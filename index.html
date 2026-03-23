@@ -1,0 +1,1379 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+  <meta name="theme-color" content="#4F46E5">
+  <meta name="description" content="Um guia interativo para compreender as quatro fases do ciclo feminino, seus arquétipos sagrados e práticas de autoconhecimento.">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="4 Fases">
+
+  <title>Mapeamento das 4 Fases Internas</title>
+
+  <link rel="manifest" href="./manifest.json">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+
+<!-- Progress Bar -->
+<div id="progress-bar-wrap" aria-hidden="true">
+  <div id="progress-bar"></div>
+</div>
+
+<!-- Offline Badge -->
+<div id="offline-badge" role="status" aria-live="polite">
+  <span class="offline-dot"></span> Offline
+</div>
+
+<!-- ════════════════════════════════════════
+     HEADER
+     ════════════════════════════════════════ -->
+<header id="site-header">
+  <a class="header-logo" href="#" data-go="cover" aria-label="Início">
+    <!-- Moon SVG Logo -->
+    <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <circle cx="18" cy="18" r="17" stroke="#4F46E5" stroke-width="1.5" opacity=".4"/>
+      <circle cx="18" cy="18" r="11" stroke="#8B5CF6" stroke-width="1.5"/>
+      <path d="M 18 7 A 11 11 0 0 0 18 29 A 7 7 0 0 1 18 7 Z" fill="#4F46E5" opacity=".7"/>
+      <circle cx="18" cy="18" r="3" fill="#8B5CF6"/>
+    </svg>
+    <span class="header-logo-text">4 Fases Internas</span>
+  </a>
+
+  <nav id="phase-nav" role="navigation" aria-label="Fases">
+    <button class="phase-btn" data-phase="cover" aria-label="Capa">
+      <span class="phase-dot" style="background:#6b7280"></span>
+      <span>Início</span>
+    </button>
+    <button class="phase-btn" data-phase="1" aria-label="Fase Menstrual">
+      <span class="phase-dot" style="background:#a855f7"></span>
+      <span>Menstrual</span>
+    </button>
+    <button class="phase-btn" data-phase="2" aria-label="Fase Folicular">
+      <span class="phase-dot" style="background:#60a5fa"></span>
+      <span>Folicular</span>
+    </button>
+    <button class="phase-btn" data-phase="3" aria-label="Fase Ovulatória">
+      <span class="phase-dot" style="background:#f87171"></span>
+      <span>Ovulatória</span>
+    </button>
+    <button class="phase-btn" data-phase="4" aria-label="Fase Lútea">
+      <span class="phase-dot" style="background:#a78bfa"></span>
+      <span>Lútea</span>
+    </button>
+  </nav>
+</header>
+
+<!-- ════════════════════════════════════════
+     MAIN
+     ════════════════════════════════════════ -->
+<main>
+
+  <!-- ── CAPA ──────────────────────────────── -->
+  <section id="cover" aria-label="Capa">
+
+    <div class="cover-glyph" aria-hidden="true">
+      <div class="cover-glyph-pulse"></div>
+      <svg viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Outer ring -->
+        <circle cx="120" cy="120" r="115" stroke="#1F2937" stroke-width="1.5"/>
+        <!-- Moon phases circle -->
+        <circle cx="120" cy="120" r="90" stroke="#4F46E5" stroke-width="1" stroke-dasharray="4 6" opacity=".5"/>
+        <!-- Phase 1 arc — top left (Menstrual) -->
+        <path d="M 120 30 A 90 90 0 0 0 30 120" stroke="#a855f7" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <!-- Phase 2 arc — top right (Folicular) -->
+        <path d="M 120 30 A 90 90 0 0 1 210 120" stroke="#60a5fa" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <!-- Phase 3 arc — bottom right (Ovulatória) -->
+        <path d="M 210 120 A 90 90 0 0 1 120 210" stroke="#f87171" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <!-- Phase 4 arc — bottom left (Lútea) -->
+        <path d="M 30 120 A 90 90 0 0 0 120 210" stroke="#a78bfa" stroke-width="3" fill="none" stroke-linecap="round"/>
+        <!-- Center decorative -->
+        <circle cx="120" cy="120" r="40" stroke="#1F2937" stroke-width="1"/>
+        <circle cx="120" cy="120" r="6" fill="#4F46E5"/>
+        <!-- Cross dividers -->
+        <line x1="120" y1="30" x2="120" y2="55" stroke="#1F2937" stroke-width="1"/>
+        <line x1="120" y1="185" x2="120" y2="210" stroke="#1F2937" stroke-width="1"/>
+        <line x1="30" y1="120" x2="55" y2="120" stroke="#1F2937" stroke-width="1"/>
+        <line x1="185" y1="120" x2="210" y2="120" stroke="#1F2937" stroke-width="1"/>
+        <!-- Moon phases symbols -->
+        <text x="107" y="25" fill="#a855f7" font-size="14" text-anchor="middle" font-family="serif">🌑</text>
+        <text x="216" y="124" fill="#60a5fa" font-size="14" text-anchor="middle" font-family="serif">🌒</text>
+        <text x="120" y="225" fill="#f87171" font-size="14" text-anchor="middle" font-family="serif">🌕</text>
+        <text x="22" y="124" fill="#a78bfa" font-size="14" text-anchor="middle" font-family="serif">🌘</text>
+      </svg>
+    </div>
+
+    <p class="cover-subtitle">Ebook Interativo · Sagrado Feminino</p>
+    <h1>Mapeamento das<br>4 Fases Internas</h1>
+    <p class="cover-description">
+      Uma jornada de autoconhecimento pelas quatro estações do seu ciclo.
+      Descubra os arquétipos, os ritmos do corpo e as práticas sagradas de cada fase
+      para viver em harmonia com sua natureza cíclica.
+    </p>
+    <button class="start-btn" id="start-btn">
+      Iniciar Jornada
+      <svg viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.857-9.809a.75.75 0 00-1.214-.882l-3.483 4.79-1.88-1.88a.75.75 0 10-1.06 1.061l2.5 2.5a.75.75 0 001.137-.089l4-5.5z" clip-rule="evenodd"/>
+      </svg>
+    </button>
+
+    <!-- Phase Quick Cards -->
+    <div class="phase-cards-grid" role="list">
+      <div class="phase-mini-card" data-phase="1" role="listitem" tabindex="0">
+        <span class="phase-icon">🌑</span>
+        <span class="phase-name">Fase Menstrual</span>
+        <span class="phase-tagline">Bruxa · Anciã · Inverno</span>
+      </div>
+      <div class="phase-mini-card" data-phase="2" role="listitem" tabindex="0">
+        <span class="phase-icon">🌒</span>
+        <span class="phase-name">Fase Folicular</span>
+        <span class="phase-tagline">Donzela · Guerreira · Primavera</span>
+      </div>
+      <div class="phase-mini-card" data-phase="3" role="listitem" tabindex="0">
+        <span class="phase-icon">🌕</span>
+        <span class="phase-name">Fase Ovulatória</span>
+        <span class="phase-tagline">Mãe · Cuidadora · Verão</span>
+      </div>
+      <div class="phase-mini-card" data-phase="4" role="listitem" tabindex="0">
+        <span class="phase-icon">🌘</span>
+        <span class="phase-name">Fase Lútea</span>
+        <span class="phase-tagline">Feiticeira · Sedutora · Outono</span>
+      </div>
+    </div>
+
+    <!-- Intro Section -->
+    <section id="intro-section">
+      <h2>O que é o Ciclo Feminino Sagrado?</h2>
+      <p style="color:var(--text-muted);font-family:var(--font-ui);font-size:.95rem;margin-bottom:1.5rem;line-height:1.8">
+        O ciclo menstrual é muito mais do que biologia. Ele é um mapa interno que revela quatro estações distintas de energia,
+        criatividade, intuição e renovação. Cada fase traz um convite diferente para seu desenvolvimento pessoal.
+      </p>
+      <div class="intro-grid">
+        <div class="intro-card">
+          <h4>Por que mapear?</h4>
+          <p>Quando você compreende seu ciclo, deixa de lutar contra si mesma. Em vez de se cobrar por ter energia baixa
+          na fase menstrual ou por sentir irritação na lútea, você entende que são expressões naturais e poderosas do seu ser.</p>
+        </div>
+        <div class="intro-card">
+          <h4>Os 4 Arquétipos</h4>
+          <p>Cada fase corresponde a um arquétipo da psicologia junguiana: a Bruxa/Anciã do inverno interno, a Donzela da primavera,
+          a Mãe do verão e a Feiticeira do outono. Cada uma guarda sabedorias únicas.</p>
+        </div>
+        <div class="intro-card">
+          <h4>Duração média</h4>
+          <p>Um ciclo completo dura em média 28 dias, mas pode variar entre 21 e 35 dias. Cada fase tem duração diferente e
+          os dias exatos variam de mulher para mulher e de ciclo para ciclo.</p>
+        </div>
+        <div class="intro-card">
+          <h4>Como usar este guia</h4>
+          <p>Navegue pelas quatro fases em qualquer ordem. Volte à fase em que você está vivendo agora. Use as perguntas de reflexão
+          para aprofundar o autoconhecimento e anote suas descobertas.</p>
+        </div>
+      </div>
+
+      <!-- Cycle Wheel -->
+      <section id="cycle-wheel-section">
+        <h2>A Roda do Ciclo</h2>
+        <p>Toque em cada fase para explorar seu conteúdo</p>
+        <div class="wheel-wrapper" role="img" aria-label="Roda do ciclo com as 4 fases">
+          <svg viewBox="0 0 380 380" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- Background ring -->
+            <circle cx="190" cy="190" r="185" fill="#111827" stroke="#1F2937" stroke-width="1"/>
+            <circle cx="190" cy="190" r="130" fill="#0B0F19" stroke="#1F2937" stroke-width="1"/>
+            <circle cx="190" cy="190" r="58" fill="#111827" stroke="#4F46E5" stroke-width="1" opacity=".6"/>
+
+            <!-- Phase 1: Menstrual — top left quadrant -->
+            <g class="wheel-segment" data-phase="1" role="button" aria-label="Fase Menstrual">
+              <path d="M 190 190 L 60 60 A 185 185 0 0 1 190 5 Z" fill="#1a0a2e" opacity=".85"/>
+              <path d="M 190 190 L 60 60 A 185 185 0 0 1 190 5 Z" fill="none" stroke="#a855f7" stroke-width="1.5" opacity=".5"/>
+              <text x="120" y="95" fill="#C084FC" font-size="24" text-anchor="middle" font-family="serif">🌑</text>
+              <text x="118" y="116" fill="#C084FC" font-size="11" text-anchor="middle" font-family="Cinzel,serif" font-weight="600" letter-spacing="1">MENSTRUAL</text>
+              <text x="118" y="132" fill="#9CA3AF" font-size="9" text-anchor="middle" font-family="Inter,sans-serif">Bruxa · Inverno</text>
+            </g>
+
+            <!-- Phase 2: Folicular — top right quadrant -->
+            <g class="wheel-segment" data-phase="2" role="button" aria-label="Fase Folicular">
+              <path d="M 190 190 L 320 60 A 185 185 0 0 0 190 5 Z" fill="#0a1628" opacity=".85"/>
+              <path d="M 190 190 L 320 60 A 185 185 0 0 0 190 5 Z" fill="none" stroke="#60a5fa" stroke-width="1.5" opacity=".5"/>
+              <text x="260" y="95" fill="#93C5FD" font-size="24" text-anchor="middle" font-family="serif">🌒</text>
+              <text x="260" y="116" fill="#93C5FD" font-size="11" text-anchor="middle" font-family="Cinzel,serif" font-weight="600" letter-spacing="1">FOLICULAR</text>
+              <text x="260" y="132" fill="#9CA3AF" font-size="9" text-anchor="middle" font-family="Inter,sans-serif">Donzela · Primavera</text>
+            </g>
+
+            <!-- Phase 3: Ovulatória — bottom right quadrant -->
+            <g class="wheel-segment" data-phase="3" role="button" aria-label="Fase Ovulatória">
+              <path d="M 190 190 L 320 320 A 185 185 0 0 1 190 375 Z" fill="#1a0a0a" opacity=".85"/>
+              <path d="M 190 190 L 320 320 A 185 185 0 0 1 190 375 Z" fill="none" stroke="#f87171" stroke-width="1.5" opacity=".5"/>
+              <text x="260" y="285" fill="#FCA5A5" font-size="24" text-anchor="middle" font-family="serif">🌕</text>
+              <text x="260" y="306" fill="#FCA5A5" font-size="11" text-anchor="middle" font-family="Cinzel,serif" font-weight="600" letter-spacing="1">OVULATÓRIA</text>
+              <text x="260" y="322" fill="#9CA3AF" font-size="9" text-anchor="middle" font-family="Inter,sans-serif">Mãe · Verão</text>
+            </g>
+
+            <!-- Phase 4: Lútea — bottom left quadrant -->
+            <g class="wheel-segment" data-phase="4" role="button" aria-label="Fase Lútea">
+              <path d="M 190 190 L 60 320 A 185 185 0 0 0 190 375 Z" fill="#0f1a0a" opacity=".85"/>
+              <path d="M 190 190 L 60 320 A 185 185 0 0 0 190 375 Z" fill="none" stroke="#a78bfa" stroke-width="1.5" opacity=".5"/>
+              <text x="120" y="285" fill="#DDD6FE" font-size="24" text-anchor="middle" font-family="serif">🌘</text>
+              <text x="120" y="306" fill="#DDD6FE" font-size="11" text-anchor="middle" font-family="Cinzel,serif" font-weight="600" letter-spacing="1">LÚTEA</text>
+              <text x="120" y="322" fill="#9CA3AF" font-size="9" text-anchor="middle" font-family="Inter,sans-serif">Feiticeira · Outono</text>
+            </g>
+
+            <!-- Dividers -->
+            <line x1="190" y1="5" x2="190" y2="375" stroke="#0B0F19" stroke-width="3"/>
+            <line x1="5" y1="190" x2="375" y2="190" stroke="#0B0F19" stroke-width="3"/>
+            <!-- Center -->
+            <circle cx="190" cy="190" r="58" fill="#111827" stroke="#4F46E5" stroke-width="1.5" opacity=".7"/>
+            <circle cx="190" cy="190" r="12" fill="#4F46E5"/>
+            <text x="190" y="178" fill="#9CA3AF" font-size="9" text-anchor="middle" font-family="Cinzel,serif" letter-spacing="1">CICLO</text>
+            <text x="190" y="195" fill="#F3F4F6" font-size="11" text-anchor="middle" font-family="Cinzel,serif" font-weight="600">SAGRADO</text>
+            <text x="190" y="210" fill="#9CA3AF" font-size="9" text-anchor="middle" font-family="Inter,sans-serif">28 dias</text>
+          </svg>
+        </div>
+      </section>
+
+      <!-- Reading Progress -->
+      <div class="reading-progress-section">
+        <h4>Seu Progresso de Leitura</h4>
+        <div class="phase-progress-list">
+          <div class="phase-progress-item" data-phase="1">
+            <span class="pp-name">🌑 Menstrual</span>
+            <div class="pp-bar-track">
+              <div class="pp-bar-fill" style="background:#a855f7;width:0%"></div>
+            </div>
+            <span class="pp-percent">0%</span>
+          </div>
+          <div class="phase-progress-item" data-phase="2">
+            <span class="pp-name">🌒 Folicular</span>
+            <div class="pp-bar-track">
+              <div class="pp-bar-fill" style="background:#60a5fa;width:0%"></div>
+            </div>
+            <span class="pp-percent">0%</span>
+          </div>
+          <div class="phase-progress-item" data-phase="3">
+            <span class="pp-name">🌕 Ovulatória</span>
+            <div class="pp-bar-track">
+              <div class="pp-bar-fill" style="background:#f87171;width:0%"></div>
+            </div>
+            <span class="pp-percent">0%</span>
+          </div>
+          <div class="phase-progress-item" data-phase="4">
+            <span class="pp-name">🌘 Lútea</span>
+            <div class="pp-bar-track">
+              <div class="pp-bar-fill" style="background:#a78bfa;width:0%"></div>
+            </div>
+            <span class="pp-percent">0%</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </section>
+
+
+  <!-- ════════════════════════════════════════
+       FASE 1 — MENSTRUAL
+       ════════════════════════════════════════ -->
+  <section id="phase-1" class="phase-section phase-1" aria-label="Fase Menstrual" data-phase="1">
+
+    <!-- Hero -->
+    <div class="phase-hero">
+      <span class="phase-hero-moon">🌑</span>
+      <p class="phase-hero-number">Fase 01 · Dias 1–5</p>
+      <h2>A Fase Menstrual</h2>
+      <p class="phase-hero-archetype">Bruxa · Anciã · Inverno Interior · Lua Nova</p>
+      <div class="phase-hero-tags">
+        <span class="phase-tag">🩸 Sangramento</span>
+        <span class="phase-tag">🌑 Lua Nova</span>
+        <span class="phase-tag">❄️ Inverno</span>
+        <span class="phase-tag">🔮 Intuição</span>
+        <span class="phase-tag">🌍 Elemento Terra</span>
+        <span class="phase-tag">🖤 Preto · Vermelho · Azul</span>
+      </div>
+    </div>
+
+    <!-- Quote -->
+    <blockquote class="phase-quote" style="border-color:#a855f7">
+      "No silêncio do sangramento, a mulher toca o véu entre mundos. Ela não está fraca — ela está em contato com o que não pode ser visto."
+      <cite>— Tradição do Sagrado Feminino</cite>
+    </blockquote>
+
+    <!-- Body Block -->
+    <div class="content-block">
+      <div class="block-header">
+        <div class="block-header-icon">🩸</div>
+        <h3>O Corpo na Fase Menstrual</h3>
+        <span class="block-toggle">▾</span>
+      </div>
+      <div class="block-body">
+        <p>Esta é a fase de maior introspecção física. Os hormônios estrogênio e progesterona estão em seus níveis mais baixos, criando um estado de recolhimento natural que a sabedoria ancestral sempre reconheceu como sagrado.</p>
+        <div class="body-signals">
+          <div class="body-signal">
+            <span class="sig-dot"></span>
+            <span class="sig-text">Sangramento uterino — liberação do endométrio</span>
+          </div>
+          <div class="body-signal">
+            <span class="sig-dot"></span>
+            <span class="sig-text">Hormônios em baixa — estrogênio e progesterona no nadir</span>
+          </div>
+          <div class="body-signal">
+            <span class="sig-dot"></span>
+            <span class="sig-text">Corpo pesado e necessidade aumentada de sono</span>
+          </div>
+          <div class="body-signal">
+            <span class="sig-dot"></span>
+            <span class="sig-text">Maior sensibilidade a ruídos e luz intensa</span>
+          </div>
+          <div class="body-signal">
+            <span class="sig-dot"></span>
+            <span class="sig-text">Possíveis cólicas — contração uterina de limpeza</span>
+          </div>
+          <div class="body-signal">
+            <span class="sig-dot"></span>
+            <span class="sig-text">Metabolismo mais lento — necessidade de alimentos quentes</span>
+          </div>
+          <div class="body-signal">
+            <span class="sig-dot"></span>
+            <span class="sig-text">Aumento da capacidade de análise cerebral holística</span>
+          </div>
+          <div class="body-signal">
+            <span class="sig-dot"></span>
+            <span class="sig-text">Hemisférios cerebrais em maior comunicação</span>
+          </div>
+        </div>
+        <p class="mt-2">Estudos mostram que durante a menstruação, os hemisférios cerebrais esquerdo e direito se comunicam com maior intensidade, o que explica a percepção aguçada e os insights profundos desta fase.</p>
+      </div>
+    </div>
+
+    <!-- Emotional Block -->
+    <div class="content-block">
+      <div class="block-header">
+        <div class="block-header-icon">🌌</div>
+        <h3>O Mundo Emocional e Espiritual</h3>
+        <span class="block-toggle">▾</span>
+      </div>
+      <div class="block-body">
+        <p>A fase menstrual carrega o poder do véu entre mundos. As culturas ancestrais chamavam as mulheres menstruadas de "visionárias" porque a percepção intuitiva atinge seu ápice. O que antes parecia impossível de ver, agora surge com clareza.</p>
+        <ul>
+          <li><strong>Retiro natural:</strong> o desejo de solidão não é isolamento — é sagrada reclusão para integrar os aprendizados do ciclo que passou</li>
+          <li><strong>Introspecção profunda:</strong> capacidade elevada de avaliar sua vida com honestidade sem julgamento excessivo</li>
+          <li><strong>Intuição ampliada:</strong> o véu entre o consciente e o inconsciente fica mais fino; sonhos e visões ganham intensidade</li>
+          <li><strong>Espiritualidade viva:</strong> conexão mais fácil com práticas meditativas, canalização e estados alterados de consciência</li>
+          <li><strong>Clareza sobre o que não serve mais:</strong> a fase convida a identificar o que deve ser liberado — relacionamentos, padrões, crenças</li>
+          <li><strong>Vulnerabilidade como força:</strong> a sensibilidade emocional desta fase não é fraqueza — é sabedoria sentindo o que precisa ser honrado</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Archetypes Block -->
+    <div class="content-block">
+      <div class="block-header">
+        <div class="block-header-icon">🔮</div>
+        <h3>Os Arquétipos da Fase Menstrual</h3>
+        <span class="block-toggle">▾</span>
+      </div>
+      <div class="block-body">
+        <p>Os arquétipos são padrões universais que habitam o inconsciente coletivo. Na fase menstrual, os arquétipos da sabedoria ancestral e da magia profunda são ativados.</p>
+        <div class="archetype-grid">
+          <div class="archetype-card">
+            <span class="arch-symbol">🧙‍♀️</span>
+            <span class="arch-name">A Bruxa</span>
+            <span class="arch-desc">Guardiã do conhecimento proibido, mestra da transformação, vive nas margens do mundo comum</span>
+          </div>
+          <div class="archetype-card">
+            <span class="arch-symbol">👵</span>
+            <span class="arch-name">A Anciã</span>
+            <span class="arch-desc">Sabedoria acumulada de muitas vidas, voz da verdade essencial, além das ilusões do ego</span>
+          </div>
+          <div class="archetype-card">
+            <span class="arch-symbol">❄️</span>
+            <span class="arch-name">Cailleach</span>
+            <span class="arch-desc">Deusa céltica do inverno, criadora das montanhas, poder da natureza em sua forma mais crua</span>
+          </div>
+          <div class="archetype-card">
+            <span class="arch-symbol">🖤</span>
+            <span class="arch-name">Ísis Negra</span>
+            <span class="arch-desc">A face noturna da grande mãe egípcia, mestra dos mistérios, guardiã dos mortos e do renascimento</span>
+          </div>
+          <div class="archetype-card">
+            <span class="arch-symbol">💀</span>
+            <span class="arch-name">Kali</span>
+            <span class="arch-desc">Deusa hindu da destruição criativa, que dissolve o ego para que o verdadeiro eu emerja renovado</span>
+          </div>
+          <div class="archetype-card">
+            <span class="arch-symbol">🌑</span>
+            <span class="arch-name">Hécate</span>
+            <span class="arch-desc">Rainha das encruzilhadas, guia nas travessias, mestra da magia das tríades e da lua negra</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Practices Block -->
+    <div class="content-block">
+      <div class="block-header">
+        <div class="block-header-icon">🌿</div>
+        <h3>Práticas para a Fase Menstrual</h3>
+        <span class="block-toggle">▾</span>
+      </div>
+      <div class="block-body">
+        <p>Esta é a fase do recolhimento e da nutrição profunda. As práticas ideais honram a necessidade de introspecção e aproveitam a percepção aguçada.</p>
+        <div class="practice-list">
+          <div class="practice-item">
+            <span class="practice-icon">🌙</span>
+            <div class="practice-text">
+              <span class="practice-name">Ritual Plantar a Lua</span>
+              <span class="practice-desc">Na Lua Nova, que coincide energeticamente com a menstruação, escreva intenções para o novo ciclo. Enterre-as simbolicamente (em papel, no jardim ou num altar) como sementes que você planta na terra do mês que vem.</span>
+            </div>
+          </div>
+          <div class="practice-item">
+            <span class="practice-icon">🧘‍♀️</span>
+            <div class="practice-text">
+              <span class="practice-name">Meditação Yin — "A Cueva Interna"</span>
+              <span class="practice-desc">Deite-se com uma compressa morna no baixo ventre. Feche os olhos e visualize uma caverna quente e segura. Observe quais imagens, mensagens e emoções emergem. Este é o seu oráculo interno falando.</span>
+            </div>
+          </div>
+          <div class="practice-item">
+            <span class="practice-icon">📓</span>
+            <div class="practice-text">
+              <span class="practice-name">Registro de Sonhos</span>
+              <span class="practice-desc">Os sonhos na fase menstrual são proféticos e simbólicos. Deixe um caderno ao lado da cama e escreva imediatamente ao acordar, antes de o ego filtrar o conteúdo inconsciente. Busque padrões ao longo de ciclos.</span>
+            </div>
+          </div>
+          <div class="practice-item">
+            <span class="practice-icon">🛀</span>
+            <div class="practice-text">
+              <span class="practice-name">Banho Ritual de Ervas</span>
+              <span class="practice-desc">Prepare um banho quente com camomila, lavanda e pétalas de rosa vermelha. Enquanto imersa, visualize o sangramento levando consigo tudo que não pertence mais a você. Agradeça ao seu corpo pela limpeza.</span>
+            </div>
+          </div>
+          <div class="practice-item">
+            <span class="practice-icon">😴</span>
+            <div class="practice-text">
+              <span class="practice-name">Descanso Consciente</span>
+              <span class="practice-desc">Permita-se dormir mais, tirar sonecas, cancelar compromissos não essenciais. O repouso na fase menstrual não é preguiça — é regeneração profunda que impacta toda a qualidade do ciclo seguinte.</span>
+            </div>
+          </div>
+          <div class="practice-item">
+            <span class="practice-icon">✍️</span>
+            <div class="practice-text">
+              <span class="practice-name">Balanço do Ciclo</span>
+              <span class="practice-desc">Dedique um tempo para avaliar o ciclo que passou: o que funcionou? O que não funcionou? O que você quer diferente? O que está pronto para ser liberado? Esta avaliação honesta planta sementes para o próximo ciclo.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Elements Block -->
+    <div class="content-block">
+      <div class="block-header">
+        <div class="block-header-icon">🌍</div>
+        <h3>Elementos, Cores e Símbolos</h3>
+        <span class="block-toggle">▾</span>
+      </div>
+      <div class="block-body">
+        <div class="elements-row">
+          <div class="element-pill"><span class="el-icon">🌑</span> Lua Nova</div>
+          <div class="element-pill"><span class="el-icon">🌍</span> Elemento Terra</div>
+          <div class="element-pill"><span class="el-icon">🖤</span> Preto</div>
+          <div class="element-pill"><span class="el-icon">🩸</span> Vermelho escuro</div>
+          <div class="element-pill"><span class="el-icon">🌊</span> Azul Noite</div>
+          <div class="element-pill"><span class="el-icon">❄️</span> Inverno</div>
+          <div class="element-pill"><span class="el-icon">🌿</span> Artemísia</div>
+          <div class="element-pill"><span class="el-icon">💎</span> Obsidiana</div>
+          <div class="element-pill"><span class="el-icon">🕯️</span> Vela preta</div>
+        </div>
+        <p class="mt-2">O elemento Terra ancora esta fase — pedras preciosas escuras como obsidiana e turmalina negra são seus aliados. As cores preto, vermelho-sangue e azul-marinho ressoam com a profundidade desta passagem.</p>
+
+        <div class="shadow-box mt-2">
+          <h5>⚠ Desafios da Sombra</h5>
+          <div class="shadow-item">
+            <span class="shadow-arrow">→</span>
+            Culpa por "não ser produtiva" durante o sangramento
+          </div>
+          <div class="shadow-item">
+            <span class="shadow-arrow">→</span>
+            Vergonha do ciclo menstrual como "sujeira"
+          </div>
+          <div class="shadow-item">
+            <span class="shadow-arrow">→</span>
+            Isolamento excessivo que se torna depressão
+          </div>
+          <div class="shadow-item">
+            <span class="shadow-arrow">→</span>
+            Resistência ao descanso por crença de que precisamos ser sempre produtivas
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Autoconhecimento Block -->
+    <div class="content-block">
+      <div class="block-header">
+        <div class="block-header-icon">🔭</div>
+        <h3>Autoconhecimento — O que esta fase revela</h3>
+        <span class="block-toggle">▾</span>
+      </div>
+      <div class="block-body">
+        <p>A fase menstrual é o momento de maior clareza para avaliar sua vida como um todo. A bruma do cotidiano se desfaz e você consegue ver o que realmente importa, o que cansa, o que nutre e o que drena.</p>
+        <ul>
+          <li><strong>Avalie relações:</strong> quais relacionamentos te nutrem genuinamente? Quais drenam sua energia?</li>
+          <li><strong>Revise compromissos:</strong> você está vivendo de acordo com seus valores ou apenas cumprindo expectativas alheias?</li>
+          <li><strong>Libere padrões:</strong> identifique comportamentos repetitivos que não te servem mais e faça um ritual de liberação</li>
+          <li><strong>Honre seu ritmo:</strong> sua produtividade não precisa ser linear — aprenda a dançar com as estações</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Reflection -->
+    <div class="reflection-box">
+      <h4>🪬 Perguntas para Reflexão Profunda</h4>
+      <ul class="reflection-questions">
+        <li>O que o meu corpo está tentando me dizer com a intensidade desta menstruação?</li>
+        <li>O que eu carregui ao longo deste ciclo que está pronto para ser liberado com o sangramento?</li>
+        <li>Que verdade eu evitei encarar durante o último mês e que agora emerge com clareza?</li>
+        <li>Se eu pudesse dar um conselho ao meu eu de 10 anos atrás, sobre descanso e autocuidado, o que eu diria?</li>
+        <li>Quais padrões se repetem a cada ciclo que me pedem transformação?</li>
+      </ul>
+    </div>
+
+    <!-- Bottom Nav -->
+    <div class="phase-nav-bottom">
+      <button class="nav-btn" data-go="cover">← Início</button>
+      <button class="nav-btn primary-nav" data-go="2">Fase Folicular →</button>
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════════
+       FASE 2 — FOLICULAR
+       ════════════════════════════════════════ -->
+  <section id="phase-2" class="phase-section phase-2" aria-label="Fase Folicular" data-phase="2">
+
+    <div class="phase-hero">
+      <span class="phase-hero-moon">🌒</span>
+      <p class="phase-hero-number">Fase 02 · Dias 6–13</p>
+      <h2>A Fase Folicular</h2>
+      <p class="phase-hero-archetype">Donzela · Guerreira · Primavera · Lua Crescente</p>
+      <div class="phase-hero-tags">
+        <span class="phase-tag">⚡ Energia Crescente</span>
+        <span class="phase-tag">🌒 Lua Crescente</span>
+        <span class="phase-tag">🌸 Primavera</span>
+        <span class="phase-tag">💡 Clareza Mental</span>
+        <span class="phase-tag">🔥 Fogo · Ar</span>
+        <span class="phase-tag">🤍 Branco</span>
+      </div>
+    </div>
+
+    <blockquote class="phase-quote" style="border-color:#60a5fa">
+      "A Donzela não teme o mundo — ela está aprendendo a nomeá-lo. Cada amanhecer é uma estreia. Cada projeto, uma promessa ao futuro."
+      <cite>— Arquétipos do Feminino</cite>
+    </blockquote>
+
+    <div class="content-block">
+      <div class="block-header">
+        <div class="block-header-icon">⚡</div>
+        <h3>O Corpo na Fase Folicular</h3>
+        <span class="block-toggle">▾</span>
+      </div>
+      <div class="block-body">
+        <p>Com o fim do sangramento, o corpo começa a produzir quantidades crescentes de estrogênio. Os folículos ovarianos crescem, preparando o óvulo para a ovulação. Esta é a fase de maior analogia com a primavera — renovação, abertura e possibilidade.</p>
+        <div class="body-signals">
+          <div class="body-signal">
+            <span class="sig-dot"></span>
+            <span class="sig-text">Estrogênio em ascensão — energia crescente</span>
+          </div>
+          <div class="body-signal">
+            <span class="sig-dot"></span>
+            <span class="sig-text">Corpo revitalizado, leveza física</span>
+          </div>
+          <div class="body-signal">
+            <span class="sig-dot"></span>
+            <span class="sig-text">Metabolismo mais ativo — apetite mais leve</span>
+          </div>
+          <div class="body-signal">
+            <span class="sig-dot"></span>
+            <span class="sig-text">Melhora na qualidade da pele e cabelo</span>
+          </div>
+          <div class="body-signal">
+            <span class="sig-dot"></span>
+            <span class="sig-text">Clareza mental aumentada e foco aprimorado</span>
+          </div>
+          <div class="body-signal">
+            <span class="sig-dot"></span>
+            <span class="sig-text">Resistência física elevada — ideal para novos exercícios</span>
+          </div>
+          <div class="body-signal">
+            <span class="sig-dot"></span>
+            <span class="sig-text">Testosterona gradualmente subindo — libido emergindo</span>
+          </div>
+          <div class="body-signal">
+            <span class="sig-dot"></span>
+            <span class="sig-text">Sono de qualidade, despertar mais fácil</span>
+          </div>
+        </div>
+        <p class="mt-2">Esta é a fase de maior neuroplasticidade. O cérebro está mais receptivo ao aprendizado, à formação de novas conexões neurais e à assimilação de informações complexas.</p>
+      </div>
+    </div>
+
+    <div class="content-block">
+      <div class="block-header">
+        <div class="block-header-icon">✨</div>
+        <h3>O Mundo Emocional e Mental</h3>
+        <span class="block-toggle">▾</span>
+      </div>
+      <div class="block-body">
+        <p>A fase folicular é a primavera interna. Depois da introspecção menstrual, o mundo se abre como flores após o inverno. A mente está limpa, o coração está leve e a sensação de que tudo é possível é genuína, não ilusória.</p>
+        <ul>
+          <li><strong>Energia dinâmica:</strong> vontade de agir, iniciar e explorar resurge de forma natural e autêntica</li>
+          <li><strong>Confiança crescente:</strong> o ego ressurge de forma saudável, com senso de identidade claro e autoestima elevada</li>
+          <li><strong>Radiância natural:</strong> a luz interna se torna visível — pessoas ao redor percebem a sua presença com mais intensidade</li>
+          <li><strong>Clareza de propósito:</strong> as sementes plantadas na menstruação começam a germinar em forma de planos concretos</li>
+          <li><strong>Mente analítica ativa:</strong> ideal para resolver problemas, estudar, planejar estratégias e aprender novas habilidades</li>
+          <li><strong>Assertividade emergindo:</strong> dizer o que pensa se torna mais fácil; comunicação direta e clara</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="content-block">
+      <div class="block-header">
+        <div class="block-header-icon">🏹</div>
+        <h3>Os Arquétipos da Fase Folicular</h3>
+        <span class="block-toggle">▾</span>
+      </div>
+      <div class="block-body">
+        <p>Os arquétipos da fase folicular celebram a independência, a busca e o despertar. São figuras que agem no mundo com coragem e frescor.</p>
+        <div class="archetype-grid">
+          <div class="archetype-card">
+            <span class="arch-symbol">🌸</span>
+            <span class="arch-name">A Donzela</span>
+            <span class="arch-desc">A jovem que desperta, ainda não comprometida, cheia de potencial virgem e inexplorado</span>
+          </div>
+          <div class="archetype-card">
+            <span class="arch-symbol">⚔️</span>
+            <span class="arch-name">Atena</span>
+            <span class="arch-desc">Deusa grega da sabedoria e da guerra estratégica, mestra do planejamento e da inteligência táctica</span>
+          </div>
+          <div class="archetype-card">
+            <span class="arch-symbol">🏹</span>
+            <span class="arch-name">Ártemis</span>
+            <span class="arch-desc">A caçadora independente, livre nas florestas, dona de si, que não pertence a ninguém além de si mesma</span>
+          </div>
+          <div class="archetype-card">
+            <span class="arch-symbol">🌙</span>
+            <span class="arch-name">Diana</span>
+            <span class="arch-desc">Versão romana de Ártemis, protetora da natureza selvagem e das mulheres jovens em seu caminho de autodescoberta</span>
+          </div>
+          <div class="archetype-card">
+            <span class="arch-symbol">☀️</span>
+            <span class="arch-name">Koré</span>
+            <span class="arch-desc">A jovem Perséfone antes da descida, símbolo da inocência e do potencial que ainda não foi testado pelo mundo</span>
+          </div>
+          <div class="archetype-card">
+            <span class="arch-symbol">🔥</span>
+            <span class="arch-name">Brigid</span>
+            <span class="arch-desc">Deusa celta da criatividade, da forja e da cura — transformação através do fogo do pensamento e da ação</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-block">
+      <div class="block-header">
+        <div class="block-header-icon">🚀</div>
+        <h3>Práticas para a Fase Folicular</h3>
+        <span class="block-toggle">▾</span>
+      </div>
+      <div class="block-body">
+        <p>Esta é a fase de maior capacidade para iniciar. As práticas focam em aproveitar esta energia expansiva de forma intencional.</p>
+        <div class="practice-list">
+          <div class="practice-item">
+            <span class="practice-icon">🎯</span>
+            <div class="practice-text">
+              <span class="practice-name">Planejamento de Metas</span>
+              <span class="practice-desc">Use a clareza mental desta fase para definir objetivos para o ciclo todo. Criar um mapa visual, board de metas ou planejamento estratégico tem muito mais impacto quando feito na fase folicular.</span>
+            </div>
+          </div>
+          <div class="practice-item">
+            <span class="practice-icon">📚</span>
+            <div class="practice-text">
+              <span class="practice-name">Aprendizado Intenso</span>
+              <span class="practice-desc">Inicie cursos, leia livros técnicos, aprenda novos idiomas ou habilidades. A neuroplasticidade está no pico — o que você aprende agora se consolida com muito mais facilidade.</span>
+            </div>
+          </div>
+          <div class="practice-item">
+            <span class="practice-icon">🏃‍♀️</span>
+            <div class="practice-text">
+              <span class="practice-name">Exercícios de Alta Intensidade</span>
+              <span class="practice-desc">HIIT, crossfit, corrida, escalada — esta fase suporta treinos intensos com boa recuperação. O corpo responde bem a novos desafios físicos e constrói força mais rapidamente.</span>
+            </div>
+          </div>
+          <div class="practice-item">
+            <span class="practice-icon">🌱</span>
+            <div class="practice-text">
+              <span class="practice-name">Iniciar Projetos Novos</span>
+              <span class="practice-desc">Qualquer projeto que você tenha adiado — comece agora. A energia folicular é combustível para primeiros passos. Não espere o "momento perfeito"; use este momento de abertura natural.</span>
+            </div>
+          </div>
+          <div class="practice-item">
+            <span class="practice-icon">🗣️</span>
+            <div class="practice-text">
+              <span class="practice-name">Networking e Comunicação</span>
+              <span class="practice-desc">Agende reuniões importantes, faça apresentações, participe de eventos. Sua comunicação está especialmente clara e assertiva — aproveite para negociações, pitches e conversas difíceis.</span>
+            </div>
+          </div>
+          <div class="practice-item">
+            <span class="practice-icon">🌺</span>
+            <div class="practice-text">
+              <span class="practice-name">Ritual de Imbolc — Primavera Interna</span>
+              <span class="practice-desc">Acenda uma vela branca. Escreva 3 sementes que quer nutrir neste ciclo. Plante algo real (um vaso, uma semente) como símbolo do que está nascendo em você. Regue a planta ao longo do ciclo.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-block">
+      <div class="block-header">
+        <div class="block-header-icon">🌬️</div>
+        <h3>Elementos, Cores e Símbolos</h3>
+        <span class="block-toggle">▾</span>
+      </div>
+      <div class="block-body">
+        <div class="elements-row">
+          <div class="element-pill"><span class="el-icon">🌒</span> Lua Crescente</div>
+          <div class="element-pill"><span class="el-icon">🔥</span> Fogo</div>
+          <div class="element-pill"><span class="el-icon">💨</span> Ar</div>
+          <div class="element-pill"><span class="el-icon">🤍</span> Branco</div>
+          <div class="element-pill"><span class="el-icon">🌸</span> Rosa claro</div>
+          <div class="element-pill"><span class="el-icon">🌸</span> Primavera</div>
+          <div class="element-pill"><span class="el-icon">💎</span> Quartzo transparente</div>
+          <div class="element-pill"><span class="el-icon">🌿</span> Menta · Alecrim</div>
+          <div class="element-pill"><span class="el-icon">🕯️</span> Vela branca</div>
+        </div>
+        <div class="shadow-box mt-2">
+          <h5>⚠ Desafios da Sombra</h5>
+          <div class="shadow-item">
+            <span class="shadow-arrow">→</span>
+            Excesso de projetos iniciados sem conclusão (energia dispersa)
+          </div>
+          <div class="shadow-item">
+            <span class="shadow-arrow">→</span>
+            Superestimar a própria energia e se comprometer além da capacidade
+          </div>
+          <div class="shadow-item">
+            <span class="shadow-arrow">→</span>
+            Impaciência com quem parece "lento" ou mais introspectivo
+          </div>
+          <div class="shadow-item">
+            <span class="shadow-arrow">→</span>
+            Negligenciar descanso por se sentir invencível
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-block">
+      <div class="block-header">
+        <div class="block-header-icon">🔭</div>
+        <h3>Autoconhecimento — O que esta fase revela</h3>
+        <span class="block-toggle">▾</span>
+      </div>
+      <div class="block-body">
+        <p>A fase folicular é o espelho da sua identidade mais genuína. Sem as demandas hormonal do ciclo, você se reconhece com mais clareza.</p>
+        <ul>
+          <li><strong>Identidade sólida:</strong> quem você é quando não está em colapso nem em euforia? A folicular responde esta pergunta</li>
+          <li><strong>Comunicação assertiva:</strong> pratique dizer o que quer e precisa com clareza; esta fase facilita essa habilidade</li>
+          <li><strong>Valores em ação:</strong> observe quais atividades te dão energia genuína — elas apontam para seus valores mais profundos</li>
+          <li><strong>Autonomia:</strong> a Donzela e Ártemis ensinam que você não precisa de aprovação externa para agir; sua bússola interna é suficiente</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="reflection-box">
+      <h4>🌱 Perguntas para Reflexão Profunda</h4>
+      <ul class="reflection-questions">
+        <li>Que projeto ou sonho eu venho adiando e que esta fase me convida a começar agora?</li>
+        <li>Quem eu sou quando não estou tentando agradar a ninguém?</li>
+        <li>Que habilidade ou conhecimento poderia transformar minha vida se eu me dedicasse a ele neste ciclo?</li>
+        <li>Onde na minha vida eu preciso ser mais assertiva e dizer o que realmente penso?</li>
+        <li>O que a Donzela dentro de mim quer explorar livremente?</li>
+      </ul>
+    </div>
+
+    <div class="phase-nav-bottom">
+      <button class="nav-btn" data-go="1">← Menstrual</button>
+      <button class="nav-btn primary-nav" data-go="3">Ovulatória →</button>
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════════
+       FASE 3 — OVULATÓRIA
+       ════════════════════════════════════════ -->
+  <section id="phase-3" class="phase-section phase-3" aria-label="Fase Ovulatória" data-phase="3">
+
+    <div class="phase-hero">
+      <span class="phase-hero-moon">🌕</span>
+      <p class="phase-hero-number">Fase 03 · Dias 14–17</p>
+      <h2>A Fase Ovulatória</h2>
+      <p class="phase-hero-archetype">Mãe · Cuidadora · Verão · Lua Cheia</p>
+      <div class="phase-hero-tags">
+        <span class="phase-tag">🌕 Lua Cheia</span>
+        <span class="phase-tag">🌊 Água</span>
+        <span class="phase-tag">☀️ Verão</span>
+        <span class="phase-tag">❤️ Empática</span>
+        <span class="phase-tag">💫 Radiante</span>
+        <span class="phase-tag">🔴 Vermelho</span>
+      </div>
+    </div>
+
+    <blockquote class="phase-quote" style="border-color:#f87171">
+      "Na plenitude da Lua Cheia, a Mãe não apenas dá vida — ela é a vida. Sua presença aquece, seu cuidado transforma, seu amor não exige retorno."
+      <cite>— Mistérios da Grande Mãe</cite>
+    </blockquote>
+
+    <div class="content-block">
+      <div class="block-header">
+        <div class="block-header-icon">🥚</div>
+        <h3>O Corpo na Fase Ovulatória</h3>
+        <span class="block-toggle">▾</span>
+      </div>
+      <div class="block-body">
+        <p>A ovulação é o pico do ciclo — o momento em que o folículo dominante libera o óvulo maduro. Fisiologicamente, este é o momento de maior potência feminina. O corpo está em seu verão interno.</p>
+        <div class="body-signals">
+          <div class="body-signal">
+            <span class="sig-dot"></span>
+            <span class="sig-text">Pico de estrogênio e LH — ovulação acontece</span>
+          </div>
+          <div class="body-signal">
+            <span class="sig-dot"></span>
+            <span class="sig-text">Temperatura basal do corpo sobe levemente</span>
+          </div>
+          <div class="body-signal">
+            <span class="sig-dot"></span>
+            <span class="sig-text">Muco cervical elástico e transparente (tipo clara de ovo)</span>
+          </div>
+          <div class="body-signal">
+            <span class="sig-dot"></span>
+            <span class="sig-text">Libido no pico — desejo sexual elevado</span>
+          </div>
+          <div class="body-signal">
+            <span class="sig-dot"></span>
+            <span class="sig-text">Sensibilidade nos seios aumentada</span>
+          </div>
+          <div class="body-signal">
+            <span class="sig-dot"></span>
+            <span class="sig-text">Voz mais grave e atraente (estudos mostram que outros percebem)</span>
+          </div>
+          <div class="body-signal">
+            <span class="sig-dot"></span>
+            <span class="sig-text">Pele luminosa — o "brilho" da ovulação é real</span>
+          </div>
+          <div class="body-signal">
+            <span class="sig-dot"></span>
+            <span class="sig-text">Máxima resistência física e capacidade atlética</span>
+          </div>
+        </div>
+        <p class="mt-2">A testosterona atinge seu pico durante a ovulação, combinada ao estrogênio em altitude. Esta combinação cria o estado de maior magnetismo pessoal e capacidade social do ciclo inteiro.</p>
+      </div>
+    </div>
+
+    <div class="content-block">
+      <div class="block-header">
+        <div class="block-header-icon">💗</div>
+        <h3>O Mundo Emocional e Social</h3>
+        <span class="block-toggle">▾</span>
+      </div>
+      <div class="block-body">
+        <p>A fase ovulatória é o verão da alma — expansiva, calorosa, generosa. A necessidade de conexão está em seu ápice, e a capacidade de criar pontes entre pessoas e ideias é extraordinária.</p>
+        <ul>
+          <li><strong>Radiância natural:</strong> você irradia uma presença especial; pessoas se aproximam e querem estar com você</li>
+          <li><strong>Empatia expandida:</strong> a capacidade de sentir e compreender o outro está no máximo — cuidado para não absorver emoções alheias</li>
+          <li><strong>Harmonia e diplomacia:</strong> conflitos se resolvem com mais facilidade; você encontra o meio-termo com graça</li>
+          <li><strong>Generosidade espontânea:</strong> dar, compartilhar e nutrir acontecem de forma natural e gozosa, sem esforço</li>
+          <li><strong>Expressão criativa:</strong> ideias fluem e pedem expressão; arte, culinária, dança, canto emergem com facilidade</li>
+          <li><strong>Conexão com a Vida:</strong> sentimento de que você FAZ PARTE do tecido da existência — a separação se dissolve</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="content-block">
+      <div class="block-header">
+        <div class="block-header-icon">🌸</div>
+        <h3>Os Arquétipos da Fase Ovulatória</h3>
+        <span class="block-toggle">▾</span>
+      </div>
+      <div class="block-body">
+        <p>Os arquétipos ovulatórios são as grandes Mães do panteão — figuras que geram, nutrem, conectam e sustentam a vida em todas as suas formas.</p>
+        <div class="archetype-grid">
+          <div class="archetype-card">
+            <span class="arch-symbol">🌍</span>
+            <span class="arch-name">A Mãe</span>
+            <span class="arch-desc">O arquétipo central do cuidado incondicional — dá vida, sustenta, protege e ensina pelo exemplo</span>
+          </div>
+          <div class="archetype-card">
+            <span class="arch-symbol">🌾</span>
+            <span class="arch-name">Deméter</span>
+            <span class="arch-desc">Deusa grega das colheitas, da fertilidade da terra e do amor materno que fertiliza todo crescimento</span>
+          </div>
+          <div class="archetype-card">
+            <span class="arch-symbol">👑</span>
+            <span class="arch-name">Hera</span>
+            <span class="arch-desc">A rainha do Olimpo, guardiã do casamento e das alianças, mestra das conexões duradouras e do compromisso</span>
+          </div>
+          <div class="archetype-card">
+            <span class="arch-symbol">🌺</span>
+            <span class="arch-name">Gaia</span>
+            <span class="arch-desc">A Terra-Mãe primordial, substrato de toda vida, o amor que não distingue entre filhos — ama a todos igualmente</span>
+          </div>
+          <div class="archetype-card">
+            <span class="arch-symbol">💛</span>
+            <span class="arch-name">Freia</span>
+            <span class="arch-desc">Deusa nórdica do amor, fertilidade e beleza — une a força guerreira da Valquíria com a ternura da Mãe</span>
+          </div>
+          <div class="archetype-card">
+            <span class="arch-symbol">🕊️</span>
+            <span class="arch-name">Afrodite-Mãe</span>
+            <span class="arch-desc">O amor que não é possessivo — que ama sem se perder, que conecta sem prender, que gera sem controlar</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-block">
+      <div class="block-header">
+        <div class="block-header-icon">🌟</div>
+        <h3>Práticas para a Fase Ovulatória</h3>
+        <span class="block-toggle">▾</span>
+      </div>
+      <div class="block-body">
+        <p>As práticas desta fase honram a necessidade de expressão, conexão e celebração. É o momento de colher os frutos do trabalho interno.</p>
+        <div class="practice-list">
+          <div class="practice-item">
+            <span class="practice-icon">👥</span>
+            <div class="practice-text">
+              <span class="practice-name">Círculos de Mulheres</span>
+              <span class="practice-desc">Reúna-se com amigas, família ou seu círculo espiritual. Compartilhe histórias, celebre conquistas, ouça com o coração. A energia ovulatória fortalece todas as formas de comunidade.</span>
+            </div>
+          </div>
+          <div class="practice-item">
+            <span class="practice-icon">🍲</span>
+            <div class="practice-text">
+              <span class="practice-name">Cozinhar com Intenção</span>
+              <span class="practice-desc">Prepare uma refeição especial para quem ama. Cozinhar nesta fase é ato de magia — coloque intenção em cada ingrediente. O ato de nutrir outros é expressão direta da energia ovulatória.</span>
+            </div>
+          </div>
+          <div class="practice-item">
+            <span class="practice-icon">🎨</span>
+            <div class="practice-text">
+              <span class="practice-name">Expressão Artística Livre</span>
+              <span class="practice-desc">Dance, cante, pinte, escreva poesia — deixe a criatividade fluir sem julgamento. Esta é a fase de maior fluxo criativo espontâneo. Não há obra certa ou errada; há apenas expressão viva.</span>
+            </div>
+          </div>
+          <div class="practice-item">
+            <span class="practice-icon">🌕</span>
+            <div class="practice-text">
+              <span class="practice-name">Ritual da Lua Cheia</span>
+              <span class="practice-desc">Na Lua Cheia, saia ao ar livre e banha-se na luz lunar. Diga em voz alta três coisas pelas quais é grata. Carregue cristais à luz da lua. Faça uma oferenda à terra em gratidão pelo ciclo.</span>
+            </div>
+          </div>
+          <div class="practice-item">
+            <span class="practice-icon">💃</span>
+            <div class="practice-text">
+              <span class="practice-name">Dança Livre e Sensual</span>
+              <span class="practice-desc">Coloque uma música que seu corpo ama e dance sem audiência. Honre cada parte do seu corpo com o movimento. A dança ovulatória é celebração — não performance. Seja o altar e a adoradora ao mesmo tempo.</span>
+            </div>
+          </div>
+          <div class="practice-item">
+            <span class="practice-icon">🤝</span>
+            <div class="practice-text">
+              <span class="practice-name">Ato de Serviço Amoroso</span>
+              <span class="practice-desc">Faça algo generoso sem expectativa de retorno. Volunteer, ajude um vizinho, doe algo valioso. A Mãe dentro de você encontra profunda satisfação no dar genuíno — diferente de dar por culpa ou obrigação.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-block">
+      <div class="block-header">
+        <div class="block-header-icon">🌊</div>
+        <h3>Elementos, Cores e Símbolos</h3>
+        <span class="block-toggle">▾</span>
+      </div>
+      <div class="block-body">
+        <div class="elements-row">
+          <div class="element-pill"><span class="el-icon">🌕</span> Lua Cheia</div>
+          <div class="element-pill"><span class="el-icon">🌊</span> Água</div>
+          <div class="element-pill"><span class="el-icon">🔴</span> Vermelho</div>
+          <div class="element-pill"><span class="el-icon">🧡</span> Laranja</div>
+          <div class="element-pill"><span class="el-icon">🌻</span> Amarelo dourado</div>
+          <div class="element-pill"><span class="el-icon">☀️</span> Verão</div>
+          <div class="element-pill"><span class="el-icon">💎</span> Cornalina · Rubi</div>
+          <div class="element-pill"><span class="el-icon">🌹</span> Rosa vermelha</div>
+          <div class="element-pill"><span class="el-icon">🕯️</span> Vela vermelha</div>
+        </div>
+        <div class="shadow-box mt-2">
+          <h5>⚠ Desafios da Sombra</h5>
+          <div class="shadow-item">
+            <span class="shadow-arrow">→</span>
+            Sobre-extensão — cuidar de todos e negligenciar a si mesma
+          </div>
+          <div class="shadow-item">
+            <span class="shadow-arrow">→</span>
+            Manipulação através do cuidado — dar para receber aprovação
+          </div>
+          <div class="shadow-item">
+            <span class="shadow-arrow">→</span>
+            Dificuldade em receber (só sabe dar)
+          </div>
+          <div class="shadow-item">
+            <span class="shadow-arrow">→</span>
+            Absorção emocional de todos ao redor — perder os próprios limites
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-block">
+      <div class="block-header">
+        <div class="block-header-icon">🔭</div>
+        <h3>Autoconhecimento — O que esta fase revela</h3>
+        <span class="block-toggle">▾</span>
+      </div>
+      <div class="block-body">
+        <p>A fase ovulatória revela sua capacidade de amar sem interesse e de criar conexões genuínas. Ela também revela onde você ainda confunde amor com necessidade de aprovação.</p>
+        <ul>
+          <li><strong>Alteridade real:</strong> consegue você ver o outro como ele é, sem projetá-lo? A Mãe ama quem está à frente dela, não quem ela quer que seja</li>
+          <li><strong>Amor incondicional:</strong> você consegue amar sem exigir que correspondam? Este é o teste da Mãe</li>
+          <li><strong>Limites no cuidado:</strong> cuidar dos outros sem perder a si mesma requer fronteiras saudáveis — a ovulatória mostra onde essas fronteiras existem ou faltam</li>
+          <li><strong>Criatividade como dom:</strong> o que você cria nesta fase vem do fundo do seu ser — observe o que emerge e o que ainda pede expressão</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="reflection-box">
+      <h4>💗 Perguntas para Reflexão Profunda</h4>
+      <ul class="reflection-questions">
+        <li>Quando eu dou, é por amor genuíno ou por medo de não ser amada?</li>
+        <li>Quem em minha vida precisa de cuidado que eu tenho a oferecer agora?</li>
+        <li>O que eu criaria se soubesse que ninguém jamais julgaria minha criação?</li>
+        <li>Onde na minha vida eu confundo minha identidade com o cuidado que dou aos outros?</li>
+        <li>O que a Grande Mãe dentro de mim quer gerar, nutrir ou proteger neste ciclo?</li>
+      </ul>
+    </div>
+
+    <div class="phase-nav-bottom">
+      <button class="nav-btn" data-go="2">← Folicular</button>
+      <button class="nav-btn primary-nav" data-go="4">Fase Lútea →</button>
+    </div>
+  </section>
+
+
+  <!-- ════════════════════════════════════════
+       FASE 4 — LÚTEA
+       ════════════════════════════════════════ -->
+  <section id="phase-4" class="phase-section phase-4" aria-label="Fase Lútea" data-phase="4">
+
+    <div class="phase-hero">
+      <span class="phase-hero-moon">🌘</span>
+      <p class="phase-hero-number">Fase 04 · Dias 18–28</p>
+      <h2>A Fase Lútea</h2>
+      <p class="phase-hero-archetype">Feiticeira · Sedutora · Outono · Lua Minguante</p>
+      <div class="phase-hero-tags">
+        <span class="phase-tag">🌘 Lua Minguante</span>
+        <span class="phase-tag">💨 Ar · Espírito</span>
+        <span class="phase-tag">🍂 Outono</span>
+        <span class="phase-tag">🔮 Intuição</span>
+        <span class="phase-tag">🟣 Roxo</span>
+        <span class="phase-tag">⚡ Criatividade</span>
+      </div>
+    </div>
+
+    <blockquote class="phase-quote" style="border-color:#a78bfa">
+      "A Feiticeira não pede licença. Ela vê o que os outros fingem não ver, sente o que não é dito, e recusa a mentira da superfície. Seu desconforto é sabedoria."
+      <cite>— Ensinamentos da Lua Minguante</cite>
+    </blockquote>
+
+    <div class="content-block">
+      <div class="block-header">
+        <div class="block-header-icon">🌡️</div>
+        <h3>O Corpo na Fase Lútea</h3>
+        <span class="block-toggle">▾</span>
+      </div>
+      <div class="block-body">
+        <p>Após a ovulação, o folículo que liberou o óvulo se transforma no corpo lúteo, que produz progesterona. Se não houver fertilização, o corpo lúteo regride e os hormônios caem — processo que prepara o caminho para a próxima menstruação.</p>
+        <div class="body-signals">
+          <div class="body-signal">
+            <span class="sig-dot"></span>
+            <span class="sig-text">Progesterona sobe e depois cai gradualmente</span>
+          </div>
+          <div class="body-signal">
+            <span class="sig-dot"></span>
+            <span class="sig-text">Retenção de líquidos — inchaço no abdômen, seios, face</span>
+          </div>
+          <div class="body-signal">
+            <span class="sig-dot"></span>
+            <span class="sig-text">Apetite aumentado, especialmente por carboidratos e doces</span>
+          </div>
+          <div class="body-signal">
+            <span class="sig-dot"></span>
+            <span class="sig-text">SPM — síndrome pré-menstrual nos dias finais</span>
+          </div>
+          <div class="body-signal">
+            <span class="sig-dot"></span>
+            <span class="sig-text">Temperatura basal elevada (1° acima do basal)</span>
+          </div>
+          <div class="body-signal">
+            <span class="sig-dot"></span>
+            <span class="sig-text">Sensibilidade emocional acentuada</span>
+          </div>
+          <div class="body-signal">
+            <span class="sig-dot"></span>
+            <span class="sig-text">Energia mais focada e concentrada (diferente da folicular expansiva)</span>
+          </div>
+          <div class="body-signal">
+            <span class="sig-dot"></span>
+            <span class="sig-text">Sono pode ser mais pesado ou perturbado</span>
+          </div>
+        </div>
+        <p class="mt-2">O SPM não é fraqueza — é o barômetro emocional funcionando em alta sensibilidade. Tudo que ficou reprimido durante o ciclo vem à superfície pedindo atenção. Escutar ao invés de suprimir é o caminho.</p>
+      </div>
+    </div>
+
+    <div class="content-block">
+      <div class="block-header">
+        <div class="block-header-icon">⚡</div>
+        <h3>O Mundo Emocional e Criativo</h3>
+        <span class="block-toggle">▾</span>
+      </div>
+      <div class="block-body">
+        <p>A fase lútea é o outono interno — a estação da colheita, da seleção e da preparação para o próximo inverno. A energia não some; ela se concentra. A criatividade se torna mais focada, intensa e profunda.</p>
+        <ul>
+          <li><strong>Criatividade explosiva:</strong> a queda hormonal cria um estado neurológico único, ideal para escrita, arte, composição e pensamento não-linear</li>
+          <li><strong>Intuição aguçada:</strong> você sente o que não é dito, percebe o subtexto das conversas, lê as energias com precisão cortante</li>
+          <li><strong>Intolerância com o mundano:</strong> o trivial, o superficial e o falso se tornam insuportáveis — sua tolerância ao fingimento cai a zero</li>
+          <li><strong>Foco intenso:</strong> quando encontra algo que vale, a fase lútea permite uma concentração profunda e prolífica</li>
+          <li><strong>Necessidade de recolhimento:</strong> o extrovertismo ovulatório dá lugar ao desejo de silêncio e espaço próprio</li>
+          <li><strong>Limites mais claros:</strong> o que era tolerado parece impossível de aceitar — os limites emergem com urgência</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="content-block">
+      <div class="block-header">
+        <div class="block-header-icon">🌙</div>
+        <h3>Os Arquétipos da Fase Lútea</h3>
+        <span class="block-toggle">▾</span>
+      </div>
+      <div class="block-body">
+        <p>Os arquétipos lúteos são as figuras que habitam as fronteiras — entre mundos, entre verdade e ilusão, entre o que deve continuar e o que deve morrer para que algo novo nasça.</p>
+        <div class="archetype-grid">
+          <div class="archetype-card">
+            <span class="arch-symbol">🔮</span>
+            <span class="arch-name">A Feiticeira</span>
+            <span class="arch-desc">Mestra da transformação e da alquimia interior — transforma feridas em poder e sombra em ouro</span>
+          </div>
+          <div class="archetype-card">
+            <span class="arch-symbol">🌹</span>
+            <span class="arch-name">A Sedutora</span>
+            <span class="arch-desc">Não é sedução de superfície — é o poder magnético de quem conhece seu próprio desejo e não o esconde</span>
+          </div>
+          <div class="archetype-card">
+            <span class="arch-symbol">🐦‍⬛</span>
+            <span class="arch-name">Morrigan</span>
+            <span class="arch-desc">Deusa céltica da guerra, destino e morte. Anuncia as mudanças inevitáveis e acompanha nas transições mais profundas</span>
+          </div>
+          <div class="archetype-card">
+            <span class="arch-symbol">🌙</span>
+            <span class="arch-name">Lilith</span>
+            <span class="arch-desc">A primeira mulher segundo a tradição cabalística — recusou a submissão e foi exilada. Hoje é símbolo de autonomia selvagem</span>
+          </div>
+          <div class="archetype-card">
+            <span class="arch-symbol">🌺</span>
+            <span class="arch-name">Perséfone</span>
+            <span class="arch-desc">Rainha do submundo — conheceu a escuridão, integrou suas sombras e se tornou mais poderosa por isso</span>
+          </div>
+          <div class="archetype-card">
+            <span class="arch-symbol">🕸️</span>
+            <span class="arch-name">A Aranha</span>
+            <span class="arch-desc">Tece o destino, conecta passado e futuro, cria estrutura invisível que sustenta toda a rede de vida</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-block">
+      <div class="block-header">
+        <div class="block-header-icon">🧹</div>
+        <h3>Práticas para a Fase Lútea</h3>
+        <span class="block-toggle">▾</span>
+      </div>
+      <div class="block-body">
+        <p>As práticas lúteas honram a necessidade de limpeza, concentração criativa e integração da sombra. Esta fase pede coragem para olhar para dentro.</p>
+        <div class="practice-list">
+          <div class="practice-item">
+            <span class="practice-icon">🧹</span>
+            <div class="practice-text">
+              <span class="practice-name">Faxina Energética</span>
+              <span class="practice-desc">Reorganize sua casa, limpe armários, doe o que não usa mais. Esta limpeza física espelha a limpeza interna. Use incenso de sálvia, palo santo ou mirra para purificar o espaço enquanto limpa.</span>
+            </div>
+          </div>
+          <div class="practice-item">
+            <span class="practice-icon">💃</span>
+            <div class="practice-text">
+              <span class="practice-name">Dança de Liberação</span>
+              <span class="practice-desc">Dance sozinha para liberar a tensão acumulada. Mova quadris, solte os braços, deixe o corpo expressar a intensidade emocional. A raiva, frustração e tristeza têm energia — dance-as para fora do corpo.</span>
+            </div>
+          </div>
+          <div class="practice-item">
+            <span class="practice-icon">✍️</span>
+            <div class="practice-text">
+              <span class="practice-name">Escrita Terapêutica de Sombra</span>
+              <span class="practice-desc">Escreva sem censura o que está sentindo. Inclua raiva, mágoa, ressentimento. Não é para publicar — é para ver com clareza. Depois, queime ou rasgue o papel como ritual de liberação.</span>
+            </div>
+          </div>
+          <div class="practice-item">
+            <span class="practice-icon">🔮</span>
+            <div class="practice-text">
+              <span class="practice-name">Adivinhação e Oráculo</span>
+              <span class="practice-desc">Esta é a fase mais propícia para tarot, runas, oráculo ou qualquer prática divinatória. Sua intuição está no ápice. Consulte seu oráculo preferido com perguntas sobre o que precisa ser visto.</span>
+            </div>
+          </div>
+          <div class="practice-item">
+            <span class="practice-icon">🎨</span>
+            <div class="practice-text">
+              <span class="practice-name">Arte da Sombra — Criatividade Profunda</span>
+              <span class="practice-desc">Escreva o capítulo difícil do livro, compose a música sombria, pinte o quadro que expressa dor. A arte lútea é das mais poderosas — ela transforma o que dói em beleza e os outros se reconhecem nela.</span>
+            </div>
+          </div>
+          <div class="practice-item">
+            <span class="practice-icon">🪞</span>
+            <div class="practice-text">
+              <span class="practice-name">Trabalho com Crenças Limitantes</span>
+              <span class="practice-desc">Esta fase revela com clareza as crenças que sabotam. Observe os pensamentos recorrentes negativos. Use EFT, ThetaHealing, afirmações ou terapia para reprogramar os padrões que emergem com mais força agora.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-block">
+      <div class="block-header">
+        <div class="block-header-icon">💜</div>
+        <h3>Elementos, Cores e Símbolos</h3>
+        <span class="block-toggle">▾</span>
+      </div>
+      <div class="block-body">
+        <div class="elements-row">
+          <div class="element-pill"><span class="el-icon">🌘</span> Lua Minguante</div>
+          <div class="element-pill"><span class="el-icon">💨</span> Ar</div>
+          <div class="element-pill"><span class="el-icon">✨</span> Espírito</div>
+          <div class="element-pill"><span class="el-icon">🟣</span> Roxo</div>
+          <div class="element-pill"><span class="el-icon">🔵</span> Azul meia-noite</div>
+          <div class="element-pill"><span class="el-icon">🍂</span> Outono</div>
+          <div class="element-pill"><span class="el-icon">💎</span> Ametista · Labradorita</div>
+          <div class="element-pill"><span class="el-icon">🌿</span> Lavanda · Absinto</div>
+          <div class="element-pill"><span class="el-icon">🕯️</span> Vela roxa</div>
+        </div>
+        <p class="mt-2">A labradorita é a pedra da fase lútea por excelência — ela revela o que está oculto, conecta com a magia interior e protege quem caminha entre mundos. A ametista amplifica a intuição e apoia o trabalho de transformação interior.</p>
+        <div class="shadow-box mt-2">
+          <h5>⚠ Desafios da Sombra</h5>
+          <div class="shadow-item">
+            <span class="shadow-arrow">→</span>
+            SPM não tratado — sofrimento desnecessário que pode ser aliviado
+          </div>
+          <div class="shadow-item">
+            <span class="shadow-arrow">→</span>
+            Explosões de raiva não integradas — destruição ao invés de transformação
+          </div>
+          <div class="shadow-item">
+            <span class="shadow-arrow">→</span>
+            Isolamento excessivo que se torna alienação
+          </div>
+          <div class="shadow-item">
+            <span class="shadow-arrow">→</span>
+            Usar a intuição para controle e manipulação
+          </div>
+          <div class="shadow-item">
+            <span class="shadow-arrow">→</span>
+            Perfeccionismo destrutivo — exigir o impossível de si e dos outros
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-block">
+      <div class="block-header">
+        <div class="block-header-icon">🔭</div>
+        <h3>Autoconhecimento — O que esta fase revela</h3>
+        <span class="block-toggle">▾</span>
+      </div>
+      <div class="block-body">
+        <p>A fase lútea é o maior professor de autoconhecimento do ciclo. O véu entre o eu consciente e os padrões inconscientes se torna transparente. O que incomoda contém o código da transformação.</p>
+        <ul>
+          <li><strong>Crenças limitantes à superfície:</strong> os pensamentos automáticos negativos que surgem agora são seus pontos cegos pedindo luz</li>
+          <li><strong>Reprogramação de padrões:</strong> esta é a fase mais eficaz para iniciar trabalho terapêutico, pois a resistência do ego está reduzida</li>
+          <li><strong>O que irrita revela o que valoriza:</strong> a intolerância lútea aponta para seus valores mais profundos — o que você não suporta é o que mais importa para você</li>
+          <li><strong>A Feiticeira como mentora:</strong> pergunte à sua Feiticeira interna: o que precisa ser transformado? O que você ainda não quer ver?</li>
+          <li><strong>Força na vulnerabilidade:</strong> a intensidade emocional desta fase é dado, não defeito — ela é matéria-prima da sua maior criatividade e sabedoria</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="reflection-box">
+      <h4>🔮 Perguntas para Reflexão Profunda</h4>
+      <ul class="reflection-questions">
+        <li>O que me irrita repetidamente neste período? O que essa irritação está tentando me mostrar sobre meus valores?</li>
+        <li>Qual crença limitante sobe à superfície com mais força agora? De onde ela veio?</li>
+        <li>Se minha raiva tivesse uma mensagem para mim, o que ela diria?</li>
+        <li>O que a Feiticeira dentro de mim quer transformar que eu tenho resistido em tocar?</li>
+        <li>Que padrão se repete a cada ciclo lúteo, pedindo para ser finalmente reconhecido e liberado?</li>
+      </ul>
+    </div>
+
+    <div class="phase-nav-bottom">
+      <button class="nav-btn" data-go="3">← Ovulatória</button>
+      <button class="nav-btn primary-nav" data-go="1">Recomeçar Ciclo 🌑</button>
+    </div>
+  </section>
+
+</main>
+
+<!-- ════════════════════════════════════════
+     FOOTER
+     ════════════════════════════════════════ -->
+<footer>
+  <p><strong>Mapeamento das 4 Fases Internas</strong></p>
+  <p>Este material é para fins de autoconhecimento e educação sobre o ciclo feminino.<br>
+  Não substitui orientação médica ou terapêutica profissional.</p>
+  <p style="margin-top:.75rem;font-size:.75rem">
+    Funciona offline · PWA instalável · Seu progresso é salvo localmente
+  </p>
+</footer>
+
+<!-- ════════════════════════════════════════
+     PWA INSTALL BANNER
+     ════════════════════════════════════════ -->
+<div id="install-banner" role="dialog" aria-label="Instalar aplicativo">
+  <div class="install-text">
+    <strong>Instalar no dispositivo</strong>
+    <span>Acesse offline a qualquer momento</span>
+  </div>
+  <button class="install-btn" id="install-btn">Instalar</button>
+  <button class="install-dismiss" id="install-dismiss" aria-label="Fechar">✕</button>
+</div>
+
+<!-- Toast Notification -->
+<div id="toast" role="alert" aria-live="assertive"></div>
+
+<!-- ════════════════════════════════════════
+     SCRIPTS
+     ════════════════════════════════════════ -->
+<script src="./app.js"></script>
+</body>
+</html>
