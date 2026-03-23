@@ -1,7 +1,7 @@
 {
   "name": "Mapeamento das 4 Fases Internas",
   "short_name": "4 Fases",
-  "description": "Um guia interativo para compreender as quatro fases do ciclo feminino e seus arquétipos sagrados.",
+  "description": "O Primeiro Guia Científico de Reconexão Cíclica Feminina",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#0B0F19",
@@ -10,16 +10,22 @@
   "lang": "pt-BR",
   "icons": [
     {
-      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' fill='%230B0F19'/%3E%3Ccircle cx='256' cy='220' r='120' fill='none' stroke='%234F46E5' stroke-width='8'/%3E%3Ccircle cx='256' cy='220' r='60' fill='%234F46E5' opacity='0.5'/%3E%3Cpath d='M 156 380 Q 256 340 356 380' stroke='%238B5CF6' stroke-width='6' fill='none'/%3E%3C/svg%3E",
+      "src": "icon-192.png",
       "sizes": "192x192",
-      "type": "image/svg+xml",
+      "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' fill='%230B0F19'/%3E%3Ccircle cx='256' cy='220' r='120' fill='none' stroke='%234F46E5' stroke-width='8'/%3E%3Ccircle cx='256' cy='220' r='60' fill='%234F46E5' opacity='0.5'/%3E%3Cpath d='M 156 380 Q 256 340 356 380' stroke='%238B5CF6' stroke-width='6' fill='none'/%3E%3C/svg%3E",
+      "src": "icon-512.png",
       "sizes": "512x512",
-      "type": "image/svg+xml",
+      "type": "image/png",
       "purpose": "any maskable"
+    },
+    {
+      "src": "icon-180.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
     }
   ],
   "categories": ["education", "lifestyle", "health"],
