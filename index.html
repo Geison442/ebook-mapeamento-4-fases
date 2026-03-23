@@ -12,8 +12,46 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="4 Fases">
   <meta name="mobile-web-app-capable" content="yes">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="./styles.css">
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+  <style>
+    /* CSS crítico inline — garante renderização mesmo se styles.css atrasar ou falhar */
+    :root {
+      --bg: #0B0F19; --surface: #111827; --surface-2: #1a2235; --surface-3: #0f1520;
+      --primary: #4F46E5; --secondary: #8B5CF6;
+      --text: #F3F4F6; --text-muted: #9CA3AF; --text-dim: #6B7280;
+      --gold: #C5A059; --gold-light: #d4b070; --gold-dark: #a8874a;
+      --border: #1F2937; --border-light: #2d3748;
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-body: 'Cormorant Garamond', Georgia, serif;
+      --font-ui: 'Lato', system-ui, sans-serif;
+      --fs: 18px;
+      --maiden: #10B981; --mother: #F59E0B; --witch: #EF4444; --crone: #6366F1;
+      --radius: 10px; --shadow: 0 4px 24px rgba(0,0,0,0.5);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: var(--fs); }
+    body {
+      background-color: var(--bg); color: var(--text);
+      font-family: var(--font-body); line-height: 1.9;
+      overflow-x: hidden; min-height: 100vh;
+    }
+    #loading-screen {
+      position: fixed; inset: 0; background: var(--bg);
+      z-index: 9999; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 1.5rem;
+      transition: opacity 0.7s ease;
+    }
+    #loading-screen.fade-out { opacity: 0; pointer-events: none; }
+    .loading-moon { font-size: 3rem; }
+    .loading-text {
+      font-family: var(--font-ui); font-size: 0.7rem; letter-spacing: 0.3em;
+      text-transform: uppercase; color: var(--gold); opacity: 0.75;
+    }
+    .loading-bar { width: 200px; height: 2px; background: var(--border); border-radius: 1px; overflow: hidden; }
+    .loading-fill { height: 100%; background: linear-gradient(90deg, var(--primary), var(--gold)); animation: loadFill 1.8s ease forwards; }
+    @keyframes loadFill { from { width: 0; } to { width: 100%; } }
+  </style>
 </head>
 <body>
 

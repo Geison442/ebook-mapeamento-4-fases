@@ -2,8 +2,6 @@
    MAPEAMENTO DAS 4 FASES INTERNAS — Premium Night Mode CSS
    ============================================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=Lato:wght@300;400;700&display=swap');
-
 /* ── CSS Variables ── */
 :root {
   --bg: #0B0F19;
