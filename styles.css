@@ -949,3 +949,336 @@ hr.fancy { border: none; height: 1px; background: linear-gradient(90deg, transpa
   .chapter{page-break-before:always;opacity:1;transform:none;}
   #intro{opacity:1;transform:none;}
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   ALMA DE LIVRO PREMIUM — Refatoração visual literária
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Fundo escuro com gradiente que simula abertura de livro ── */
+#book-wrap {
+  background: linear-gradient(90deg,
+    #030508 0%, #070b12 5%,
+    #0B0F19 12%, #0B0F19 88%,
+    #070b12 95%, #030508 100%
+  );
+  padding: 0 0 7rem;
+}
+
+/* ── Container: simulação de páginas com sombra lateral de livro ── */
+.book-container {
+  max-width: 740px;
+  margin: 0 auto;
+  background: var(--surface);
+  box-shadow:
+    -14px 0 60px rgba(0,0,0,0.8),
+     14px 0 60px rgba(0,0,0,0.8),
+    -4px  0 20px rgba(0,0,0,0.6),
+     4px  0 20px rgba(0,0,0,0.6),
+    inset 0 0 0 1px rgba(197,160,89,0.08);
+  border-left:  1px solid rgba(197,160,89,0.13);
+  border-right: 1px solid rgba(197,160,89,0.13);
+  position: relative;
+}
+
+/* Lombada do livro (efeito de encadernação) */
+.book-container::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 6px;
+  background: linear-gradient(180deg,
+    rgba(197,160,89,0.18) 0%,
+    rgba(197,160,89,0.07) 25%,
+    rgba(197,160,89,0.15) 50%,
+    rgba(197,160,89,0.07) 75%,
+    rgba(197,160,89,0.18) 100%
+  );
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* ── Capítulos: margens generosas de livro ── */
+.chapter, #intro {
+  padding: 5.5rem 5rem 4.5rem;
+  position: relative;
+  border-bottom: none;
+}
+
+/* Divisor ornamental entre capítulos */
+.chapter + .chapter,
+#intro + .chapter {
+  border-top: none;
+}
+
+.chapter + .chapter::before,
+#intro + .chapter::before {
+  content: '✦  ✧  ☽  ✧  ✦';
+  display: block;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--gold);
+  opacity: 0.3;
+  letter-spacing: 0.9em;
+  padding-top: 3rem;
+  margin-bottom: -2.5rem;
+}
+
+/* Linha dourada abaixo do ornamento */
+.chapter + .chapter::after,
+#intro + .chapter::after {
+  content: '';
+  display: block;
+  height: 1px;
+  background: linear-gradient(90deg,
+    transparent 0%, rgba(197,160,89,0.35) 20%,
+    rgba(197,160,89,0.2) 50%,
+    rgba(197,160,89,0.35) 80%, transparent 100%
+  );
+  margin: 0 5rem 1.5rem;
+}
+
+/* ── Animação de virada de página ── */
+.chapter, #intro {
+  opacity: 0;
+  transform: translateX(-12px) perspective(800px) rotateY(-4deg);
+  transform-origin: left center;
+  transition: opacity 0.75s ease, transform 0.75s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.chapter.visible, #intro.visible {
+  opacity: 1;
+  transform: translateX(0) perspective(800px) rotateY(0deg);
+}
+
+/* ── Numeração romana — estilo tipográfico literário ── */
+.chapter-number {
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  letter-spacing: 0.45em;
+  font-style: italic;
+  font-weight: 400;
+  color: var(--gold);
+  opacity: 0.8;
+  margin-bottom: 1.1rem;
+  display: block;
+}
+
+/* Linha decorativa abaixo do número do capítulo */
+.chapter-header {
+  margin-bottom: 3rem;
+  padding-bottom: 2.2rem;
+  border-bottom: none;
+  position: relative;
+}
+
+.chapter-header::after {
+  content: '';
+  display: block;
+  height: 1px;
+  background: linear-gradient(90deg,
+    var(--gold) 0%, rgba(197,160,89,0.4) 40%,
+    rgba(197,160,89,0.15) 70%, transparent 100%
+  );
+  margin-top: 2.2rem;
+}
+
+/* ── Título do capítulo ── */
+.chapter-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.1rem, 4.5vw, 3.1rem);
+  font-weight: 600;
+  line-height: 1.1;
+  color: var(--text);
+  margin-bottom: 0.7rem;
+  letter-spacing: 0.01em;
+}
+
+/* ── Drop cap dourado proeminente ── */
+.drop-cap::first-letter {
+  font-family: var(--font-display);
+  font-size: 5.2rem;
+  font-weight: 700;
+  float: left;
+  line-height: 0.78;
+  color: var(--gold);
+  margin-right: 0.12rem;
+  margin-top: 0.08rem;
+  text-shadow:
+    0 0 40px rgba(197,160,89,0.4),
+    0 2px 8px rgba(0,0,0,0.5);
+}
+
+/* ── Blockquote literário com aspas gigantes ── */
+blockquote {
+  position: relative;
+  border-left: 3px solid var(--gold);
+  border-left-width: 0; /* removido — a borda vem do ::after */
+  padding: 2.2rem 2.5rem 2rem 4rem;
+  background: rgba(197,160,89,0.035);
+  margin: 3rem 0;
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-style: italic;
+  color: rgba(243,244,246,0.8);
+  line-height: 1.95;
+  border-radius: 0 6px 6px 0;
+}
+
+/* Aspa decorativa gigante */
+blockquote::before {
+  content: '\201C';
+  position: absolute;
+  left: 0.5rem;
+  top: -1.2rem;
+  font-family: var(--font-display);
+  font-size: 7rem;
+  color: var(--gold);
+  opacity: 0.25;
+  line-height: 1;
+  font-style: normal;
+  pointer-events: none;
+}
+
+/* Borda lateral dourada com gradiente */
+blockquote::after {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: linear-gradient(180deg,
+    var(--gold) 0%,
+    rgba(197,160,89,0.5) 50%,
+    rgba(197,160,89,0.2) 100%
+  );
+  border-radius: 2px;
+}
+
+/* ── Ornamentos entre seções ── */
+.ornament {
+  text-align: center;
+  font-size: 0.82rem;
+  color: var(--gold);
+  margin: 4rem 0;
+  letter-spacing: 0.7em;
+  opacity: 0.45;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+}
+
+.ornament::before,
+.ornament::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(197,160,89,0.35));
+  margin: 0 1.5rem;
+}
+
+.ornament::after {
+  background: linear-gradient(270deg, transparent, rgba(197,160,89,0.35));
+}
+
+/* ── Título de seção com acento dourado ── */
+.section-title {
+  font-family: var(--font-display);
+  font-size: 1.72rem;
+  font-weight: 600;
+  color: var(--text);
+  margin: 3.5rem 0 1.5rem;
+  line-height: 1.18;
+  position: relative;
+  padding-bottom: 0.9rem;
+}
+
+.section-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0;
+  width: 36px; height: 1px;
+  background: var(--gold);
+  opacity: 0.5;
+}
+
+/* ── Parágrafos — ritmo literário ── */
+p {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 2.05;
+  margin-bottom: 1.3rem;
+  letter-spacing: 0.013em;
+}
+
+/* ── hr.fancy ornamental ── */
+hr.fancy {
+  border: none;
+  margin: 4.5rem 0;
+  position: relative;
+  text-align: center;
+  height: 0;
+}
+
+hr.fancy::before {
+  content: '◆';
+  display: inline-block;
+  color: var(--gold);
+  opacity: 0.3;
+  font-size: 0.65rem;
+  letter-spacing: 2em;
+}
+
+hr.fancy::after {
+  content: '';
+  display: block;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(197,160,89,0.2), transparent);
+  margin-top: 0.9rem;
+}
+
+/* ── Cabeçalho fixo: título do capítulo em itálico dourado ── */
+.header-progress-label {
+  font-family: var(--font-display) !important;
+  font-style: italic !important;
+  font-size: 0.85rem !important;
+  color: var(--gold) !important;
+  opacity: 0.88;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── Intro label ── */
+.intro-label {
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  letter-spacing: 0.45em;
+  font-style: italic;
+  color: var(--gold);
+  opacity: 0.8;
+  display: block;
+  margin-bottom: 1.1rem;
+}
+
+/* ── Responsivo ── */
+@media (max-width: 900px) {
+  .book-container::before { display: none; }
+}
+
+@media (max-width: 700px) {
+  .chapter, #intro { padding: 3.5rem 2.2rem 3rem; }
+  .chapter + .chapter::after,
+  #intro + .chapter::after { margin: 0 2.2rem 1.5rem; }
+  blockquote { padding: 1.8rem 1.5rem 1.6rem 3rem; font-size: 1.15rem; }
+  blockquote::before { font-size: 5rem; }
+  .drop-cap::first-letter { font-size: 3.8rem; }
+  .chapter-title { font-size: clamp(1.7rem, 6vw, 2.5rem); }
+}
+
+@media (max-width: 480px) {
+  .chapter, #intro { padding: 2.5rem 1.4rem 2rem; }
+  .chapter + .chapter::after,
+  #intro + .chapter::after { display: none; }
+}
