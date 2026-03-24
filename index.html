@@ -2490,6 +2490,17 @@ if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('./service-worker.js').catch(() => {});
   });
+  // Notificação discreta de nova versão
+  navigator.serviceWorker.addEventListener('message', (event) => {
+    if (event.data && event.data.type === 'NEW_VERSION') {
+      const el = document.getElementById('save-indicator');
+      if (el) {
+        el.textContent = '✨ Nova versão disponível — feche e reabra para atualizar';
+        el.classList.add('show');
+        setTimeout(() => el.classList.remove('show'), 8000);
+      }
+    }
+  });
 }
 
 // ══════════════════════════════════════════════════════════
