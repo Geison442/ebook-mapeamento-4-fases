@@ -1491,3 +1491,423 @@ body.grifo-mode .para-wrap p { outline: 1px dashed rgba(197,160,89,0.18); border
   .feature-tip-box { padding: 2rem 1.5rem; }
   .chapter-nav-btn { font-size: 0.62rem; padding: 0.6rem 1rem; }
 }
+
+/* =================================================================
+   NOVAS FUNCIONALIDADES v2.0 — Alma de livro premium noturno
+   Relógio, Calendário, Questionário Mensal, Insights, Recomendações,
+   Linha do Tempo, Modo Cerimônia, Biblioteca Pessoal
+   ================================================================= */
+
+/* ── RELÓGIO E SAUDAÇÃO NA CAPA ── */
+.cover-clock-wrap {
+  display: flex; flex-direction: column; align-items: center;
+  gap: 0.35rem; margin-bottom: 1.8rem;
+}
+.cover-time {
+  font-family: var(--font-display); font-size: 2.4rem; font-weight: 300;
+  color: var(--gold); letter-spacing: 0.08em;
+  text-shadow: 0 0 20px rgba(197,160,89,0.4);
+}
+.cover-greeting {
+  font-family: var(--font-display); font-size: 1.15rem; font-style: italic;
+  color: var(--text-muted); letter-spacing: 0.04em;
+}
+.cover-phase-suggest {
+  font-family: var(--font-ui); font-size: 0.65rem; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--gold); opacity: 0.8;
+  background: rgba(197,160,89,0.08); border: 1px solid rgba(197,160,89,0.22);
+  padding: 0.28rem 0.9rem; border-radius: 20px; margin-top: 0.2rem;
+}
+
+/* ── BANNER DE INSIGHT ── */
+.insight-banner {
+  display: none; background: linear-gradient(135deg, rgba(197,160,89,0.1), rgba(79,70,229,0.06));
+  border: 1px solid rgba(197,160,89,0.32); border-radius: 12px;
+  padding: 1.2rem 1.5rem; margin: 1.5rem 0; position: relative;
+  animation: fadeIn 0.6s ease;
+}
+.insight-banner.visible { display: block; }
+.insight-banner-label {
+  font-family: var(--font-ui); font-size: 0.6rem; letter-spacing: 0.22em;
+  text-transform: uppercase; color: var(--gold); opacity: 0.75; margin-bottom: 0.5rem; display: block;
+}
+.insight-banner-text {
+  font-family: var(--font-display); font-size: 1.05rem; font-style: italic;
+  color: var(--text-muted); line-height: 1.75;
+}
+.insight-banner-close {
+  position: absolute; top: 0.7rem; right: 0.9rem;
+  background: none; border: none; color: var(--text-dim); cursor: pointer;
+  font-size: 0.9rem; transition: color 0.2s;
+}
+.insight-banner-close:hover { color: var(--gold); }
+
+/* ── CARD DE RECOMENDAÇÃO ── */
+.recommendation-card {
+  display: none; background: rgba(11,15,25,0.97);
+  border: 1px solid var(--gold); border-radius: 14px;
+  padding: 1.6rem 1.8rem; margin: 1.5rem 0;
+  box-shadow: 0 8px 40px rgba(197,160,89,0.1);
+  animation: fadeIn 0.7s ease;
+}
+.recommendation-card.visible { display: block; }
+.recommendation-phase-badge {
+  font-family: var(--font-ui); font-size: 0.6rem; letter-spacing: 0.18em;
+  text-transform: uppercase; padding: 0.22rem 0.8rem; border-radius: 20px;
+  border: 1px solid currentColor; display: inline-block; margin-bottom: 0.8rem;
+}
+.rec-maiden { color: var(--maiden); }
+.rec-mother { color: var(--mother); }
+.rec-witch  { color: var(--witch); }
+.rec-crone  { color: var(--crone); }
+.recommendation-card-title {
+  font-family: var(--font-display); font-size: 1.3rem; font-weight: 600;
+  color: var(--gold); margin-bottom: 0.6rem;
+}
+.recommendation-card-text {
+  font-family: var(--font-display); font-size: 1.05rem; font-style: italic;
+  color: var(--text-muted); line-height: 1.82;
+}
+
+/* ── BOTÃO CERIMÔNIA NA CAPA ── */
+.btn-ceremony {
+  display: inline-block; padding: 0.8rem 2.2rem;
+  background: transparent; border: 1px solid rgba(197,160,89,0.45);
+  color: var(--text-muted); font-family: var(--font-ui);
+  font-size: 0.73rem; font-weight: 600; letter-spacing: 0.18em;
+  text-transform: uppercase; cursor: pointer; border-radius: 50px;
+  transition: all 0.4s ease; margin-top: 1rem;
+}
+.btn-ceremony:hover {
+  border-color: var(--gold); color: var(--gold);
+  box-shadow: 0 0 20px rgba(197,160,89,0.2);
+}
+
+/* ── OVERLAY MODO CERIMÔNIA ── */
+#ceremony-overlay {
+  display: none; position: fixed; inset: 0; z-index: 9200;
+  background: #030508; overflow-y: auto;
+}
+#ceremony-overlay.open { display: block; animation: fadeIn 0.8s ease; }
+.ceremony-inner {
+  max-width: 640px; margin: 0 auto; padding: 4rem 2.5rem 6rem;
+  text-align: center; min-height: 100vh;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+}
+.ceremony-close {
+  position: fixed; top: 1.2rem; right: 1.4rem;
+  background: rgba(255,255,255,0.06); border: 1px solid rgba(197,160,89,0.3);
+  color: var(--gold); border-radius: 50%; width: 40px; height: 40px;
+  font-size: 1.1rem; cursor: pointer; transition: all 0.2s;
+  display: flex; align-items: center; justify-content: center; z-index: 10;
+}
+.ceremony-close:hover { background: rgba(197,160,89,0.15); }
+.ceremony-candle {
+  font-size: 4.5rem; margin-bottom: 2rem; display: block;
+  animation: candleFlicker 2.2s ease-in-out infinite;
+  filter: drop-shadow(0 0 16px rgba(255,180,50,0.8));
+}
+@keyframes candleFlicker {
+  0%,100% { transform: scale(1) rotate(-1deg);   filter: drop-shadow(0 0 12px rgba(255,180,50,0.7)); }
+  25%      { transform: scale(1.05) rotate(1.5deg); filter: drop-shadow(0 0 24px rgba(255,200,80,0.95)); }
+  50%      { transform: scale(0.97) rotate(-0.5deg); filter: drop-shadow(0 0 8px rgba(255,160,30,0.6)); }
+  75%      { transform: scale(1.03) rotate(2deg);  filter: drop-shadow(0 0 18px rgba(255,190,60,0.85)); }
+}
+.ceremony-title {
+  font-family: var(--font-display); font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 600; color: var(--gold); margin-bottom: 0.8rem; letter-spacing: 0.03em;
+}
+.ceremony-subtitle {
+  font-family: var(--font-display); font-size: 1.1rem; font-style: italic;
+  color: var(--text-muted); margin-bottom: 3rem; line-height: 1.7;
+}
+.ceremony-divider {
+  color: var(--gold); opacity: 0.4; letter-spacing: 0.8em;
+  font-size: 0.85rem; margin: 2.5rem 0; display: block;
+}
+.ceremony-step {
+  background: rgba(197,160,89,0.04); border: 1px solid rgba(197,160,89,0.14);
+  border-radius: 12px; padding: 1.8rem; margin-bottom: 1.4rem;
+  text-align: left; transition: border-color 0.3s;
+}
+.ceremony-step:hover { border-color: rgba(197,160,89,0.3); }
+.ceremony-step-num {
+  font-family: var(--font-ui); font-size: 0.58rem; letter-spacing: 0.25em;
+  text-transform: uppercase; color: var(--gold); opacity: 0.6; margin-bottom: 0.5rem; display: block;
+}
+.ceremony-step-title {
+  font-family: var(--font-display); font-size: 1.25rem; font-weight: 600;
+  color: var(--text); margin-bottom: 0.65rem;
+}
+.ceremony-step-text {
+  font-family: var(--font-display); font-style: italic; font-size: 1rem;
+  color: var(--text-muted); line-height: 1.85;
+}
+.ceremony-closing {
+  font-family: var(--font-display); font-size: 1.25rem; font-style: italic;
+  color: var(--gold-light); margin-top: 2.5rem; line-height: 1.8;
+  border-top: 1px solid rgba(197,160,89,0.2); padding-top: 2.5rem; text-align: center;
+}
+
+/* ── TOC — itens novos ── */
+.toc-section-label {
+  font-family: var(--font-ui); font-size: 0.6rem; letter-spacing: 0.15em;
+  text-transform: uppercase; color: var(--gold); opacity: 0.45;
+  padding: 0.6rem 1.2rem 0.2rem; display: block; margin-top: 0.5rem;
+}
+
+/* ── SEÇÃO CALENDÁRIO ── */
+#section-calendar {
+  display: none; padding: 4.5rem 3.5rem;
+  border-top: 1px solid var(--border);
+}
+#section-calendar.visible { display: block; animation: fadeIn 0.5s ease; }
+.calendar-header-row {
+  display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem;
+}
+.calendar-month-title {
+  font-family: var(--font-display); font-size: 1.6rem; font-weight: 600; color: var(--gold);
+}
+.calendar-nav-btn {
+  background: none; border: 1px solid var(--border); color: var(--text-muted);
+  width: 38px; height: 38px; border-radius: 50%; cursor: pointer;
+  font-size: 1rem; transition: all 0.2s; display: flex; align-items: center; justify-content: center;
+}
+.calendar-nav-btn:hover { border-color: var(--gold); color: var(--gold); }
+.calendar-instruction {
+  font-family: var(--font-display); font-style: italic; font-size: 0.93rem;
+  color: var(--text-muted); margin-bottom: 1.8rem; line-height: 1.65;
+  padding: 0.9rem 1.2rem; background: rgba(197,160,89,0.04);
+  border-left: 3px solid rgba(197,160,89,0.3); border-radius: 0 6px 6px 0;
+}
+.calendar-weekdays {
+  display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; margin-bottom: 4px;
+}
+.calendar-weekday {
+  font-family: var(--font-ui); font-size: 0.6rem; text-align: center;
+  color: var(--text-dim); letter-spacing: 0.08em; text-transform: uppercase; padding: 0.3rem 0;
+}
+.calendar-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 4px; }
+.calendar-day {
+  aspect-ratio: 1; border-radius: 8px; background: var(--surface-2);
+  border: 1px solid var(--border); cursor: pointer;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 2px; transition: all 0.2s; position: relative; min-height: 44px;
+}
+.calendar-day:hover { border-color: var(--gold); transform: scale(1.06); z-index: 1; }
+.calendar-day.empty { background: transparent; border-color: transparent; cursor: default; pointer-events: none; }
+.calendar-day-num {
+  font-family: var(--font-ui); font-size: 0.78rem; font-weight: 600; color: var(--text-muted);
+}
+.calendar-day.today .calendar-day-num { color: var(--gold); }
+.calendar-day.today { border-color: rgba(197,160,89,0.6); box-shadow: 0 0 0 1px rgba(197,160,89,0.25); }
+.calendar-day-phase { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+.calendar-day.has-entry { box-shadow: 0 0 0 2px var(--gold), 0 0 8px rgba(197,160,89,0.2); }
+.calendar-day.has-entry .calendar-day-num { color: var(--gold); }
+.calendar-day-emoji { font-size: 0.72rem; line-height: 1; }
+
+/* ── SEÇÃO JORNADA ── */
+#section-journey {
+  display: none; padding: 4.5rem 3.5rem; border-top: 1px solid var(--border);
+}
+#section-journey.visible { display: block; animation: fadeIn 0.5s ease; }
+.journey-stat-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 1rem; margin: 2rem 0;
+}
+.journey-stat-card {
+  background: var(--surface-2); border: 1px solid var(--border);
+  border-radius: 10px; padding: 1.2rem; text-align: center; transition: border-color 0.2s;
+}
+.journey-stat-card:hover { border-color: var(--gold); }
+.journey-stat-num {
+  font-family: var(--font-display); font-size: 2.4rem; font-weight: 300; color: var(--gold);
+}
+.journey-stat-label {
+  font-family: var(--font-ui); font-size: 0.62rem; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--text-dim); margin-top: 0.3rem;
+}
+.journey-milestones { margin: 2rem 0; }
+.journey-milestone {
+  display: flex; align-items: center; gap: 1rem; padding: 0.85rem 1rem;
+  border-radius: 8px; margin-bottom: 0.6rem;
+  background: var(--surface-2); border: 1px solid var(--border); transition: all 0.2s;
+}
+.journey-milestone.achieved { border-color: rgba(197,160,89,0.4); background: rgba(197,160,89,0.06); }
+.journey-milestone-icon { font-size: 1.4rem; }
+.journey-milestone-icon.locked { filter: grayscale(1) opacity(0.3); }
+.journey-milestone-text { font-family: var(--font-display); font-size: 0.98rem; color: var(--text-muted); flex: 1; }
+.journey-milestone.achieved .journey-milestone-text { color: var(--gold-light); }
+.journey-milestone-date { font-family: var(--font-ui); font-size: 0.62rem; color: var(--text-dim); }
+.energy-chart-wrap { margin: 2.5rem 0; }
+.energy-chart-title { font-family: var(--font-display); font-size: 1.2rem; color: var(--gold); margin-bottom: 1rem; }
+.energy-chart {
+  display: flex; align-items: flex-end; gap: 3px;
+  height: 90px; background: rgba(0,0,0,0.2); border-radius: 8px;
+  padding: 8px 8px 0; overflow-x: auto; border: 1px solid var(--border);
+}
+.energy-bar {
+  min-width: 14px; flex: 1; border-radius: 3px 3px 0 0;
+  background: linear-gradient(to top, var(--primary), var(--gold));
+  opacity: 0.72; transition: opacity 0.2s; cursor: pointer;
+}
+.energy-bar:hover { opacity: 1; }
+.energy-bar-empty { min-width: 14px; flex: 1; border-radius: 3px 3px 0 0; background: var(--border); opacity: 0.25; }
+.journey-phrase {
+  font-family: var(--font-display); font-size: 1.2rem; font-style: italic;
+  color: var(--gold-light); text-align: center; margin-top: 2rem;
+  padding: 1.5rem; border: 1px solid rgba(197,160,89,0.2);
+  border-radius: 8px; background: rgba(197,160,89,0.04); line-height: 1.7;
+}
+
+/* ── SEÇÃO BIBLIOTECA ── */
+#section-library {
+  display: none; padding: 4.5rem 3.5rem; border-top: 1px solid var(--border);
+}
+#section-library.visible { display: block; animation: fadeIn 0.5s ease; }
+.library-tab-row { display: flex; gap: 0.5rem; margin-bottom: 1.8rem; flex-wrap: wrap; }
+.library-tab {
+  padding: 0.5rem 1.3rem; border-radius: 20px; border: 1px solid var(--border);
+  background: none; color: var(--text-muted); font-family: var(--font-ui);
+  font-size: 0.7rem; letter-spacing: 0.06em; cursor: pointer; transition: all 0.2s;
+}
+.library-tab:hover { border-color: var(--gold); color: var(--gold); }
+.library-tab.active { border-color: var(--gold); color: var(--gold); background: rgba(197,160,89,0.08); }
+.library-content { display: none; }
+.library-content.active { display: block; }
+.library-highlight-item {
+  padding: 0.9rem 1rem; border-radius: 6px; margin-bottom: 0.7rem;
+  font-family: var(--font-display); font-style: italic; font-size: 0.98rem;
+  color: var(--text-muted); border-left: 3px solid; line-height: 1.72;
+  background: rgba(0,0,0,0.15);
+}
+.library-highlight-item.color-gold   { border-color: var(--gold);    background: rgba(197,160,89,0.06); }
+.library-highlight-item.color-purple { border-color: #8B5CF6;         background: rgba(139,92,246,0.06); }
+.library-highlight-item.color-pink   { border-color: #EC4899;         background: rgba(236,72,153,0.06); }
+.library-highlight-item.color-green  { border-color: var(--maiden);   background: rgba(16,185,129,0.06); }
+.library-note-item {
+  padding: 1rem 1.1rem; border-radius: 8px; margin-bottom: 0.8rem;
+  background: var(--surface-2); border: 1px solid var(--border);
+}
+.library-note-date {
+  font-family: var(--font-ui); font-size: 0.6rem; color: var(--text-dim);
+  letter-spacing: 0.08em; margin-bottom: 0.4rem; text-transform: uppercase;
+}
+.library-note-text {
+  font-family: var(--font-display); font-size: 0.96rem; color: var(--text-muted); line-height: 1.72;
+}
+.library-empty {
+  text-align: center; padding: 3rem 1rem;
+  font-family: var(--font-display); font-style: italic; color: var(--text-dim); font-size: 1rem;
+}
+.library-export-btn {
+  display: inline-block; margin-top: 1.5rem; padding: 0.7rem 2rem;
+  background: none; border: 1px solid var(--gold); color: var(--gold);
+  border-radius: 50px; font-family: var(--font-ui); font-size: 0.73rem;
+  font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+  cursor: pointer; transition: all 0.3s; min-height: 44px;
+}
+.library-export-btn:hover { background: rgba(197,160,89,0.12); }
+
+/* ── MODAL CALENDÁRIO (REGISTRO DO DIA REAL) ── */
+.cal-modal-date {
+  font-family: var(--font-ui); font-size: 0.68rem; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--gold); opacity: 0.75; margin-bottom: 1.4rem;
+}
+.cal-practices-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-top: 0.5rem;
+}
+.cal-practice-chk {
+  display: flex; align-items: center; gap: 0.5rem; cursor: pointer;
+  font-family: var(--font-ui); font-size: 0.76rem; color: var(--text-muted);
+}
+.cal-practice-chk input[type="checkbox"] {
+  -webkit-appearance: none; appearance: none; width: 16px; height: 16px;
+  border: 1px solid var(--border-light); border-radius: 3px; cursor: pointer;
+  flex-shrink: 0; position: relative; transition: all 0.2s;
+}
+.cal-practice-chk input[type="checkbox"]:checked { background: var(--gold); border-color: var(--gold); }
+.cal-practice-chk input[type="checkbox"]:checked::after {
+  content: "✓"; position: absolute; top: 50%; left: 50%;
+  transform: translate(-50%,-50%); color: var(--bg); font-size: 0.52rem; font-weight: 900;
+}
+
+/* ── MODAL QUESTIONÁRIO MENSAL ── */
+#monthly-quiz-modal {
+  display: none; position: fixed; inset: 0; z-index: 9100;
+  background: rgba(0,0,0,0.85); backdrop-filter: blur(8px);
+  align-items: flex-start; justify-content: center; padding: 1.5rem;
+  overflow-y: auto;
+}
+#monthly-quiz-modal.open { display: flex; }
+.monthly-quiz-box {
+  background: #111827; border: 1px solid var(--gold);
+  border-radius: 20px; padding: 2.5rem; max-width: 580px; width: 100%;
+  box-shadow: 0 40px 100px rgba(0,0,0,0.9); margin: auto;
+  animation: fadeIn 0.5s ease;
+}
+.monthly-quiz-title {
+  font-family: var(--font-display); font-size: 1.85rem; font-weight: 600;
+  color: var(--gold); text-align: center; margin-bottom: 0.4rem;
+}
+.monthly-quiz-subtitle {
+  font-family: var(--font-display); font-size: 0.98rem; font-style: italic;
+  color: var(--text-muted); text-align: center; margin-bottom: 2rem; line-height: 1.6;
+}
+.monthly-quiz-field { margin-bottom: 1.6rem; }
+.monthly-quiz-field label {
+  display: block; font-family: var(--font-ui); font-size: 0.7rem;
+  font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--text-muted); margin-bottom: 0.5rem;
+}
+.phase-btn-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.5rem; }
+.phase-choice-btn {
+  padding: 0.62rem 0.8rem; border-radius: 8px; border: 1px solid var(--border);
+  background: none; color: var(--text-muted); font-family: var(--font-ui);
+  font-size: 0.7rem; cursor: pointer; transition: all 0.2s; text-align: center; min-height: 44px;
+}
+.phase-choice-btn:hover { border-color: var(--gold); color: var(--gold); }
+.phase-choice-btn.sel-maiden { border-color: var(--maiden); color: var(--maiden); background: rgba(16,185,129,0.08); }
+.phase-choice-btn.sel-mother { border-color: var(--mother); color: var(--mother); background: rgba(245,158,11,0.08); }
+.phase-choice-btn.sel-witch  { border-color: var(--witch);  color: var(--witch);  background: rgba(239,68,68,0.08); }
+.phase-choice-btn.sel-crone  { border-color: var(--crone);  color: var(--crone);  background: rgba(99,102,241,0.08); }
+.monthly-save-btn {
+  width: 100%; padding: 1rem; background: rgba(197,160,89,0.1);
+  border: 1px solid var(--gold); color: var(--gold);
+  border-radius: 50px; font-family: var(--font-ui); font-size: 0.78rem;
+  font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
+  cursor: pointer; margin-top: 0.5rem; transition: all 0.3s; min-height: 48px;
+}
+.monthly-save-btn:hover { background: rgba(197,160,89,0.22); }
+
+/* ── HISTÓRICO DE INSIGHTS ── */
+#section-insights {
+  display: none; padding: 4.5rem 3.5rem; border-top: 1px solid var(--border);
+}
+#section-insights.visible { display: block; animation: fadeIn 0.5s ease; }
+.insight-history-item {
+  background: var(--surface-2); border: 1px solid var(--border);
+  border-radius: 10px; padding: 1.2rem 1.4rem; margin-bottom: 1rem;
+  border-left: 3px solid var(--gold);
+}
+.insight-history-date {
+  font-family: var(--font-ui); font-size: 0.6rem; color: var(--text-dim);
+  letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.4rem;
+}
+.insight-history-text {
+  font-family: var(--font-display); font-style: italic; font-size: 0.98rem;
+  color: var(--text-muted); line-height: 1.75;
+}
+
+/* ── Responsivo global novas seções ── */
+@media (max-width: 700px) {
+  #section-calendar, #section-journey, #section-library,
+  #section-insights { padding: 3rem 1.5rem; }
+  .ceremony-inner { padding: 3rem 1.4rem 5rem; }
+  .cal-practices-grid { grid-template-columns: 1fr; }
+  .journey-stat-grid { grid-template-columns: repeat(2, 1fr); }
+  .monthly-quiz-box { padding: 1.8rem 1.4rem; }
+}
+@media (max-width: 480px) {
+  .cover-time { font-size: 1.8rem; }
+  .phase-btn-grid { grid-template-columns: 1fr 1fr; }
+}

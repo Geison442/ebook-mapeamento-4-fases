@@ -252,6 +252,12 @@
     <li><a href="#cap6-crenças" class="toc-sub" onclick="closeTOC()">As 7 Crenças Tóxicas</a></li>
     <hr class="toc-sep">
     <li><a href="#conclusao" class="toc-chapter" onclick="closeTOC()">Conclusão</a></li>
+    <hr class="toc-sep">
+    <span class="toc-section-label">Ferramentas Pessoais</span>
+    <li><a href="#section-calendar" class="toc-chapter" onclick="closeTOC();showSection('calendar')">☽ Meu Calendário</a></li>
+    <li><a href="#section-journey" class="toc-chapter" onclick="closeTOC();showSection('journey')">✦ Minha Jornada</a></li>
+    <li><a href="#section-library" class="toc-chapter" onclick="closeTOC();showSection('library')">◆ Minha Biblioteca</a></li>
+    <li><a href="#section-insights" class="toc-chapter" onclick="closeTOC();showSection('insights')">☽ Histórico de Insights</a></li>
   </ul>
 </div>
 
@@ -262,12 +268,37 @@
   <div class="stars-container" id="stars-container"></div>
   <div class="cover-content">
     <span class="cover-eyebrow">✦ Guia Científico de Consciência Cíclica ✦</span>
+
+    <!-- Relógio e saudação em tempo real -->
+    <div class="cover-clock-wrap">
+      <div class="cover-time" id="cover-time">00:00</div>
+      <div class="cover-greeting" id="cover-greeting">Bem-vinda</div>
+      <div class="cover-phase-suggest" id="cover-phase-suggest">☽ Calculando sua fase...</div>
+    </div>
+
+    <!-- Banner de insight (semanal/mensal) -->
+    <div class="insight-banner" id="insight-banner">
+      <button class="insight-banner-close" onclick="document.getElementById('insight-banner').classList.remove('visible')" title="Fechar">✕</button>
+      <span class="insight-banner-label" id="insight-banner-label">✦ Insight da Semana</span>
+      <div class="insight-banner-text" id="insight-banner-text"></div>
+    </div>
+
+    <!-- Card de recomendação personalizada -->
+    <div class="recommendation-card" id="recommendation-card">
+      <span class="recommendation-phase-badge" id="rec-phase-badge">Fase</span>
+      <div class="recommendation-card-title" id="rec-title">Recomendação Personalizada</div>
+      <div class="recommendation-card-text" id="rec-text"></div>
+    </div>
+
     <div class="cover-moon">☽</div>
     <h1 class="cover-title">Mapeamento das<br>4 Fases Internas</h1>
     <p class="cover-subtitle">O Primeiro Guia Científico de Reconexão Cíclica Feminina</p>
     <div class="cover-divider">✦ ✧ ☽ ✧ ✦</div>
     <button class="btn-start" onclick="document.getElementById('intro').scrollIntoView({behavior:'smooth'})">
       Iniciar Jornada
+    </button>
+    <button class="btn-ceremony" onclick="openCeremony()" title="Iniciar Cerimônia de Conexão com seu Ciclo">
+      ✦ Iniciar Cerimônia
     </button>
     <div class="cover-phases">
       <div class="cover-phase-item maiden">
@@ -1629,6 +1660,75 @@
 </div><!-- /book-container -->
 </div><!-- /book-wrap -->
 
+<!-- ══════════════════════════════════════════
+     SEÇÃO: MEU CALENDÁRIO
+══════════════════════════════════════════ -->
+<div id="section-calendar" class="book-container" style="max-width:740px;margin:0 auto;">
+  <span class="toc-section-label" style="display:block;padding:2rem 3.5rem 0;font-size:0.7rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);opacity:0.6">✦ Ferramentas Pessoais</span>
+  <div style="padding:0 3.5rem 5rem;">
+    <h2 class="chapter-title" style="margin-top:1.5rem;margin-bottom:0.5rem">☽ Meu Calendário</h2>
+    <p class="calendar-instruction">Toque em qualquer dia para registrar como foi. Quanto mais você registra, mais personalizado fica seu guia.</p>
+    <div class="calendar-header-row">
+      <button class="calendar-nav-btn" onclick="calPrevMonth()" title="Mês anterior">‹</button>
+      <div class="calendar-month-title" id="cal-month-title">Carregando...</div>
+      <button class="calendar-nav-btn" onclick="calNextMonth()" title="Próximo mês">›</button>
+    </div>
+    <div class="calendar-weekdays">
+      <div class="calendar-weekday">Dom</div><div class="calendar-weekday">Seg</div>
+      <div class="calendar-weekday">Ter</div><div class="calendar-weekday">Qua</div>
+      <div class="calendar-weekday">Qui</div><div class="calendar-weekday">Sex</div>
+      <div class="calendar-weekday">Sáb</div>
+    </div>
+    <div class="calendar-grid" id="cal-grid"></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SEÇÃO: MINHA JORNADA
+══════════════════════════════════════════ -->
+<div id="section-journey" class="book-container" style="max-width:740px;margin:0 auto;">
+  <div style="padding:3.5rem 3.5rem 5rem;">
+    <h2 class="chapter-title" style="margin-bottom:0.5rem">✦ Minha Jornada</h2>
+    <p style="font-family:var(--font-display);font-style:italic;color:var(--text-muted);margin-bottom:2rem;line-height:1.7">Cada registro é um passo na sua reconexão cíclica. Celebre sua consistência.</p>
+    <div class="journey-stat-grid" id="journey-stats"></div>
+    <h3 class="section-title">Marcos da Jornada</h3>
+    <div class="journey-milestones" id="journey-milestones"></div>
+    <div class="energy-chart-wrap">
+      <div class="energy-chart-title">☽ Energia ao Longo do Tempo</div>
+      <div class="energy-chart" id="energy-chart"></div>
+    </div>
+    <div class="journey-phrase" id="journey-phrase">Sua jornada está apenas começando. Cada dia registrado é sabedoria que nenhum livro pode ensinar.</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SEÇÃO: MINHA BIBLIOTECA
+══════════════════════════════════════════ -->
+<div id="section-library" class="book-container" style="max-width:740px;margin:0 auto;">
+  <div style="padding:3.5rem 3.5rem 5rem;">
+    <h2 class="chapter-title" style="margin-bottom:0.5rem">◆ Minha Biblioteca</h2>
+    <p style="font-family:var(--font-display);font-style:italic;color:var(--text-muted);margin-bottom:1.8rem;line-height:1.7">Seus grifos e anotações, organizados para consulta a qualquer momento.</p>
+    <div class="library-tab-row">
+      <button class="library-tab active" onclick="switchLibraryTab('highlights',this)">✦ Grifos</button>
+      <button class="library-tab" onclick="switchLibraryTab('notes',this)">📝 Anotações</button>
+    </div>
+    <div class="library-content active" id="lib-highlights"></div>
+    <div class="library-content" id="lib-notes"></div>
+    <button class="library-export-btn" onclick="exportLibrary()" title="Exportar todos os grifos e anotações como arquivo .txt">⬇ Exportar como Texto (.txt)</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SEÇÃO: HISTÓRICO DE INSIGHTS
+══════════════════════════════════════════ -->
+<div id="section-insights" class="book-container" style="max-width:740px;margin:0 auto;">
+  <div style="padding:3.5rem 3.5rem 5rem;">
+    <h2 class="chapter-title" style="margin-bottom:0.5rem">☽ Histórico de Insights</h2>
+    <p style="font-family:var(--font-display);font-style:italic;color:var(--text-muted);margin-bottom:1.8rem;line-height:1.7">Todos os seus insights semanais e mensais, guardados com carinho.</p>
+    <div id="insights-history-list"></div>
+  </div>
+</div>
+
 <!-- MODALS -->
 <div class="modal-overlay" id="welcome-modal">
   <div class="modal" style="text-align:center">
@@ -1649,6 +1749,129 @@
       <button class="btn-action danger" onclick="confirmReset()">Sim, apagar tudo</button>
       <button class="btn-action secondary" onclick="closeModal('reset-modal')">Cancelar</button>
     </div>
+  </div>
+</div>
+
+<!-- MODAL CALENDÁRIO REAL (registro por data) -->
+<div class="modal-overlay" id="cal-day-modal">
+  <div class="modal">
+    <div class="cal-modal-date" id="cal-modal-date-label">Data</div>
+    <h3 class="modal-title" id="cal-modal-title">Registro do Dia</h3>
+    <div class="input-group">
+      <span class="label-main">Como você está se sentindo?</span>
+      <div class="mood-select" id="cal-mood-select">
+        <div class="mood-opt" data-mood="😢" onclick="calSelectMood(this)">😢</div>
+        <div class="mood-opt" data-mood="😐" onclick="calSelectMood(this)">😐</div>
+        <div class="mood-opt" data-mood="🙂" onclick="calSelectMood(this)">🙂</div>
+        <div class="mood-opt" data-mood="😊" onclick="calSelectMood(this)">😊</div>
+        <div class="mood-opt" data-mood="🌟" onclick="calSelectMood(this)">🌟</div>
+      </div>
+    </div>
+    <div class="input-group">
+      <span class="label-main">Energia (1–10)</span>
+      <div class="slider-group">
+        <input type="range" min="1" max="10" value="5" id="cal-energy-slider" oninput="document.getElementById('cal-energy-val').textContent=this.value">
+        <span class="slider-value" id="cal-energy-val">5</span>
+      </div>
+    </div>
+    <div class="input-group">
+      <span class="label-main">Nota livre do dia</span>
+      <textarea class="input-text" id="cal-note-text" rows="3" placeholder="O que foi especial hoje? Como seu corpo e mente estiveram?"></textarea>
+    </div>
+    <div class="input-group">
+      <span class="label-main">Práticas realizadas</span>
+      <div class="cal-practices-grid">
+        <label class="cal-practice-chk"><input type="checkbox" id="prac-meditacao"> Meditação</label>
+        <label class="cal-practice-chk"><input type="checkbox" id="prac-journaling"> Journaling</label>
+        <label class="cal-practice-chk"><input type="checkbox" id="prac-movimento"> Movimento</label>
+        <label class="cal-practice-chk"><input type="checkbox" id="prac-ritual"> Ritual/Cerimônia</label>
+        <label class="cal-practice-chk"><input type="checkbox" id="prac-descanso"> Descanso consciente</label>
+        <label class="cal-practice-chk"><input type="checkbox" id="prac-conexao"> Conexão significativa</label>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-action" onclick="saveCalDayEntry()">✦ Salvar Registro</button>
+      <button class="btn-action secondary" onclick="closeModal('cal-day-modal')">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<!-- MODAL QUESTIONÁRIO MENSAL -->
+<div id="monthly-quiz-modal">
+  <div class="monthly-quiz-box">
+    <h2 class="monthly-quiz-title" id="monthly-quiz-title">☽ Encerrando o Mês</h2>
+    <p class="monthly-quiz-subtitle" id="monthly-quiz-subtitle">Como foi sua jornada?</p>
+    <div class="monthly-quiz-field">
+      <label>Energia Geral do Mês (1–10)</label>
+      <div class="slider-group">
+        <input type="range" min="1" max="10" value="5" id="mq-energia" oninput="document.getElementById('mq-energia-val').textContent=this.value">
+        <span class="slider-value" id="mq-energia-val">5</span>
+      </div>
+    </div>
+    <div class="monthly-quiz-field">
+      <label>Fase mais desafiadora</label>
+      <div class="phase-btn-grid" id="mq-desafio-btns">
+        <button class="phase-choice-btn" data-phase="maiden" onclick="selectPhaseChoice(this,'desafio')">☽ Donzela / Estrategista</button>
+        <button class="phase-choice-btn" data-phase="mother" onclick="selectPhaseChoice(this,'desafio')">○ Mãe / Criativa</button>
+        <button class="phase-choice-btn" data-phase="witch"  onclick="selectPhaseChoice(this,'desafio')">◑ Bruxa / Analista</button>
+        <button class="phase-choice-btn" data-phase="crone"  onclick="selectPhaseChoice(this,'desafio')">● Anciã / Visionária</button>
+      </div>
+    </div>
+    <div class="monthly-quiz-field">
+      <label>Fase mais poderosa</label>
+      <div class="phase-btn-grid" id="mq-poder-btns">
+        <button class="phase-choice-btn" data-phase="maiden" onclick="selectPhaseChoice(this,'poder')">☽ Donzela / Estrategista</button>
+        <button class="phase-choice-btn" data-phase="mother" onclick="selectPhaseChoice(this,'poder')">○ Mãe / Criativa</button>
+        <button class="phase-choice-btn" data-phase="witch"  onclick="selectPhaseChoice(this,'poder')">◑ Bruxa / Analista</button>
+        <button class="phase-choice-btn" data-phase="crone"  onclick="selectPhaseChoice(this,'poder')">● Anciã / Visionária</button>
+      </div>
+    </div>
+    <div class="monthly-quiz-field">
+      <label>Maior aprendizado do mês</label>
+      <textarea class="input-text" id="mq-aprendizado" rows="3" placeholder="O que o ciclo que passou te revelou?"></textarea>
+    </div>
+    <div class="monthly-quiz-field">
+      <label>Intenção para o próximo mês</label>
+      <textarea class="input-text" id="mq-intencao" rows="2" placeholder="O que você honrará no próximo ciclo?"></textarea>
+    </div>
+    <button class="monthly-save-btn" onclick="saveMonthlyQuiz()">Guardar minha jornada ☽</button>
+  </div>
+</div>
+
+<!-- OVERLAY MODO CERIMÔNIA -->
+<div id="ceremony-overlay">
+  <div class="ceremony-inner">
+    <button class="ceremony-close" onclick="closeCeremony()" title="Fechar Cerimônia">✕</button>
+    <span class="ceremony-candle">🕯</span>
+    <h2 class="ceremony-title">Cerimônia de Conexão Cíclica</h2>
+    <p class="ceremony-subtitle">Um espaço sagrado para você se encontrar.<br>Respire. Esteja presente. Este momento é seu.</p>
+    <span class="ceremony-divider">✦ ✧ ☽ ✧ ✦</span>
+    <div class="ceremony-step">
+      <span class="ceremony-step-num">✦ Primeiro Passo</span>
+      <div class="ceremony-step-title">Criando o Espaço Sagrado</div>
+      <div class="ceremony-step-text">Encontre um lugar quieto. Se possível, acenda uma vela — qualquer vela. Silencie notificações. Coloque as mãos sobre o coração e diga internamente: "Estou aqui. Estou pronta para me ouvir."</div>
+    </div>
+    <div class="ceremony-step">
+      <span class="ceremony-step-num">✧ Segundo Passo</span>
+      <div class="ceremony-step-title">A Respiração da Lua</div>
+      <div class="ceremony-step-text">Inspire contando 4 tempos. Segure 4 tempos. Expire contando 4 tempos. Repita 4 vezes. Com cada expiração, libere o que o dia trouxe. Com cada inspiração, convide a presença de sua sabedoria cíclica.</div>
+    </div>
+    <div class="ceremony-step">
+      <span class="ceremony-step-num">☽ Terceiro Passo</span>
+      <div class="ceremony-step-title">Reconhecendo Sua Fase</div>
+      <div class="ceremony-step-text">Coloque uma mão no ventre. Sinta. Sem julgamento, observe: Qual é a qualidade da sua energia hoje? Seu corpo está pedindo movimento ou recolhimento? Clareza ou profundidade? Este é o pulso da sua fase.</div>
+    </div>
+    <div class="ceremony-step">
+      <span class="ceremony-step-num">◆ Quarto Passo</span>
+      <div class="ceremony-step-title">A Pergunta Sagrada</div>
+      <div class="ceremony-step-text">Pergunte ao seu corpo, não à sua mente: "O que você precisa de mim hoje?" Espere. A resposta pode chegar como uma imagem, uma sensação, uma palavra. Confie no primeiro sinal que vier.</div>
+    </div>
+    <div class="ceremony-step">
+      <span class="ceremony-step-num">❋ Quinto Passo</span>
+      <div class="ceremony-step-title">O Compromisso Cíclico</div>
+      <div class="ceremony-step-text">Coloque uma mão sobre o coração. Diga em voz alta ou internamente: "Eu honro minha natureza cíclica. Eu acolho cada fase como um presente. Eu sou completa em todos os meus estados." Sinta o peso dessas palavras.</div>
+    </div>
+    <p class="ceremony-closing">☽ Você acaba de realizar um ato revolucionário:<br>ouviu a si mesma com gentileza.<br><br>Carregue essa presença pelo dia. ✦</p>
   </div>
 </div>
 
@@ -2510,9 +2733,24 @@ function downloadRespostas() {
   content += 'NOTAS MARGINAIS:\n\n';
   for (let i = 0; i < localStorage.length; i++) {
     const key = localStorage.key(i);
-    if (key.startsWith('ebook_note-')) {
+    if (key && key.startsWith('ebook_note-')) {
       const val = localStorage.getItem(key);
       if (val) content += key.replace('ebook_note-','Nota ') + ':\n' + val + '\n\n';
+    }
+  }
+  content += '═'.repeat(50) + '\n';
+  content += 'REGISTROS DO DIÁRIO:\n\n';
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    if (key && key.startsWith('4fases-diario-')) {
+      try {
+        const d = JSON.parse(localStorage.getItem(key));
+        const date = key.replace('4fases-diario-','');
+        content += date + ': humor=' + (d.mood||'-') + ' energia=' + (d.energy||'-') + '/10';
+        if (d.practices && d.practices.length) content += ' práticas=[' + d.practices.join(',') + ']';
+        if (d.note) content += '\n  ' + d.note;
+        content += '\n\n';
+      } catch(e) {}
     }
   }
   const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
@@ -2526,7 +2764,8 @@ function downloadRespostas() {
 function confirmReset() {
   const keys = [];
   for (let i = 0; i < localStorage.length; i++) {
-    if (localStorage.key(i).startsWith('ebook_')) keys.push(localStorage.key(i));
+    const k = localStorage.key(i);
+    if (k && (k.startsWith('ebook_') || k.startsWith('4fases-'))) keys.push(k);
   }
   keys.forEach(k => localStorage.removeItem(k));
   closeModal('reset-modal');
@@ -2891,6 +3130,602 @@ document.addEventListener('click', function(e) {
   }, { passive: true });
 
   window._flipToChapter = flipTo;
+})();
+
+// ═══════════════════════════════════════════════════════════
+// NOVAS FUNCIONALIDADES v2.0
+// ═══════════════════════════════════════════════════════════
+
+// ── HELPERS DE DATA ──────────────────────────────────────────
+function fmtDate(d) {
+  return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
+}
+function fmtMonthKey(d) {
+  return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0');
+}
+function getDayPhase(day) {
+  if (day <= 7)  return 'maiden';
+  if (day <= 14) return 'mother';
+  if (day <= 21) return 'witch';
+  return 'crone';
+}
+const PHASE_COLORS = { maiden: '#10B981', mother: '#F59E0B', witch: '#EF4444', crone: '#6366F1' };
+const PHASE_NAMES  = { maiden: '☽ Folicular', mother: '○ Ovulatória', witch: '◑ Lútea', crone: '● Menstrual' };
+const PT_MONTHS    = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+
+// ── A. RELÓGIO EM TEMPO REAL ─────────────────────────────────
+(function initClock() {
+  function tick() {
+    const now = new Date();
+    const h = now.getHours(), m = now.getMinutes();
+    const timeEl     = document.getElementById('cover-time');
+    const greetEl    = document.getElementById('cover-greeting');
+    const phaseEl    = document.getElementById('cover-phase-suggest');
+    if (timeEl) timeEl.textContent = String(h).padStart(2,'0') + ':' + String(m).padStart(2,'0');
+    if (greetEl) {
+      let g = 'Boa noite, viajante lunar ☽';
+      if (h >= 5  && h < 12) g = 'Bom dia, guerreira ✦';
+      else if (h >= 12 && h < 18) g = 'Boa tarde, viajante ✦';
+      greetEl.textContent = g;
+    }
+    if (phaseEl) {
+      const day = now.getDate();
+      const phase = getDayPhase(day);
+      phaseEl.textContent = PHASE_NAMES[phase] + ' · Dia ' + day + ' do ciclo';
+      phaseEl.style.color = PHASE_COLORS[phase];
+    }
+  }
+  tick();
+  setInterval(tick, 1000);
+})();
+
+// ── B. CALENDÁRIO REAL ───────────────────────────────────────
+let _calYear  = new Date().getFullYear();
+let _calMonth = new Date().getMonth();
+let _calSelDate = '';
+let _calSelMood = '';
+
+function renderCalendar() {
+  const grid      = document.getElementById('cal-grid');
+  const titleEl   = document.getElementById('cal-month-title');
+  if (!grid || !titleEl) return;
+  titleEl.textContent = PT_MONTHS[_calMonth] + ' ' + _calYear;
+  grid.innerHTML = '';
+  const today   = new Date();
+  const firstDay = new Date(_calYear, _calMonth, 1).getDay();
+  const daysInMonth = new Date(_calYear, _calMonth+1, 0).getDate();
+
+  for (let i = 0; i < firstDay; i++) {
+    const empty = document.createElement('div');
+    empty.className = 'calendar-day empty';
+    grid.appendChild(empty);
+  }
+  for (let d = 1; d <= daysInMonth; d++) {
+    const dateKey = _calYear + '-' + String(_calMonth+1).padStart(2,'0') + '-' + String(d).padStart(2,'0');
+    const cell = document.createElement('div');
+    cell.className = 'calendar-day';
+    if (d === today.getDate() && _calMonth === today.getMonth() && _calYear === today.getFullYear()) {
+      cell.classList.add('today');
+    }
+    const num = document.createElement('div');
+    num.className = 'calendar-day-num';
+    num.textContent = d;
+    cell.appendChild(num);
+
+    const phase = getDayPhase(d);
+    const dot = document.createElement('div');
+    dot.className = 'calendar-day-phase';
+    dot.style.background = PHASE_COLORS[phase];
+    cell.appendChild(dot);
+
+    const stored = localStorage.getItem('4fases-diario-' + dateKey);
+    if (stored) {
+      cell.classList.add('has-entry');
+      try {
+        const data = JSON.parse(stored);
+        if (data.mood) {
+          const em = document.createElement('div');
+          em.className = 'calendar-day-emoji';
+          em.textContent = data.mood;
+          cell.appendChild(em);
+        }
+      } catch(e) {}
+    }
+    const dayRef = d, dateRef = dateKey;
+    cell.addEventListener('click', function() { openCalDayModal(dayRef, dateRef); });
+    grid.appendChild(cell);
+  }
+}
+
+function calPrevMonth() {
+  _calMonth--;
+  if (_calMonth < 0) { _calMonth = 11; _calYear--; }
+  renderCalendar();
+}
+function calNextMonth() {
+  _calMonth++;
+  if (_calMonth > 11) { _calMonth = 0; _calYear++; }
+  renderCalendar();
+}
+
+function openCalDayModal(day, dateKey) {
+  _calSelDate = dateKey;
+  _calSelMood = '';
+  const phase = getDayPhase(day);
+  const phaseName = PHASE_NAMES[phase];
+  document.getElementById('cal-modal-date-label').textContent = dateKey + ' · ' + phaseName;
+  document.getElementById('cal-modal-title').textContent = 'Registro — Dia ' + day;
+  document.querySelectorAll('#cal-mood-select .mood-opt').forEach(o => o.classList.remove('selected'));
+  document.getElementById('cal-energy-slider').value = 5;
+  document.getElementById('cal-energy-val').textContent = '5';
+  document.getElementById('cal-note-text').value = '';
+  ['meditacao','journaling','movimento','ritual','descanso','conexao'].forEach(p => {
+    const el = document.getElementById('prac-' + p);
+    if (el) el.checked = false;
+  });
+  const stored = localStorage.getItem('4fases-diario-' + dateKey);
+  if (stored) {
+    try {
+      const d = JSON.parse(stored);
+      if (d.mood) {
+        _calSelMood = d.mood;
+        document.querySelectorAll('#cal-mood-select .mood-opt').forEach(o => { if (o.dataset.mood === d.mood) o.classList.add('selected'); });
+      }
+      if (d.energy) {
+        document.getElementById('cal-energy-slider').value = d.energy;
+        document.getElementById('cal-energy-val').textContent = d.energy;
+      }
+      if (d.note) document.getElementById('cal-note-text').value = d.note;
+      if (d.practices) {
+        d.practices.forEach(p => {
+          const el = document.getElementById('prac-' + p);
+          if (el) el.checked = true;
+        });
+      }
+    } catch(e) {}
+  }
+  openModal('cal-day-modal');
+}
+
+function calSelectMood(el) {
+  document.querySelectorAll('#cal-mood-select .mood-opt').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  _calSelMood = el.dataset.mood;
+}
+
+function saveCalDayEntry() {
+  const practices = ['meditacao','journaling','movimento','ritual','descanso','conexao'].filter(p => {
+    const el = document.getElementById('prac-' + p);
+    return el && el.checked;
+  });
+  const data = {
+    mood: _calSelMood,
+    energy: parseInt(document.getElementById('cal-energy-slider').value),
+    note: document.getElementById('cal-note-text').value,
+    practices: practices,
+    savedAt: new Date().toISOString()
+  };
+  localStorage.setItem('4fases-diario-' + _calSelDate, JSON.stringify(data));
+  closeModal('cal-day-modal');
+  renderCalendar();
+  updateJourney();
+  showSaveIndicator('☽ Dia registrado!');
+}
+
+// ── C. QUESTIONÁRIO MENSAL ────────────────────────────────────
+const MQ_STATE = { desafio: '', poder: '' };
+
+function selectPhaseChoice(btn, field) {
+  const parent = document.getElementById('mq-' + field + '-btns');
+  if (!parent) return;
+  parent.querySelectorAll('.phase-choice-btn').forEach(b => {
+    b.classList.remove('sel-maiden','sel-mother','sel-witch','sel-crone');
+  });
+  const phase = btn.dataset.phase;
+  btn.classList.add('sel-' + phase);
+  MQ_STATE[field] = phase;
+}
+
+function checkMonthlyQuiz() {
+  const lastAccess = localStorage.getItem('4fases-last-access-month');
+  const nowKey = fmtMonthKey(new Date());
+  if (lastAccess && lastAccess !== nowKey) {
+    const prevDate = new Date(lastAccess + '-01');
+    const prevMonth = PT_MONTHS[prevDate.getMonth()];
+    const already = localStorage.getItem('4fases-mensal-' + lastAccess);
+    if (!already) {
+      document.getElementById('monthly-quiz-title').textContent = '☽ Encerrando ' + prevMonth;
+      document.getElementById('monthly-quiz-subtitle').textContent = 'Como foi sua jornada em ' + prevMonth + '?';
+      document.getElementById('monthly-quiz-modal').classList.add('open');
+    }
+  }
+  localStorage.setItem('4fases-last-access-month', nowKey);
+}
+
+function saveMonthlyQuiz() {
+  const data = {
+    energia: document.getElementById('mq-energia').value,
+    desafio: MQ_STATE.desafio,
+    poder:   MQ_STATE.poder,
+    aprendizado: document.getElementById('mq-aprendizado').value,
+    intencao:    document.getElementById('mq-intencao').value,
+    savedAt: new Date().toISOString()
+  };
+  const key = fmtMonthKey(new Date(new Date().getFullYear(), new Date().getMonth() - 1, 1));
+  localStorage.setItem('4fases-mensal-' + key, JSON.stringify(data));
+  // Gerar insight mensal
+  const insightText = 'Sua energia em ' + PT_MONTHS[new Date(new Date().getFullYear(), new Date().getMonth()-1,1).getMonth()] +
+    ' foi ' + data.energia + '/10. Sua fase mais poderosa: ' + (PHASE_NAMES[data.poder] || '—') +
+    '. ' + (data.intencao ? '"' + data.intencao + '"' : '');
+  saveInsight('mensal', insightText);
+  document.getElementById('monthly-quiz-modal').classList.remove('open');
+  showSaveIndicator('✦ Jornada do mês guardada!');
+  updateInsightsHistory();
+}
+
+// ── D. INSIGHTS ───────────────────────────────────────────────
+function saveInsight(type, text) {
+  const key = '4fases-insight-' + type + '-' + fmtDate(new Date());
+  localStorage.setItem(key, JSON.stringify({ type, text, date: new Date().toISOString() }));
+  showInsightBanner(type === 'mensal' ? '✦ Insight do Mês' : '☽ Insight da Semana', text);
+}
+
+function showInsightBanner(label, text) {
+  const banner = document.getElementById('insight-banner');
+  const labelEl = document.getElementById('insight-banner-label');
+  const textEl  = document.getElementById('insight-banner-text');
+  if (!banner || !labelEl || !textEl) return;
+  labelEl.textContent = label;
+  textEl.textContent  = text;
+  banner.classList.add('visible');
+}
+
+function checkWeeklyInsight() {
+  const now = new Date();
+  if (now.getDay() !== 1) return; // apenas segunda-feira
+  const key = '4fases-insight-semanal-' + fmtDate(now);
+  if (localStorage.getItem(key)) return;
+  const records = getAllCalRecords();
+  if (records.length < 3) return;
+  const week = records.slice(-7);
+  const avgEnergy = week.reduce((s,r) => s + (r.energy || 5), 0) / week.length;
+  const text = 'Esta semana seus registros mostram uma energia média de ' +
+    avgEnergy.toFixed(1) + '/10. ' + getWeeklyPoetic(avgEnergy);
+  saveInsight('semanal', text);
+}
+
+function getWeeklyPoetic(avg) {
+  if (avg >= 8) return 'Sua luz está radiante — honre esse pico com presença plena. ✦';
+  if (avg >= 6) return 'Sua energia flui com equilíbrio. Continue observando seus padrões. ☽';
+  if (avg >= 4) return 'Semana de processamento interno. Sua sabedoria está trabalhando em silêncio. ◑';
+  return 'Esta semana pediu recolhimento. O descanso é sagrado — você está se integrando. ●';
+}
+
+function getAllCalRecords() {
+  const results = [];
+  for (let i = 0; i < localStorage.length; i++) {
+    const k = localStorage.key(i);
+    if (k && k.startsWith('4fases-diario-')) {
+      try {
+        const d = JSON.parse(localStorage.getItem(k));
+        d._dateKey = k.replace('4fases-diario-','');
+        results.push(d);
+      } catch(e) {}
+    }
+  }
+  return results.sort((a,b) => a._dateKey.localeCompare(b._dateKey));
+}
+
+function updateInsightsHistory() {
+  const list = document.getElementById('insights-history-list');
+  if (!list) return;
+  const items = [];
+  for (let i = 0; i < localStorage.length; i++) {
+    const k = localStorage.key(i);
+    if (k && k.startsWith('4fases-insight-')) {
+      try {
+        const d = JSON.parse(localStorage.getItem(k));
+        items.push(d);
+      } catch(e) {}
+    }
+  }
+  items.sort((a,b) => b.date.localeCompare(a.date));
+  if (items.length === 0) {
+    list.innerHTML = '<div class="library-empty">☽ Seus insights aparecerão aqui conforme você usa o app.</div>';
+    return;
+  }
+  list.innerHTML = items.map(item => {
+    const d = new Date(item.date);
+    const dateStr = d.toLocaleDateString('pt-BR');
+    const label = item.type === 'mensal' ? '✦ Insight Mensal' : '☽ Insight Semanal';
+    return '<div class="insight-history-item"><div class="insight-history-date">' + label + ' · ' + dateStr + '</div><div class="insight-history-text">' + item.text + '</div></div>';
+  }).join('');
+}
+
+function checkAndShowStoredInsight() {
+  // Mostra o último insight salvo na capa
+  const items = [];
+  for (let i = 0; i < localStorage.length; i++) {
+    const k = localStorage.key(i);
+    if (k && k.startsWith('4fases-insight-')) {
+      try {
+        const d = JSON.parse(localStorage.getItem(k));
+        items.push(d);
+      } catch(e) {}
+    }
+  }
+  if (items.length > 0) {
+    items.sort((a,b) => b.date.localeCompare(a.date));
+    const latest = items[0];
+    const label  = latest.type === 'mensal' ? '✦ Insight do Mês' : '☽ Insight da Semana';
+    // só mostra se foi gerado nos últimos 7 dias
+    const age = Date.now() - new Date(latest.date).getTime();
+    if (age < 7 * 24 * 3600 * 1000) {
+      showInsightBanner(label, latest.text);
+    }
+  }
+}
+
+// ── E. RECOMENDAÇÕES PERSONALIZADAS ──────────────────────────
+function showRecommendation() {
+  const now = new Date();
+  const day = now.getDate();
+  const h   = now.getHours();
+  const phase = getDayPhase(day);
+  const isNight   = (h >= 18 || h < 5);
+  const isMorning = (h >= 5 && h < 12);
+
+  const RECS = {
+    crone_night:  { title: 'Sua energia pede recolhimento agora ☽', text: 'Prepare uma infusão de lavanda e valeriana, acenda uma vela roxa e permita-se descansar sem culpa. Seu sistema nervoso está integrando a sabedoria do ciclo. Honre esse recolhimento como o ato de amor que é.' },
+    maiden_morning: { title: 'Sua energia desperta ✦', text: 'Este é o momento de começar novos projetos. Seu córtex pré-frontal está em máxima ativação. Cristal de quartzo rosa te acompanha nessa clareza matinal. Escreva suas intenções antes de checar o telefone.' },
+    mother_any:   { title: 'Seu poder está no auge ✦', text: 'Expresse-se, conecte-se, lidere. Seu magnetismo está radiante hoje. Compartilhe algo belo com alguém, crie sem censura, apareça com toda sua presença. O mundo precisa do que só você pode oferecer.' },
+    witch_any:    { title: 'Período de introspecção ☽', text: 'Honre sua sabedoria interna. Sua percepção está amplificada — use-a para analisar padrões, tomar decisões importantes ou simplesmente para sentir sem precisar explicar.' },
+    crone_any:    { title: 'Fase de integração ●', text: 'Você está destilando a sabedoria do ciclo. Permita-se desacelerar. Um banho ritual, silêncio consciente e gratidão pelo que foi vivido são os melhores presentes para este momento.' },
+    maiden_any:   { title: 'Clareza e foco disponíveis ✦', text: 'Sua mente está como lâmina. Priorize decisões importantes, planejamentos e projetos que precisam de visão clara. Obsidiana ou turmalina negra ampliam sua intenção nesta fase.' },
+  };
+
+  let key = phase + '_any';
+  if (phase === 'crone' && isNight)   key = 'crone_night';
+  if (phase === 'maiden' && isMorning) key = 'maiden_morning';
+
+  const rec = RECS[key] || RECS[phase + '_any'];
+  if (!rec) return;
+
+  const card = document.getElementById('recommendation-card');
+  const badge = document.getElementById('rec-phase-badge');
+  const title = document.getElementById('rec-title');
+  const text  = document.getElementById('rec-text');
+  if (!card || !badge || !title || !text) return;
+
+  badge.textContent = PHASE_NAMES[phase];
+  badge.className   = 'recommendation-phase-badge rec-' + phase;
+  title.textContent = rec.title;
+  text.textContent  = rec.text;
+  card.classList.add('visible');
+}
+
+// ── F. LINHA DO TEMPO / JORNADA ──────────────────────────────
+function updateJourney() {
+  const records = getAllCalRecords();
+  const totalDays = records.length;
+  const totalPractices = records.reduce((s, r) => s + ((r.practices || []).length), 0);
+
+  // Primeiro registro
+  const firstKey = localStorage.getItem('4fases-first-use');
+  const daysUsingApp = firstKey ? Math.floor((Date.now() - new Date(firstKey).getTime()) / (1000*60*60*24)) + 1 : 1;
+
+  // Stats
+  const statsEl = document.getElementById('journey-stats');
+  if (statsEl) {
+    statsEl.innerHTML = [
+      { num: daysUsingApp, label: 'Dias na Jornada' },
+      { num: totalDays,    label: 'Dias Registrados' },
+      { num: totalPractices, label: 'Práticas Realizadas' },
+      { num: Object.keys(getMonthlySummaries()).length, label: 'Meses Completos' },
+    ].map(s => '<div class="journey-stat-card"><div class="journey-stat-num">' + s.num + '</div><div class="journey-stat-label">' + s.label + '</div></div>').join('');
+  }
+
+  // Marcos
+  const MILESTONES = [
+    { id: 'first', icon: '✦', text: 'Primeiro registro', threshold: () => totalDays >= 1 },
+    { id: 'week',  icon: '☽', text: '7 dias de jornada',  threshold: () => daysUsingApp >= 7 },
+    { id: 'practices30', icon: '🌟', text: '30 práticas realizadas', threshold: () => totalPractices >= 30 },
+    { id: 'month1', icon: '✦', text: '1 mês completo',  threshold: () => daysUsingApp >= 30 },
+    { id: 'days14', icon: '☽', text: '14 dias registrados', threshold: () => totalDays >= 14 },
+    { id: 'days28', icon: '◆', text: 'Ciclo completo (28 registros)', threshold: () => totalDays >= 28 },
+  ];
+  const milestonesEl = document.getElementById('journey-milestones');
+  if (milestonesEl) {
+    milestonesEl.innerHTML = MILESTONES.map(m => {
+      const achieved = m.threshold();
+      const savedDate = localStorage.getItem('4fases-milestone-' + m.id);
+      if (achieved && !savedDate) localStorage.setItem('4fases-milestone-' + m.id, fmtDate(new Date()));
+      const dateStr = savedDate || (achieved ? fmtDate(new Date()) : '');
+      return '<div class="journey-milestone' + (achieved ? ' achieved' : '') + '">' +
+        '<div class="journey-milestone-icon' + (achieved ? '' : ' locked') + '">' + m.icon + '</div>' +
+        '<div class="journey-milestone-text">' + m.text + '</div>' +
+        (dateStr ? '<div class="journey-milestone-date">' + dateStr + '</div>' : '') +
+        '</div>';
+    }).join('');
+  }
+
+  // Gráfico de energia
+  const chartEl = document.getElementById('energy-chart');
+  if (chartEl) {
+    const last30 = records.slice(-30);
+    if (last30.length === 0) {
+      chartEl.innerHTML = '<div style="color:var(--text-dim);font-family:var(--font-ui);font-size:0.72rem;padding:0.5rem;align-self:center">Registre dias para ver seu gráfico ☽</div>';
+    } else {
+      chartEl.innerHTML = last30.map(r => {
+        const pct = ((r.energy || 5) / 10 * 100);
+        return '<div class="energy-bar" style="height:' + pct + '%" title="' + r._dateKey + ': ' + (r.energy||5) + '/10"></div>';
+      }).join('');
+      // completar com vazios até 30
+      for (let i = last30.length; i < 30; i++) {
+        chartEl.innerHTML += '<div class="energy-bar-empty"></div>';
+      }
+    }
+  }
+
+  // Frase motivacional
+  const phraseEl = document.getElementById('journey-phrase');
+  if (phraseEl) {
+    const phrases = [
+      'Sua jornada está apenas começando. Cada dia registrado é sabedoria que nenhum livro pode ensinar.',
+      'Você já percorreu ' + daysUsingApp + ' dias nessa jornada. Sua consistência é seu maior superpoder. ✦',
+      'Cada registro é uma conversa com sua própria natureza. Continue ouvindo. ☽',
+      totalDays >= 7 ? 'Você tem ' + totalDays + ' registros. Sua sabedoria cíclica está sendo cartografada em tempo real. ◆' : null,
+      daysUsingApp >= 30 ? 'Um mês completo de consciência cíclica. Você fez algo extraordinário. ✦' : null,
+    ].filter(Boolean);
+    phraseEl.textContent = phrases[Math.min(Math.floor(daysUsingApp / 7), phrases.length - 1)];
+  }
+}
+
+function getMonthlySummaries() {
+  const result = {};
+  for (let i = 0; i < localStorage.length; i++) {
+    const k = localStorage.key(i);
+    if (k && k.startsWith('4fases-mensal-')) result[k] = true;
+  }
+  return result;
+}
+
+// ── G. MODO CERIMÔNIA ─────────────────────────────────────────
+function openCeremony() {
+  document.getElementById('ceremony-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeCeremony() {
+  document.getElementById('ceremony-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// ── H. BIBLIOTECA PESSOAL ─────────────────────────────────────
+function switchLibraryTab(tab, btn) {
+  document.querySelectorAll('.library-tab').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.library-content').forEach(c => c.classList.remove('active'));
+  if (btn) btn.classList.add('active');
+  const el = document.getElementById('lib-' + tab);
+  if (el) el.classList.add('active');
+}
+
+function renderLibrary() {
+  renderLibraryHighlights();
+  renderLibraryNotes();
+}
+
+function renderLibraryHighlights() {
+  const el = document.getElementById('lib-highlights');
+  if (!el) return;
+  const data = JSON.parse(localStorage.getItem('ebook_highlights') || '[]');
+  if (data.length === 0) {
+    el.innerHTML = '<div class="library-empty">✦ Seus grifos aparecerão aqui. Selecione um texto para grifar.</div>';
+    return;
+  }
+  el.innerHTML = data.map(h =>
+    '<div class="library-highlight-item color-' + (h.color || 'gold') + '">' + escapeHtml(h.text) + '</div>'
+  ).join('');
+}
+
+function renderLibraryNotes() {
+  const el = document.getElementById('lib-notes');
+  if (!el) return;
+  const notes = [];
+  for (let i = 0; i < localStorage.length; i++) {
+    const k = localStorage.key(i);
+    if (k && k.startsWith('ebook_note-')) {
+      const val = localStorage.getItem(k);
+      if (val && val.trim()) notes.push({ key: k, text: val });
+    }
+  }
+  if (notes.length === 0) {
+    el.innerHTML = '<div class="library-empty">📝 Suas anotações aparecerão aqui. Clique em 📝 ao lado de um parágrafo.</div>';
+    return;
+  }
+  el.innerHTML = notes.map(n =>
+    '<div class="library-note-item"><div class="library-note-date">' + n.key.replace('ebook_note-','') + '</div><div class="library-note-text">' + escapeHtml(n.text) + '</div></div>'
+  ).join('');
+}
+
+function escapeHtml(str) {
+  return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function exportLibrary() {
+  let txt = 'MINHA BIBLIOTECA — MAPEAMENTO DAS 4 FASES INTERNAS\n';
+  txt += new Date().toLocaleDateString('pt-BR') + '\n\n';
+  txt += '═'.repeat(50) + '\n\n';
+
+  const highlights = JSON.parse(localStorage.getItem('ebook_highlights') || '[]');
+  if (highlights.length > 0) {
+    txt += 'MEUS GRIFOS\n' + '─'.repeat(30) + '\n\n';
+    highlights.forEach((h, i) => {
+      txt += (i+1) + '. [' + (h.color||'gold').toUpperCase() + '] ' + h.text + '\n\n';
+    });
+  }
+
+  txt += '═'.repeat(50) + '\n\n';
+  txt += 'MINHAS ANOTAÇÕES\n' + '─'.repeat(30) + '\n\n';
+  for (let i = 0; i < localStorage.length; i++) {
+    const k = localStorage.key(i);
+    if (k && k.startsWith('ebook_note-')) {
+      const val = localStorage.getItem(k);
+      if (val && val.trim()) {
+        txt += '[' + k.replace('ebook_note-','') + ']\n' + val + '\n\n';
+      }
+    }
+  }
+
+  const blob = new Blob([txt], { type: 'text/plain;charset=utf-8' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = '4fases-biblioteca-pessoal.txt';
+  a.click();
+}
+
+// ── SHOW SECTION (novas seções via TOC) ───────────────────────
+function showSection(name) {
+  const sections = ['calendar','journey','library','insights'];
+  sections.forEach(s => {
+    const el = document.getElementById('section-' + s);
+    if (el) el.classList.remove('visible');
+  });
+  const target = document.getElementById('section-' + name);
+  if (target) {
+    target.classList.add('visible');
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    // Renderizar conteúdo dinâmico ao abrir
+    if (name === 'calendar') renderCalendar();
+    if (name === 'journey') { updateJourney(); }
+    if (name === 'library') { renderLibrary(); }
+    if (name === 'insights') { updateInsightsHistory(); }
+  }
+}
+
+// ── I. CORREÇÃO: SALVAR COM DATA/HORA ─────────────────────────
+// Sobrescreve saveNote para incluir timestamp
+const _origSaveNote = typeof saveNote === 'function' ? saveNote : null;
+function saveNote(id, value) {
+  localStorage.setItem('ebook_note-' + id, value);
+  localStorage.setItem('ebook_note-' + id + '-ts', new Date().toISOString());
+  showSaveIndicator();
+}
+
+// ── INICIALIZAÇÃO DE TUDO ─────────────────────────────────────
+(function initNewFeatures() {
+  // Registrar primeiro uso
+  if (!localStorage.getItem('4fases-first-use')) {
+    localStorage.setItem('4fases-first-use', new Date().toISOString());
+  }
+
+  // Verificar questionário mensal (aguardar loading)
+  setTimeout(() => {
+    checkMonthlyQuiz();
+    checkWeeklyInsight();
+    checkAndShowStoredInsight();
+    showRecommendation();
+    renderCalendar();
+  }, 2500);
 })();
 </script>
 
