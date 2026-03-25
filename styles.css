@@ -1282,3 +1282,212 @@ hr.fancy::after {
   .chapter + .chapter::after,
   #intro + .chapter::after { display: none; }
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   NOVAS FUNCIONALIDADES — Foco, Marcador, Grifo, Modos, Flip
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Modos de leitura — transição suave ── */
+body,
+.book-container,
+#cover,
+#fixed-header,
+#toc-panel,
+.modal,
+.worksheet,
+.phase-card,
+.flip-card-front,
+.flip-card-back,
+.checklist-section,
+.belief-card,
+.timer-wrap,
+blockquote {
+  transition: background-color 0.35s ease, color 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease;
+}
+
+/* ── White Mode ── */
+body.mode-white {
+  --bg: #F5F0E8; --surface: #FFFFFF; --surface-2: #F7F3EE;
+  --surface-3: #EDE8E0; --text: #1C1917; --text-muted: #44403C;
+  --text-dim: #78716C; --border: #D6C9BD; --border-light: #C4B5A5;
+}
+body.mode-white #book-wrap {
+  background: linear-gradient(90deg, #C8C0B4 0%, #D9D0C5 5%, #F5F0E8 12%, #F5F0E8 88%, #D9D0C5 95%, #C8C0B4 100%);
+}
+body.mode-white #cover {
+  background: radial-gradient(ellipse at 50% 30%, rgba(79,70,229,0.07) 0%, #E8E2D8 55%, #DDD7CC 100%);
+}
+body.mode-white .book-container {
+  box-shadow: -12px 0 50px rgba(0,0,0,0.12), 12px 0 50px rgba(0,0,0,0.12), inset 0 0 0 1px rgba(197,160,89,0.2);
+}
+body.mode-white .book-container::before {
+  background: linear-gradient(180deg, rgba(197,160,89,0.2) 0%, rgba(197,160,89,0.08) 50%, rgba(197,160,89,0.2) 100%);
+}
+body.mode-white .star { background: rgba(79,70,229,0.15); }
+
+/* ── Sépia ── */
+body.mode-sepia {
+  --bg: #2C1810; --surface: #3D2B1F; --surface-2: #4A3428;
+  --surface-3: #261510; --text: #E8D5B7; --text-muted: #C4A882;
+  --text-dim: #9E7D5A; --border: #5C3D2A; --border-light: #6B4A35;
+}
+body.mode-sepia #book-wrap {
+  background: linear-gradient(90deg, #160B06 0%, #1E0F09 5%, #2C1810 12%, #2C1810 88%, #1E0F09 95%, #160B06 100%);
+}
+body.mode-sepia #cover {
+  background: radial-gradient(ellipse at 50% 30%, #4A2010 0%, #2C1810 60%, #160B06 100%);
+}
+
+/* ── Night Mode ── */
+body.mode-night {
+  --bg: #000000; --surface: #0A0A0A; --surface-2: #111111;
+  --surface-3: #070707; --text: #E0E0E0; --text-muted: #A0A0A0;
+  --text-dim: #666666; --border: #1A1A1A; --border-light: #242424;
+}
+body.mode-night #book-wrap { background: #000; }
+body.mode-night #cover { background: #000; }
+body.mode-night .book-container {
+  box-shadow: none;
+  border-left-color: rgba(197,160,89,0.08);
+  border-right-color: rgba(197,160,89,0.08);
+}
+
+/* ── Feature tip modals ── */
+.feature-tip-modal {
+  position: fixed; inset: 0; z-index: 8500;
+  background: rgba(0,0,0,0.78); backdrop-filter: blur(5px);
+  display: flex; align-items: center; justify-content: center;
+  padding: 2rem;
+}
+.feature-tip-box {
+  background: #111827; border: 1px solid var(--gold);
+  border-radius: 18px; padding: 2.8rem 2.2rem 2.4rem;
+  max-width: 420px; width: 100%; text-align: center;
+  box-shadow: 0 32px 90px rgba(0,0,0,0.85), 0 0 0 1px rgba(197,160,89,0.1);
+}
+.feature-tip-icon { font-size: 2.8rem; margin-bottom: 0.7rem; display: block; }
+.feature-tip-title {
+  font-family: var(--font-display); font-size: 1.7rem;
+  color: var(--gold); margin-bottom: 1rem;
+}
+.feature-tip-desc {
+  font-family: var(--font-display); font-size: 1.08rem;
+  font-style: italic; color: rgba(243,244,246,0.75);
+  line-height: 1.85; margin-bottom: 2rem;
+}
+.feature-tip-btn {
+  padding: 0.9rem 2.8rem;
+  background: rgba(197,160,89,0.1); border: 1px solid var(--gold);
+  color: var(--gold); border-radius: 50px;
+  font-family: var(--font-ui); font-size: 0.78rem;
+  font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
+  cursor: pointer; transition: all 0.3s;
+}
+.feature-tip-btn:hover { background: rgba(197,160,89,0.22); }
+
+/* ── Reading mode selector ── */
+.mode-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 0.75rem; margin-bottom: 1.8rem;
+}
+.mode-option {
+  padding: 1.1rem 0.9rem; border-radius: 12px;
+  border: 2px solid rgba(255,255,255,0.06); cursor: pointer;
+  transition: all 0.25s; text-align: center;
+}
+.mode-option:hover { border-color: rgba(197,160,89,0.5); }
+.mode-option.active { border-color: var(--gold); background: rgba(197,160,89,0.1); }
+.mode-option[data-mode="dark"]  { background: rgba(11,15,25,0.85); }
+.mode-option[data-mode="white"] { background: rgba(245,240,232,0.12); }
+.mode-option[data-mode="sepia"] { background: rgba(61,43,31,0.55); }
+.mode-option[data-mode="night"] { background: rgba(0,0,0,0.7); }
+.mode-option-icon { font-size: 1.5rem; margin-bottom: 0.4rem; display: block; }
+.mode-option-name {
+  font-family: var(--font-ui); font-size: 0.68rem;
+  font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--text); display: block; margin-bottom: 0.2rem;
+}
+.mode-option-desc {
+  font-family: var(--font-display); font-size: 0.78rem;
+  font-style: italic; color: var(--text-muted);
+}
+
+/* ── Highlight — 4ª cor (verde) ── */
+.highlight.green { background: rgba(16,185,129,0.28); }
+.hl-green { background: #10B981; }
+
+/* ── Foco aprimorado ── */
+body.focus-mode .para-wrap p {
+  opacity: 0.07;
+  filter: blur(0.4px);
+  transition: opacity 0.4s ease, filter 0.4s ease;
+}
+body.focus-mode .para-wrap.focused p {
+  opacity: 1 !important;
+  filter: none !important;
+}
+
+/* ── Grifo: badge de contagem ── */
+#grifo-count {
+  display: inline-block; background: var(--gold); color: var(--bg);
+  font-size: 0.52rem; font-weight: 700; border-radius: 8px;
+  padding: 1px 4px; margin-left: 2px; vertical-align: top;
+  line-height: 1.6; min-width: 14px; text-align: center;
+}
+#grifo-count:empty { display: none; }
+
+/* Modo grifo ativo: cursor crosshair em parágrafos */
+body.grifo-mode .para-wrap { cursor: crosshair; }
+body.grifo-mode .para-wrap p { outline: 1px dashed rgba(197,160,89,0.18); border-radius: 3px; }
+
+/* ── Flip de página ── */
+@keyframes flipOut {
+  0%   { transform: perspective(1200px) rotateY(0deg); opacity: 1; }
+  100% { transform: perspective(1200px) rotateY(-22deg) scale(0.97); opacity: 0; }
+}
+@keyframes flipIn {
+  0%   { transform: perspective(1200px) rotateY(22deg) scale(0.97); opacity: 0; }
+  100% { transform: perspective(1200px) rotateY(0deg); opacity: 1; }
+}
+.book-container.flipping-out {
+  animation: flipOut 0.34s ease-in forwards;
+  transform-origin: center center;
+}
+.book-container.flipping-in {
+  animation: flipIn 0.38s ease-out forwards;
+  transform-origin: center center;
+}
+
+/* ── Botões de navegação entre capítulos ── */
+.chapter-nav {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 2.2rem 0 0.5rem; margin-top: 2.5rem;
+  border-top: 1px solid rgba(197,160,89,0.1);
+}
+.chapter-nav-btn {
+  background: none; border: 1px solid var(--border-light);
+  color: var(--text-dim); padding: 0.65rem 1.5rem;
+  border-radius: 50px; font-family: var(--font-ui);
+  font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase;
+  cursor: pointer; transition: all 0.25s;
+}
+.chapter-nav-btn:hover:not(:disabled) { border-color: var(--gold); color: var(--gold); }
+.chapter-nav-btn:disabled { opacity: 0.18; cursor: default; }
+
+/* ── TOC bookmark marker ── */
+.toc-bookmark-marker { color: var(--gold); margin-left: 0.3rem; font-size: 0.75rem; }
+
+/* ── @keyframes ribbonPop (caso não exista) ── */
+@keyframes ribbonPop {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.45) rotate(14deg); }
+  70%  { transform: scale(0.9) rotate(-5deg); }
+  100% { transform: scale(1) rotate(0); }
+}
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .mode-grid { grid-template-columns: 1fr 1fr; gap: 0.6rem; }
+  .feature-tip-box { padding: 2rem 1.5rem; }
+  .chapter-nav-btn { font-size: 0.62rem; padding: 0.6rem 1rem; }
+}

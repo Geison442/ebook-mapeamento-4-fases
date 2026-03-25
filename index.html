@@ -133,6 +133,7 @@
   <button class="hl-btn hl-gold" data-color="gold" title="Dourado"></button>
   <button class="hl-btn hl-purple" data-color="purple" title="Roxo"></button>
   <button class="hl-btn hl-pink" data-color="pink" title="Rosa"></button>
+  <button class="hl-btn hl-green" data-color="green" title="Verde"></button>
 </div>
 
 <!-- SAVE INDICATOR -->
@@ -147,8 +148,10 @@
   <div class="header-controls">
     <button class="header-btn" id="btn-font-dec" title="Diminuir fonte">A−</button>
     <button class="header-btn" id="btn-font-inc" title="Aumentar fonte">A+</button>
+    <button class="header-btn" id="btn-grifo" title="Modo grifo (✏️ toque para grifar)">✏️<span id="grifo-count"></span></button>
     <button class="header-btn" id="btn-bookmark" title="Marcar página">🎗️</button>
     <button class="header-btn" id="btn-focus" title="Modo foco">◎</button>
+    <button class="header-btn" id="btn-theme" title="Modo de leitura">🌙</button>
   </div>
 </div>
 
@@ -157,6 +160,54 @@
   <span>📍 Você tem um marcador salvo</span>
   <button class="bm-go" id="bm-go-btn">Ir ao marcador</button>
   <button class="bm-dismiss" id="bm-dismiss-btn">✕</button>
+</div>
+
+<!-- FEATURE TIP MODALS -->
+<div id="focus-tip-modal" class="feature-tip-modal" style="display:none" onclick="if(event.target===this)closeFocusTip()">
+  <div class="feature-tip-box">
+    <div class="feature-tip-icon">🌙</div>
+    <h3 class="feature-tip-title">Modo Foco</h3>
+    <p class="feature-tip-desc">Toque em qualquer parágrafo para iluminá-lo. Todo o resto escurece suavemente, criando um ambiente de leitura profunda. Toque novamente no ícone para sair.</p>
+    <button class="feature-tip-btn" onclick="closeFocusTip()">Entendido ✦</button>
+  </div>
+</div>
+
+<div id="bookmark-tip-modal" class="feature-tip-modal" style="display:none" onclick="if(event.target===this)closeBookmarkTip()">
+  <div class="feature-tip-box">
+    <div class="feature-tip-icon">🎗️</div>
+    <h3 class="feature-tip-title">Marcador de Página</h3>
+    <p class="feature-tip-desc">Salva exatamente onde você parou. Na próxima vez que abrir o ebook, um banner discreto perguntará se deseja continuar de onde parou.</p>
+    <button class="feature-tip-btn" onclick="closeBookmarkTip()">Entendido e Salvar ✦</button>
+  </div>
+</div>
+
+<div id="reading-mode-modal" class="feature-tip-modal" style="display:none" onclick="if(event.target===this)closeReadingModes()">
+  <div class="feature-tip-box">
+    <h3 class="feature-tip-title" style="margin-bottom:1.5rem">Modo de Leitura</h3>
+    <div class="mode-grid">
+      <div class="mode-option" data-mode="dark">
+        <div class="mode-option-icon">🌙</div>
+        <span class="mode-option-name">Dark Mode</span>
+        <span class="mode-option-desc">Padrão noturno</span>
+      </div>
+      <div class="mode-option" data-mode="white">
+        <div class="mode-option-icon">☀️</div>
+        <span class="mode-option-name">Papel Branco</span>
+        <span class="mode-option-desc">Clássico diurno</span>
+      </div>
+      <div class="mode-option" data-mode="sepia">
+        <div class="mode-option-icon">📜</div>
+        <span class="mode-option-name">Sépia</span>
+        <span class="mode-option-desc">Papel envelhecido</span>
+      </div>
+      <div class="mode-option" data-mode="night">
+        <div class="mode-option-icon">⬛</div>
+        <span class="mode-option-name">Night Mode</span>
+        <span class="mode-option-desc">Máximo conforto</span>
+      </div>
+    </div>
+    <button class="feature-tip-btn" onclick="closeReadingModes()">Fechar ✦</button>
+  </div>
 </div>
 
 <!-- TOC TOGGLE -->
@@ -175,29 +226,29 @@
     <li><a href="#cover" class="toc-chapter" onclick="closeTOC()">☽ Capa</a></li>
     <li><a href="#intro" onclick="closeTOC()">Introdução: O Despertar</a></li>
     <hr class="toc-sep">
-    <li><a href="#cap1" class="toc-chapter" onclick="closeTOC()">Capítulo 1 — A Ciência</a></li>
+    <li><a href="#cap1" class="toc-chapter" onclick="closeTOC()">Capítulo I — A Ciência</a></li>
     <li><a href="#cap1-neuro" class="toc-sub" onclick="closeTOC()">A Revolução Neurológica</a></li>
     <li><a href="#cap1-exerc" class="toc-sub" onclick="closeTOC()">Exercício Prático 1</a></li>
     <hr class="toc-sep">
-    <li><a href="#cap2" class="toc-chapter" onclick="closeTOC()">Capítulo 2 — Os 4 Arquétipos</a></li>
+    <li><a href="#cap2" class="toc-chapter" onclick="closeTOC()">Capítulo II — Os 4 Arquétipos</a></li>
     <li><a href="#cap2-donzela" class="toc-sub" onclick="closeTOC()">Donzela / Estrategista</a></li>
     <li><a href="#cap2-mae" class="toc-sub" onclick="closeTOC()">Mãe / Criativa</a></li>
     <li><a href="#cap2-bruxa" class="toc-sub" onclick="closeTOC()">Bruxa / Analista</a></li>
     <li><a href="#cap2-ancia" class="toc-sub" onclick="closeTOC()">Anciã / Visionária</a></li>
     <li><a href="#cap2-roda" class="toc-sub" onclick="closeTOC()">Roda do Ciclo</a></li>
     <hr class="toc-sep">
-    <li><a href="#cap3" class="toc-chapter" onclick="closeTOC()">Capítulo 3 — Desconstruindo a Culpa</a></li>
+    <li><a href="#cap3" class="toc-chapter" onclick="closeTOC()">Capítulo III — Desconstruindo a Culpa</a></li>
     <li><a href="#cap3-pilares" class="toc-sub" onclick="closeTOC()">3 Pilares da Autocompaixão</a></li>
     <li><a href="#cap3-timer" class="toc-sub" onclick="closeTOC()">Timer de Meditação</a></li>
     <hr class="toc-sep">
-    <li><a href="#cap4" class="toc-chapter" onclick="closeTOC()">Capítulo 4 — 28 Dias</a></li>
+    <li><a href="#cap4" class="toc-chapter" onclick="closeTOC()">Capítulo IV — 28 Dias</a></li>
     <li><a href="#cap4-diario" class="toc-sub" onclick="closeTOC()">Diário de 28 Dias</a></li>
     <li><a href="#cap4-humor" class="toc-sub" onclick="closeTOC()">Gráfico de Humor</a></li>
     <hr class="toc-sep">
-    <li><a href="#cap5" class="toc-chapter" onclick="closeTOC()">Capítulo 5 — Padrões Únicos</a></li>
+    <li><a href="#cap5" class="toc-chapter" onclick="closeTOC()">Capítulo V — Padrões Únicos</a></li>
     <li><a href="#cap5-quiz" class="toc-sub" onclick="closeTOC()">Quiz do Tipo Cíclico</a></li>
     <hr class="toc-sep">
-    <li><a href="#cap6" class="toc-chapter" onclick="closeTOC()">Capítulo 6 — Crenças Sabotadoras</a></li>
+    <li><a href="#cap6" class="toc-chapter" onclick="closeTOC()">Capítulo VI — Crenças Sabotadoras</a></li>
     <li><a href="#cap6-crenças" class="toc-sub" onclick="closeTOC()">As 7 Crenças Tóxicas</a></li>
     <hr class="toc-sep">
     <li><a href="#conclusao" class="toc-chapter" onclick="closeTOC()">Conclusão</a></li>
@@ -1786,6 +1837,14 @@ document.getElementById('btn-font-inc').addEventListener('click', () => {
 
 // ── BOOKMARK ──
 document.getElementById('btn-bookmark').addEventListener('click', () => {
+  if (!localStorage.getItem('ebook_bm-tip-seen')) {
+    document.getElementById('bookmark-tip-modal').style.display = 'flex';
+    return;
+  }
+  doSaveBookmark();
+});
+
+function doSaveBookmark() {
   const pos = window.scrollY;
   localStorage.setItem('ebook_bookmark', pos);
   const btn = document.getElementById('btn-bookmark');
@@ -1793,7 +1852,8 @@ document.getElementById('btn-bookmark').addEventListener('click', () => {
   btn.style.animation = 'ribbonPop 0.4s ease';
   setTimeout(() => btn.style.animation = '', 500);
   showSaveIndicator('🎗️ Marcador salvo!');
-});
+  updateTOCBookmark();
+}
 
 function checkBookmark() {
   const pos = localStorage.getItem('ebook_bookmark');
@@ -1811,6 +1871,10 @@ function checkBookmark() {
 
 // ── FOCUS MODE ──
 document.getElementById('btn-focus').addEventListener('click', () => {
+  if (!STATE.focusMode && !localStorage.getItem('ebook_focus-tip-seen')) {
+    document.getElementById('focus-tip-modal').style.display = 'flex';
+    return;
+  }
   STATE.focusMode ? disableFocusMode() : enableFocusMode();
 });
 
@@ -2598,6 +2662,235 @@ if ('serviceWorker' in navigator) {
   iosModal.addEventListener('click', function(e) {
     if (e.target === iosModal) closeIOSModal();
   });
+})();
+
+// ═══════════════════════════════════════════════════════════
+// NOVAS FUNCIONALIDADES — Foco, Marcador, Grifo, Modos, Flip
+// ═══════════════════════════════════════════════════════════
+
+// ── FOCUS TIP ─────────────────────────────────────────────
+window.closeFocusTip = function() {
+  localStorage.setItem('ebook_focus-tip-seen', '1');
+  document.getElementById('focus-tip-modal').style.display = 'none';
+  enableFocusMode();
+};
+
+// ── BOOKMARK TIP ──────────────────────────────────────────
+window.closeBookmarkTip = function() {
+  localStorage.setItem('ebook_bm-tip-seen', '1');
+  document.getElementById('bookmark-tip-modal').style.display = 'none';
+  doSaveBookmark();
+};
+
+function updateTOCBookmark() {
+  document.querySelectorAll('.toc-bookmark-marker').forEach(m => m.remove());
+  const pos = parseInt(localStorage.getItem('ebook_bookmark') || '0');
+  if (!pos) return;
+  const ids = ['intro','cap1','cap2','cap3','cap4','cap5','cap6','conclusao'];
+  let section = 'intro';
+  ids.forEach(id => {
+    const el = document.getElementById(id);
+    if (el && el.offsetTop <= pos + 300) section = id;
+  });
+  const link = document.querySelector('#toc-panel a[href="#' + section + '"]');
+  if (link) {
+    const m = document.createElement('span');
+    m.className = 'toc-bookmark-marker';
+    m.textContent = ' 🎗️';
+    link.appendChild(m);
+  }
+}
+
+// Restaurar marker no carregamento
+setTimeout(updateTOCBookmark, 2800);
+
+// ── GRIFO COUNTER ─────────────────────────────────────────
+function updateGrifoCount() {
+  const el = document.getElementById('grifo-count');
+  if (el) el.textContent = STATE.highlightData.length > 0 ? STATE.highlightData.length : '';
+}
+updateGrifoCount();
+
+// Redefine para incluir updateGrifoCount
+function saveHighlight(id, color, text) {
+  STATE.highlightData.push({ id, color, text });
+  localStorage.setItem('ebook_highlights', JSON.stringify(STATE.highlightData));
+  updateGrifoCount();
+}
+function removeHighlight(id) {
+  const span = document.querySelector('[data-hl-id="' + id + '"]');
+  if (span) {
+    const parent = span.parentNode;
+    while (span.firstChild) parent.insertBefore(span.firstChild, span);
+    parent.removeChild(span);
+  }
+  STATE.highlightData = STATE.highlightData.filter(h => h.id !== id);
+  localStorage.setItem('ebook_highlights', JSON.stringify(STATE.highlightData));
+  showSaveIndicator('Grifo removido');
+  updateGrifoCount();
+}
+
+// ── MODO GRIFO MOBILE ─────────────────────────────────────
+document.getElementById('btn-grifo').addEventListener('click', () => {
+  const active = document.body.classList.toggle('grifo-mode');
+  document.getElementById('btn-grifo').classList.toggle('active', active);
+  if (active) showSaveIndicator('✏️ Modo grifo ativo — toque em um parágrafo');
+  else hideHighlightTooltip();
+});
+
+// Em modo grifo: toque no parágrafo seleciona e mostra tooltip
+document.addEventListener('click', function(e) {
+  if (!document.body.classList.contains('grifo-mode')) return;
+  if (e.target.closest('#highlight-tooltip') || e.target.closest('#btn-grifo')) return;
+  const para = e.target.closest('.para-wrap p');
+  if (!para) return;
+  const range = document.createRange();
+  range.selectNode(para);
+  const sel = window.getSelection();
+  sel.removeAllRanges();
+  sel.addRange(range);
+  window._currentRange = range.cloneRange();
+  const tooltip = document.getElementById('highlight-tooltip');
+  tooltip.classList.add('show');
+  const rect = para.getBoundingClientRect();
+  tooltip.style.left = Math.max(8, Math.min(rect.left, window.innerWidth - 180)) + 'px';
+  tooltip.style.top = (rect.top - 52 + window.scrollY) + 'px';
+});
+
+// ── MODOS DE LEITURA ──────────────────────────────────────
+(function() {
+  const ICONS = { dark:'🌙', white:'☀️', sepia:'📜', night:'⬛' };
+  let _mode = localStorage.getItem('ebook_reading-mode') || 'dark';
+
+  function applyMode(mode) {
+    document.body.classList.remove('mode-white','mode-sepia','mode-night');
+    if (mode !== 'dark') document.body.classList.add('mode-' + mode);
+    localStorage.setItem('ebook_reading-mode', mode);
+    _mode = mode;
+    const btn = document.getElementById('btn-theme');
+    if (btn) btn.textContent = ICONS[mode] || '🌙';
+    document.querySelectorAll('.mode-option').forEach(opt => {
+      opt.classList.toggle('active', opt.dataset.mode === mode);
+    });
+  }
+
+  applyMode(_mode);
+
+  document.getElementById('btn-theme').addEventListener('click', () => {
+    document.getElementById('reading-mode-modal').style.display = 'flex';
+    document.querySelectorAll('.mode-option').forEach(opt => {
+      opt.classList.toggle('active', opt.dataset.mode === _mode);
+    });
+  });
+
+  document.addEventListener('click', function(e) {
+    const opt = e.target.closest('.mode-option');
+    if (opt && opt.dataset.mode) applyMode(opt.dataset.mode);
+  });
+
+  window.closeReadingModes = function() {
+    document.getElementById('reading-mode-modal').style.display = 'none';
+  };
+})();
+
+// ── FLIP DE PÁGINA ────────────────────────────────────────
+(function() {
+  const CHAPTERS = ['intro','cap1','cap2','cap3','cap4','cap5','cap6','conclusao'];
+  const LABELS = { intro:'Introdução', cap1:'Cap. I', cap2:'Cap. II', cap3:'Cap. III',
+                   cap4:'Cap. IV', cap5:'Cap. V', cap6:'Cap. VI', conclusao:'Conclusão' };
+  let _flipActive = false;
+  let _touchStartX = 0, _touchStartY = 0, _longTimer = null;
+
+  function getCurrentChapter() {
+    let cur = CHAPTERS[0];
+    CHAPTERS.forEach(id => {
+      const el = document.getElementById(id);
+      if (el && el.getBoundingClientRect().top < window.innerHeight * 0.45) cur = id;
+    });
+    return cur;
+  }
+
+  function flipTo(targetId) {
+    if (_flipActive || localStorage.getItem('ebook_flip-disabled') === '1') {
+      const el = document.getElementById(targetId);
+      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      return;
+    }
+    _flipActive = true;
+    const container = document.querySelector('.book-container');
+    container.classList.add('flipping-out');
+    setTimeout(() => {
+      container.classList.remove('flipping-out');
+      const el = document.getElementById(targetId);
+      if (el) {
+        el.scrollIntoView({ behavior: 'instant', block: 'start' });
+        window.scrollBy(0, -10);
+      }
+      requestAnimationFrame(() => {
+        container.classList.add('flipping-in');
+        setTimeout(() => { container.classList.remove('flipping-in'); _flipActive = false; }, 380);
+      });
+    }, 340);
+  }
+
+  // Injetar botões de navegação em cada capítulo
+  function injectNav() {
+    CHAPTERS.forEach((id, idx) => {
+      const section = document.getElementById(id);
+      if (!section) return;
+      if (section.querySelector('.chapter-nav')) return;
+      const nav = document.createElement('div');
+      nav.className = 'chapter-nav';
+      const prev = document.createElement('button');
+      prev.className = 'chapter-nav-btn';
+      if (idx === 0) { prev.disabled = true; prev.textContent = '◂'; }
+      else { prev.textContent = '◂ ' + (LABELS[CHAPTERS[idx-1]] || ''); prev.onclick = () => flipTo(CHAPTERS[idx-1]); }
+      const next = document.createElement('button');
+      next.className = 'chapter-nav-btn';
+      if (idx === CHAPTERS.length-1) { next.disabled = true; next.textContent = '▸'; }
+      else { next.textContent = (LABELS[CHAPTERS[idx+1]] || '') + ' ▸'; next.onclick = () => flipTo(CHAPTERS[idx+1]); }
+      nav.appendChild(prev);
+      nav.appendChild(next);
+      section.appendChild(nav);
+    });
+  }
+  setTimeout(injectNav, 150);
+
+  // Swipe horizontal
+  document.addEventListener('touchstart', function(e) {
+    _touchStartX = e.changedTouches[0].clientX;
+    _touchStartY = e.changedTouches[0].clientY;
+    // Long press para modo foco
+    const pw = e.target.closest('.para-wrap');
+    if (pw) {
+      _longTimer = setTimeout(() => {
+        if (!STATE.focusMode) enableFocusMode();
+        document.querySelectorAll('.para-wrap.focused').forEach(p => p.classList.remove('focused'));
+        pw.classList.add('focused');
+        if (navigator.vibrate) navigator.vibrate(18);
+      }, 600);
+    }
+  }, { passive: true });
+
+  document.addEventListener('touchmove', function(e) {
+    const dx = Math.abs(e.changedTouches[0].clientX - _touchStartX);
+    const dy = Math.abs(e.changedTouches[0].clientY - _touchStartY);
+    if (dx > 12 || dy > 12) { clearTimeout(_longTimer); _longTimer = null; }
+  }, { passive: true });
+
+  document.addEventListener('touchend', function(e) {
+    clearTimeout(_longTimer); _longTimer = null;
+    const dx = e.changedTouches[0].clientX - _touchStartX;
+    const dy = e.changedTouches[0].clientY - _touchStartY;
+    if (Math.abs(dx) > 75 && Math.abs(dx) > Math.abs(dy) * 1.6) {
+      const cur = getCurrentChapter();
+      const idx = CHAPTERS.indexOf(cur);
+      if (dx < 0 && idx < CHAPTERS.length - 1) flipTo(CHAPTERS[idx + 1]);
+      else if (dx > 0 && idx > 0) flipTo(CHAPTERS[idx - 1]);
+    }
+  }, { passive: true });
+
+  window._flipToChapter = flipTo;
 })();
 </script>
 
