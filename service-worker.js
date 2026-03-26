@@ -1,4 +1,4 @@
-const CACHE_NAME = '4-fases-v1.0.6';
+const CACHE_NAME = '4-fases-v1.0.7';
 
 // Assets com estratégia Stale-While-Revalidate (HTML, CSS, JS)
 const SWR_ASSETS = [

@@ -33,6 +33,12 @@
 /* ── Reset ── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+/* ── Transição suave entre modos de leitura ── */
+p, h1, h2, h3, h4, h5, h6, span, div, section, article, blockquote,
+label, textarea, input, select, button, a, li, td, th {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
 html { scroll-behavior: smooth; font-size: var(--fs); }
 
 body {
@@ -42,6 +48,7 @@ body {
   line-height: 1.9;
   overflow-x: hidden;
   min-height: 100vh;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 ::-webkit-scrollbar { width: 7px; }
@@ -149,8 +156,11 @@ body {
   background: rgba(11,15,25,0.93); backdrop-filter: blur(14px);
   border-bottom: 1px solid var(--border); padding: 0.55rem 1.5rem;
   display: flex; align-items: center; gap: 0.8rem;
-  transform: translateY(-100%); transition: transform 0.4s ease;
+  transform: translateY(-100%); transition: transform 0.4s ease, background-color 0.3s ease;
 }
+body.mode-white #fixed-header { background: rgba(245,240,232,0.96); }
+body.mode-sepia #fixed-header { background: rgba(44,24,16,0.96); }
+body.mode-night #fixed-header { background: rgba(0,0,0,0.97); }
 #fixed-header.visible { transform: translateY(0); }
 .header-progress-wrap { flex: 1; min-width: 0; }
 .header-progress-label {
@@ -210,6 +220,7 @@ body {
   max-width: 780px; margin: 0 auto; background: var(--surface);
   box-shadow: 0 0 80px rgba(0,0,0,0.6), inset 0 0 0 1px rgba(197,160,89,0.07);
   position: relative;
+  transition: background-color 0.3s ease;
 }
 
 /* ── Chapter / Section ── */
@@ -753,7 +764,7 @@ hr.fancy { border: none; height: 1px; background: linear-gradient(90deg, transpa
 .pwa-text small {
   font-family: 'Lato', sans-serif;
   font-size: 0.72rem;
-  color: rgba(255,255,255,0.65);
+  color: var(--text-dim);
   font-weight: 300;
 }
 
@@ -774,8 +785,8 @@ hr.fancy { border: none; height: 1px; background: linear-gradient(90deg, transpa
   min-height: 68px;
   background: transparent;
   border: none;
-  border-left: 1px solid rgba(255,255,255,0.1);
-  color: rgba(255,255,255,0.45);
+  border-left: 1px solid var(--border);
+  color: var(--text-dim);
   font-size: 1rem;
   cursor: pointer;
   flex-shrink: 0;
@@ -783,8 +794,8 @@ hr.fancy { border: none; height: 1px; background: linear-gradient(90deg, transpa
   -webkit-tap-highlight-color: transparent;
 }
 #pwa-dismiss:active {
-  background: rgba(255,255,255,0.08);
-  color: white;
+  background: rgba(128,128,128,0.12);
+  color: var(--text);
 }
 
 /* ── Modal iOS ── */
@@ -802,7 +813,7 @@ hr.fancy { border: none; height: 1px; background: linear-gradient(90deg, transpa
 }
 
 #ios-install-content {
-  background: #111827;
+  background: var(--surface);
   border: 1px solid rgba(197,160,89,0.3);
   border-bottom: none;
   border-radius: 20px 20px 0 0;
@@ -818,9 +829,9 @@ hr.fancy { border: none; height: 1px; background: linear-gradient(90deg, transpa
 #ios-modal-close {
   position: absolute;
   top: 16px; right: 16px;
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.12);
-  color: rgba(255,255,255,0.6);
+  background: rgba(128,128,128,0.12);
+  border: 1px solid var(--border-light);
+  color: var(--text-muted);
   border-radius: 50%;
   width: 32px; height: 32px;
   font-size: 0.85rem;
@@ -828,7 +839,7 @@ hr.fancy { border: none; height: 1px; background: linear-gradient(90deg, transpa
   display: flex; align-items: center; justify-content: center;
   transition: background 0.2s;
 }
-#ios-modal-close:active { background: rgba(255,255,255,0.15); }
+#ios-modal-close:active { background: rgba(128,128,128,0.2); }
 
 .ios-moon-icon {
   font-size: 2.8rem;
@@ -848,7 +859,7 @@ hr.fancy { border: none; height: 1px; background: linear-gradient(90deg, transpa
 #ios-install-content > p {
   font-family: 'Lato', sans-serif;
   font-size: 0.9rem;
-  color: rgba(243,244,246,0.7);
+  color: var(--text-muted);
   text-align: center;
   margin-bottom: 24px;
 }
@@ -880,7 +891,7 @@ hr.fancy { border: none; height: 1px; background: linear-gradient(90deg, transpa
 .ios-step-text {
   font-family: 'Lato', sans-serif;
   font-size: 0.88rem;
-  color: rgba(243,244,246,0.85);
+  color: var(--text);
   line-height: 1.5;
   display: flex;
   align-items: center;
@@ -1127,9 +1138,10 @@ blockquote {
   font-family: var(--font-display);
   font-size: 1.3rem;
   font-style: italic;
-  color: rgba(243,244,246,0.8);
+  color: var(--text-muted);
   line-height: 1.95;
   border-radius: 0 6px 6px 0;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* Aspa decorativa gigante */
@@ -1316,8 +1328,10 @@ blockquote {
 /* ── White Mode ── */
 body.mode-white {
   --bg: #F5F0E8; --surface: #FFFFFF; --surface-2: #F7F3EE;
-  --surface-3: #EDE8E0; --text: #1C1917; --text-muted: #44403C;
+  --surface-3: #EDE8E0; --text: #1C1917; --text-muted: #57534E;
   --text-dim: #78716C; --border: #D6C9BD; --border-light: #C4B5A5;
+  --gold: #8B6914; --gold-light: #A07820; --gold-dark: #6B5010;
+  --shadow: 0 4px 24px rgba(0,0,0,0.15);
 }
 body.mode-white #book-wrap {
   background: linear-gradient(90deg, #C8C0B4 0%, #D9D0C5 5%, #F5F0E8 12%, #F5F0E8 88%, #D9D0C5 95%, #C8C0B4 100%);
@@ -1368,10 +1382,11 @@ body.mode-night .book-container {
   padding: 2rem;
 }
 .feature-tip-box {
-  background: #111827; border: 1px solid var(--gold);
+  background: var(--surface); border: 1px solid var(--gold);
   border-radius: 18px; padding: 2.8rem 2.2rem 2.4rem;
   max-width: 420px; width: 100%; text-align: center;
   box-shadow: 0 32px 90px rgba(0,0,0,0.85), 0 0 0 1px rgba(197,160,89,0.1);
+  transition: background-color 0.3s ease;
 }
 .feature-tip-icon { font-size: 2.8rem; margin-bottom: 0.7rem; display: block; }
 .feature-tip-title {
@@ -1380,7 +1395,7 @@ body.mode-night .book-container {
 }
 .feature-tip-desc {
   font-family: var(--font-display); font-size: 1.08rem;
-  font-style: italic; color: rgba(243,244,246,0.75);
+  font-style: italic; color: var(--text-muted);
   line-height: 1.85; margin-bottom: 2rem;
 }
 .feature-tip-btn {
@@ -1915,8 +1930,8 @@ body.grifo-mode .para-wrap p { outline: 1px dashed rgba(197,160,89,0.18); border
   bottom: calc(100% + 8px);
   left: 50%;
   transform: translateX(-50%);
-  background: #1a2235;
-  color: var(--gold-light);
+  background: var(--surface-2);
+  color: var(--gold);
   font-family: var(--font-ui);
   font-size: 0.68rem;
   white-space: nowrap;
