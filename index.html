@@ -129,11 +129,12 @@
 
 <!-- HIGHLIGHT TOOLTIP -->
 <div id="highlight-tooltip">
-  <span class="hl-label">Grifar:</span>
+  <span class="hl-label">Grifo:</span>
   <button class="hl-btn hl-gold" data-color="gold" title="Dourado"></button>
   <button class="hl-btn hl-purple" data-color="purple" title="Roxo"></button>
   <button class="hl-btn hl-pink" data-color="pink" title="Rosa"></button>
   <button class="hl-btn hl-green" data-color="green" title="Verde"></button>
+  <button class="hl-btn hl-remove" id="hl-remove-btn" title="Remover grifo">✕</button>
 </div>
 
 <!-- SAVE INDICATOR -->
@@ -2252,75 +2253,87 @@ function restoreWheel() {
   if (saved) setCurrentPhase(saved);
 }
 
-// ── HIGHLIGHTS ──
-document.addEventListener('mouseup', handleSelection);
-document.addEventListener('touchend', handleSelection);
-
-function handleSelection(e) {
-  const sel = window.getSelection();
-  if (!sel || sel.isCollapsed || !sel.toString().trim()) {
-    hideHighlightTooltip();
-    return;
-  }
-  const tooltip = document.getElementById('highlight-tooltip');
-  tooltip.classList.add('show');
-  const range = sel.getRangeAt(0);
-  const rect = range.getBoundingClientRect();
-  tooltip.style.left = Math.min(rect.left, window.innerWidth - 200) + 'px';
-  tooltip.style.top = (rect.top - 55 + window.scrollY) + 'px';
-  window._currentRange = range.cloneRange();
-}
-
+// ── HIGHLIGHTS (paragraph-level — funciona em Android, iOS e desktop) ──
 function hideHighlightTooltip() {
-  document.getElementById('highlight-tooltip').classList.remove('show');
-  window._currentRange = null;
+  const t = document.getElementById('highlight-tooltip');
+  t.classList.remove('show', 'has-hl');
+  window._currentGrifoPara = null;
 }
 
-document.querySelectorAll('.hl-btn').forEach(btn => {
-  btn.addEventListener('mousedown', e => {
-    e.preventDefault();
-    applyHighlight(btn.dataset.color);
-    hideHighlightTooltip();
-    window.getSelection().removeAllRanges();
-  });
+function showHighlightTooltip(para) {
+  window._currentGrifoPara = para;
+  const tooltip = document.getElementById('highlight-tooltip');
+  const hasHl = para.classList.contains('highlight');
+  tooltip.classList.toggle('has-hl', hasHl);
+  tooltip.classList.add('show');
+  const rect = para.getBoundingClientRect();
+  const tipTop = rect.top > 60 ? rect.top - 52 : rect.bottom + 8;
+  tooltip.style.left = Math.max(8, Math.min(rect.left, window.innerWidth - 210)) + 'px';
+  tooltip.style.top = tipTop + 'px';
+}
+
+document.querySelectorAll('.hl-btn:not(#hl-remove-btn)').forEach(btn => {
+  btn.addEventListener('mousedown', e => { e.preventDefault(); applyParaHighlight(btn.dataset.color); });
+  btn.addEventListener('touchstart', e => { e.preventDefault(); applyParaHighlight(btn.dataset.color); }, { passive: false });
 });
 
-function applyHighlight(color) {
-  if (!window._currentRange) return;
-  const range = window._currentRange;
-  const span = document.createElement('span');
-  span.className = 'highlight ' + color;
-  const id = 'hl-' + Date.now();
-  span.dataset.hlId = id;
-  span.title = 'Clique para remover grifo';
-  span.onclick = function() { removeHighlight(id); };
-  try {
-    range.surroundContents(span);
-    saveHighlight(id, color, span.textContent);
-    showSaveIndicator('✦ Grifo salvo!');
-  } catch(e) { /* partial selection across nodes */ }
-}
+document.getElementById('hl-remove-btn').addEventListener('mousedown', e => { e.preventDefault(); removeParaHighlight(); });
+document.getElementById('hl-remove-btn').addEventListener('touchstart', e => { e.preventDefault(); removeParaHighlight(); }, { passive: false });
 
-function saveHighlight(id, color, text) {
-  STATE.highlightData.push({ id, color, text });
+function applyParaHighlight(color) {
+  const para = window._currentGrifoPara;
+  if (!para) return;
+  const noteBtn = para.closest('.para-wrap') && para.closest('.para-wrap').querySelector('.note-btn');
+  const paraId = noteBtn ? noteBtn.dataset.para : ('t-' + Date.now());
+  para.classList.remove('highlight', 'gold', 'purple', 'pink', 'green');
+  para.classList.add('highlight', color);
+  STATE.highlightData = STATE.highlightData.filter(h => h.paraId !== paraId);
+  STATE.highlightData.push({ paraId, color });
   localStorage.setItem('ebook_highlights', JSON.stringify(STATE.highlightData));
+  updateGrifoCount();
+  hideHighlightTooltip();
+  showSaveIndicator('✦ Grifo salvo!');
 }
 
-function removeHighlight(id) {
-  const span = document.querySelector('[data-hl-id="' + id + '"]');
-  if (span) {
-    const parent = span.parentNode;
-    while (span.firstChild) parent.insertBefore(span.firstChild, span);
-    parent.removeChild(span);
+function removeParaHighlight() {
+  const para = window._currentGrifoPara;
+  if (!para) return;
+  const noteBtn = para.closest('.para-wrap') && para.closest('.para-wrap').querySelector('.note-btn');
+  const paraId = noteBtn ? noteBtn.dataset.para : null;
+  para.classList.remove('highlight', 'gold', 'purple', 'pink', 'green');
+  if (paraId) {
+    STATE.highlightData = STATE.highlightData.filter(h => h.paraId !== paraId);
+    localStorage.setItem('ebook_highlights', JSON.stringify(STATE.highlightData));
   }
-  STATE.highlightData = STATE.highlightData.filter(h => h.id !== id);
-  localStorage.setItem('ebook_highlights', JSON.stringify(STATE.highlightData));
+  updateGrifoCount();
+  hideHighlightTooltip();
   showSaveIndicator('Grifo removido');
+}
+
+function restoreHighlights() {
+  try {
+    const data = JSON.parse(localStorage.getItem('ebook_highlights') || '[]');
+    const paraHighlights = data.filter(h => h.paraId);
+    paraHighlights.forEach(h => {
+      const btn = document.querySelector('.note-btn[data-para="' + h.paraId + '"]');
+      if (!btn) return;
+      const wrap = btn.closest('.para-wrap');
+      const p = wrap && wrap.querySelector('p');
+      if (!p) return;
+      p.classList.remove('highlight', 'gold', 'purple', 'pink', 'green');
+      p.classList.add('highlight', h.color);
+    });
+    STATE.highlightData = paraHighlights;
+    updateGrifoCount();
+  } catch(e) {}
 }
 
 document.addEventListener('mousedown', e => {
   if (!e.target.closest('#highlight-tooltip')) hideHighlightTooltip();
 });
+document.addEventListener('touchstart', e => {
+  if (!e.target.closest('#highlight-tooltip') && !e.target.closest('.para-wrap p')) hideHighlightTooltip();
+}, { passive: true });
 
 // ── CHECKLIST ──
 function initChecklist() {
@@ -2799,6 +2812,7 @@ function restoreAll() {
   restoreNotes();
   restoreSliders();
   restoreWheel();
+  restoreHighlights();
   initDiary();
   initMoodGraph();
   initQuiz();
@@ -2970,50 +2984,21 @@ function updateGrifoCount() {
 }
 updateGrifoCount();
 
-// Redefine para incluir updateGrifoCount
-function saveHighlight(id, color, text) {
-  STATE.highlightData.push({ id, color, text });
-  localStorage.setItem('ebook_highlights', JSON.stringify(STATE.highlightData));
-  updateGrifoCount();
-}
-function removeHighlight(id) {
-  const span = document.querySelector('[data-hl-id="' + id + '"]');
-  if (span) {
-    const parent = span.parentNode;
-    while (span.firstChild) parent.insertBefore(span.firstChild, span);
-    parent.removeChild(span);
-  }
-  STATE.highlightData = STATE.highlightData.filter(h => h.id !== id);
-  localStorage.setItem('ebook_highlights', JSON.stringify(STATE.highlightData));
-  showSaveIndicator('Grifo removido');
-  updateGrifoCount();
-}
-
-// ── MODO GRIFO MOBILE ─────────────────────────────────────
+// ── MODO GRIFO ─────────────────────────────────────────────
 document.getElementById('btn-grifo').addEventListener('click', () => {
   const active = document.body.classList.toggle('grifo-mode');
   document.getElementById('btn-grifo').classList.toggle('active', active);
-  if (active) showSaveIndicator('✏️ Modo grifo ativo — toque em um parágrafo');
-  else hideHighlightTooltip();
+  hideHighlightTooltip();
+  if (active) showSaveIndicator('✏️ Modo grifo — toque em um parágrafo');
 });
 
-// Em modo grifo: toque no parágrafo seleciona e mostra tooltip
+// Em modo grifo: toque no parágrafo mostra seletor de cor
 document.addEventListener('click', function(e) {
   if (!document.body.classList.contains('grifo-mode')) return;
   if (e.target.closest('#highlight-tooltip') || e.target.closest('#btn-grifo')) return;
   const para = e.target.closest('.para-wrap p');
-  if (!para) return;
-  const range = document.createRange();
-  range.selectNode(para);
-  const sel = window.getSelection();
-  sel.removeAllRanges();
-  sel.addRange(range);
-  window._currentRange = range.cloneRange();
-  const tooltip = document.getElementById('highlight-tooltip');
-  tooltip.classList.add('show');
-  const rect = para.getBoundingClientRect();
-  tooltip.style.left = Math.max(8, Math.min(rect.left, window.innerWidth - 180)) + 'px';
-  tooltip.style.top = (rect.top - 52 + window.scrollY) + 'px';
+  if (!para) { hideHighlightTooltip(); return; }
+  showHighlightTooltip(para);
 });
 
 // ── MODOS DE LEITURA ──────────────────────────────────────
@@ -3139,6 +3124,8 @@ document.addEventListener('click', function(e) {
 
   document.addEventListener('touchend', function(e) {
     clearTimeout(_longTimer); _longTimer = null;
+    // Ignore swipes starting from screen edges (Safari back/forward gesture zone)
+    if (_touchStartX < 22 || _touchStartX > window.innerWidth - 22) return;
     const dx = e.changedTouches[0].clientX - _touchStartX;
     const dy = e.changedTouches[0].clientY - _touchStartY;
     if (Math.abs(dx) > 75 && Math.abs(dx) > Math.abs(dy) * 1.6) {
