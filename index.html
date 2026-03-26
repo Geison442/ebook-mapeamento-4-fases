@@ -146,12 +146,12 @@
     <div class="header-progress-bar"><div class="header-progress-fill" id="progress-fill"></div></div>
   </div>
   <div class="header-controls">
-    <button class="header-btn" id="btn-font-dec" title="Diminuir fonte">A−</button>
-    <button class="header-btn" id="btn-font-inc" title="Aumentar fonte">A+</button>
-    <button class="header-btn" id="btn-grifo" title="Modo grifo (✏️ toque para grifar)">✏️<span id="grifo-count"></span></button>
-    <button class="header-btn" id="btn-bookmark" title="Marcar página">🎗️</button>
-    <button class="header-btn" id="btn-focus" title="Modo foco">◎</button>
-    <button class="header-btn" id="btn-theme" title="Modo de leitura">🌙</button>
+    <span class="htip-wrap"><button class="header-btn" id="btn-font-dec" title="Diminuir fonte">A−</button><span class="htip">Diminuir fonte</span></span>
+    <span class="htip-wrap"><button class="header-btn" id="btn-font-inc" title="Aumentar fonte">A+</button><span class="htip">Aumentar fonte</span></span>
+    <span class="htip-wrap"><button class="header-btn" id="btn-grifo" title="Ativar modo grifo — selecione um trecho e escolha a cor">✏️<span id="grifo-count"></span></button><span class="htip">Grifar texto — selecione e escolha cor</span></span>
+    <span class="htip-wrap"><button class="header-btn" id="btn-bookmark" title="Salvar marcador de página — guarda onde você parou">🎗️</button><span class="htip">Marcador — salva onde você parou</span></span>
+    <span class="htip-wrap"><button class="header-btn" id="btn-focus" title="Modo foco — toque num parágrafo para iluminá-lo isoladamente">◎</button><span class="htip">Modo foco — ilumina um parágrafo</span></span>
+    <span class="htip-wrap"><button class="header-btn" id="btn-theme" title="Modo de leitura — dark, sépia, papel branco ou night mode">🌙</button><span class="htip">Modo de leitura — 4 temas visuais</span></span>
   </div>
 </div>
 
@@ -1691,13 +1691,21 @@
     <h2 class="chapter-title" style="margin-bottom:0.5rem">✦ Minha Jornada</h2>
     <p style="font-family:var(--font-display);font-style:italic;color:var(--text-muted);margin-bottom:2rem;line-height:1.7">Cada registro é um passo na sua reconexão cíclica. Celebre sua consistência.</p>
     <div class="journey-stat-grid" id="journey-stats"></div>
-    <h3 class="section-title">Marcos da Jornada</h3>
-    <div class="journey-milestones" id="journey-milestones"></div>
-    <div class="energy-chart-wrap">
-      <div class="energy-chart-title">☽ Energia ao Longo do Tempo</div>
-      <div class="energy-chart" id="energy-chart"></div>
-    </div>
     <div class="journey-phrase" id="journey-phrase">Sua jornada está apenas começando. Cada dia registrado é sabedoria que nenhum livro pode ensinar.</div>
+    <h3 class="section-title" style="margin-top:2.5rem">Marcos da Jornada</h3>
+    <p class="input-hint" style="margin-bottom:1.2rem">Conquistas desbloqueadas conforme você avança na sua jornada cíclica.</p>
+    <div class="journey-milestones" id="journey-milestones"></div>
+    <div class="energy-chart-wrap" style="margin-top:2.5rem">
+      <div class="energy-chart-title">☽ Energia — Últimos 30 Registros</div>
+      <p class="input-hint" style="margin-bottom:1rem">Cada barra representa um dia registrado. A altura indica seu nível de energia (1–10).</p>
+      <div class="energy-chart" id="energy-chart"></div>
+      <div class="chart-axis-labels"><span>Dia mais antigo</span><span>Mais recente</span></div>
+    </div>
+    <div class="monthly-energy-chart-wrap" style="margin-top:2rem">
+      <div class="energy-chart-title">◆ Energia Média por Mês</div>
+      <p class="input-hint" style="margin-bottom:1rem">Visão da evolução mês a mês — registre com consistência para ver seus padrões.</p>
+      <div class="monthly-energy-chart" id="monthly-energy-chart"></div>
+    </div>
   </div>
 </div>
 
@@ -1707,14 +1715,19 @@
 <div id="section-library" class="book-container" style="max-width:740px;margin:0 auto;">
   <div style="padding:3.5rem 3.5rem 5rem;">
     <h2 class="chapter-title" style="margin-bottom:0.5rem">◆ Minha Biblioteca</h2>
-    <p style="font-family:var(--font-display);font-style:italic;color:var(--text-muted);margin-bottom:1.8rem;line-height:1.7">Seus grifos e anotações, organizados para consulta a qualquer momento.</p>
+    <p style="font-family:var(--font-display);font-style:italic;color:var(--text-muted);margin-bottom:0.6rem;line-height:1.7">Seus grifos e anotações, organizados para consulta a qualquer momento.</p>
+    <p class="input-hint" style="margin-bottom:1.5rem">Para grifar: selecione qualquer texto durante a leitura e escolha uma cor. Para anotar: clique no ícone 📝 ao lado de cada parágrafo.</p>
     <div class="library-tab-row">
       <button class="library-tab active" onclick="switchLibraryTab('highlights',this)">✦ Grifos</button>
       <button class="library-tab" onclick="switchLibraryTab('notes',this)">📝 Anotações</button>
     </div>
     <div class="library-content active" id="lib-highlights"></div>
     <div class="library-content" id="lib-notes"></div>
-    <button class="library-export-btn" onclick="exportLibrary()" title="Exportar todos os grifos e anotações como arquivo .txt">⬇ Exportar como Texto (.txt)</button>
+    <div class="library-export-row">
+      <button class="library-export-btn" onclick="exportLibrary()" title="Exportar todos os grifos e anotações como arquivo de texto .txt">⬇ Exportar como Texto (.txt)</button>
+      <button class="library-export-btn pdf" onclick="exportLibraryPDF()" title="Exportar como PDF elegante com layout premium — nome: Meu Diário Lunar [Mês Ano].pdf">✦ Exportar PDF Elegante</button>
+    </div>
+    <p class="input-hint" style="margin-top:0.8rem;text-align:center">O PDF inclui grifos, anotações e insights organizados com layout premium. Use a opção Imprimir do seu navegador e selecione "Salvar como PDF".</p>
   </div>
 </div>
 
@@ -1768,15 +1781,18 @@
       </div>
     </div>
     <div class="input-group">
-      <span class="label-main">Energia (1–10)</span>
+      <span class="label-main">Nível de Energia</span>
+      <p class="input-hint">Arraste o controle para registrar como estava sua energia neste dia.</p>
       <div class="slider-group">
         <input type="range" min="1" max="10" value="5" id="cal-energy-slider" oninput="document.getElementById('cal-energy-val').textContent=this.value">
         <span class="slider-value" id="cal-energy-val">5</span>
       </div>
+      <div class="slider-legend"><span>1 = esgotada</span><span>10 = plena de energia</span></div>
     </div>
     <div class="input-group">
       <span class="label-main">Nota livre do dia</span>
-      <textarea class="input-text" id="cal-note-text" rows="3" placeholder="O que foi especial hoje? Como seu corpo e mente estiveram?"></textarea>
+      <p class="input-hint">Escreva livremente — sem julgamento. Este é seu espaço seguro.</p>
+      <textarea class="input-text" id="cal-note-text" rows="3" placeholder="Como foi hoje? O que seu corpo sentiu? Algo te surpreendeu? Que sensação ficou?"></textarea>
     </div>
     <div class="input-group">
       <span class="label-main">Práticas realizadas</span>
@@ -1802,11 +1818,13 @@
     <h2 class="monthly-quiz-title" id="monthly-quiz-title">☽ Encerrando o Mês</h2>
     <p class="monthly-quiz-subtitle" id="monthly-quiz-subtitle">Como foi sua jornada?</p>
     <div class="monthly-quiz-field">
-      <label>Energia Geral do Mês (1–10)</label>
+      <label>Energia Geral do Mês</label>
+      <p class="input-hint" style="font-size:0.75rem;margin-bottom:0.5rem;color:var(--text-dim)">Como foi sua energia ao longo deste ciclo, de forma geral?</p>
       <div class="slider-group">
         <input type="range" min="1" max="10" value="5" id="mq-energia" oninput="document.getElementById('mq-energia-val').textContent=this.value">
         <span class="slider-value" id="mq-energia-val">5</span>
       </div>
+      <div class="slider-legend"><span>1 = esgotada</span><span>10 = plena de energia</span></div>
     </div>
     <div class="monthly-quiz-field">
       <label>Fase mais desafiadora</label>
@@ -1828,11 +1846,13 @@
     </div>
     <div class="monthly-quiz-field">
       <label>Maior aprendizado do mês</label>
-      <textarea class="input-text" id="mq-aprendizado" rows="3" placeholder="O que o ciclo que passou te revelou?"></textarea>
+      <p class="input-hint" style="font-size:0.75rem;margin-bottom:0.5rem;color:var(--text-dim)">Escreva uma frase, uma palavra, uma imagem — o que o ciclo te ensinou?</p>
+      <textarea class="input-text" id="mq-aprendizado" rows="3" placeholder="O que este ciclo me revelou foi... Aprendi que meu corpo... A fase que mais me ensinou foi..."></textarea>
     </div>
     <div class="monthly-quiz-field">
       <label>Intenção para o próximo mês</label>
-      <textarea class="input-text" id="mq-intencao" rows="2" placeholder="O que você honrará no próximo ciclo?"></textarea>
+      <p class="input-hint" style="font-size:0.75rem;margin-bottom:0.5rem;color:var(--text-dim)">Uma semente de intenção — simples e verdadeira.</p>
+      <textarea class="input-text" id="mq-intencao" rows="2" placeholder="No próximo ciclo, quero honrar... Vou me permitir... Minha intenção é..."></textarea>
     </div>
     <button class="monthly-save-btn" onclick="saveMonthlyQuiz()">Guardar minha jornada ☽</button>
   </div>
@@ -3510,9 +3530,10 @@ function updateJourney() {
   const totalDays = records.length;
   const totalPractices = records.reduce((s, r) => s + ((r.practices || []).length), 0);
 
-  // Primeiro registro
   const firstKey = localStorage.getItem('4fases-first-use');
-  const daysUsingApp = firstKey ? Math.floor((Date.now() - new Date(firstKey).getTime()) / (1000*60*60*24)) + 1 : 1;
+  const firstDate = firstKey ? new Date(firstKey) : new Date();
+  const daysUsingApp = Math.max(1, Math.floor((Date.now() - firstDate.getTime()) / (1000*60*60*24)) + 1);
+  const monthsUsing  = Math.floor(daysUsingApp / 30);
 
   // Stats
   const statsEl = document.getElementById('journey-stats');
@@ -3525,14 +3546,37 @@ function updateJourney() {
     ].map(s => '<div class="journey-stat-card"><div class="journey-stat-num">' + s.num + '</div><div class="journey-stat-label">' + s.label + '</div></div>').join('');
   }
 
-  // Marcos
+  // Frase motivacional personalizada por tempo de uso
+  const phraseEl = document.getElementById('journey-phrase');
+  if (phraseEl) {
+    let phrase;
+    if (daysUsingApp >= 365) {
+      phrase = 'Você está nesta jornada há mais de 1 ano. Cada ciclo te trouxe uma camada mais profunda de autoconhecimento. Você é uma guardiã da sua própria sabedoria cíclica. ✦';
+    } else if (daysUsingApp >= 180) {
+      phrase = 'Você está nesta jornada há ' + monthsUsing + ' meses. Sua cartografia interna já revela padrões que pouquíssimas mulheres se permitem enxergar. Continue. ☽';
+    } else if (daysUsingApp >= 90) {
+      phrase = 'Você está nesta jornada há ' + monthsUsing + ' meses. Cada ciclo te trouxe mais sabedoria. Você está aprendendo a língua do seu próprio corpo. ◆';
+    } else if (daysUsingApp >= 30) {
+      phrase = 'Você está nesta jornada há ' + monthsUsing + (monthsUsing === 1 ? ' mês' : ' meses') + '. Um ciclo completo de consciência. Isso é raro e precioso. ✦';
+    } else if (daysUsingApp >= 7) {
+      phrase = 'Você está nesta jornada há ' + daysUsingApp + ' dias. Sua consistência já está plantando raízes profundas. ☽';
+    } else {
+      phrase = 'Sua jornada está começando. Cada dia registrado é uma conversa com sua natureza cíclica — a mais sábia que existe. ✦';
+    }
+    phraseEl.textContent = phrase;
+  }
+
+  // Marcos de tempo expandidos
   const MILESTONES = [
-    { id: 'first', icon: '✦', text: 'Primeiro registro', threshold: () => totalDays >= 1 },
-    { id: 'week',  icon: '☽', text: '7 dias de jornada',  threshold: () => daysUsingApp >= 7 },
-    { id: 'practices30', icon: '🌟', text: '30 práticas realizadas', threshold: () => totalPractices >= 30 },
-    { id: 'month1', icon: '✦', text: '1 mês completo',  threshold: () => daysUsingApp >= 30 },
-    { id: 'days14', icon: '☽', text: '14 dias registrados', threshold: () => totalDays >= 14 },
-    { id: 'days28', icon: '◆', text: 'Ciclo completo (28 registros)', threshold: () => totalDays >= 28 },
+    { id: 'first',        icon: '✦', text: 'Primeiro registro realizado',     threshold: () => totalDays >= 1 },
+    { id: 'week',         icon: '☽', text: '1 semana de jornada',              threshold: () => daysUsingApp >= 7 },
+    { id: 'days14',       icon: '◆', text: '14 dias registrados',              threshold: () => totalDays >= 14 },
+    { id: 'month1',       icon: '🌙', text: '1 mês de consciência cíclica',    threshold: () => daysUsingApp >= 30 },
+    { id: 'practices30',  icon: '🌟', text: '30 práticas realizadas',           threshold: () => totalPractices >= 30 },
+    { id: 'days28',       icon: '✧', text: 'Ciclo lunar completo (28 dias)',    threshold: () => totalDays >= 28 },
+    { id: 'months3',      icon: '☽', text: '3 meses de jornada lunar',         threshold: () => daysUsingApp >= 90 },
+    { id: 'months6',      icon: '◆', text: '6 meses — meio ano de sabedoria',  threshold: () => daysUsingApp >= 180 },
+    { id: 'year1',        icon: '✦', text: '1 ano de reconexão cíclica',       threshold: () => daysUsingApp >= 365 },
   ];
   const milestonesEl = document.getElementById('journey-milestones');
   if (milestonesEl) {
@@ -3544,40 +3588,62 @@ function updateJourney() {
       return '<div class="journey-milestone' + (achieved ? ' achieved' : '') + '">' +
         '<div class="journey-milestone-icon' + (achieved ? '' : ' locked') + '">' + m.icon + '</div>' +
         '<div class="journey-milestone-text">' + m.text + '</div>' +
-        (dateStr ? '<div class="journey-milestone-date">' + dateStr + '</div>' : '') +
+        (dateStr ? '<div class="journey-milestone-date">Conquistado em ' + dateStr + '</div>' : '<div class="journey-milestone-date locked-label">Em breve ✦</div>') +
         '</div>';
     }).join('');
   }
 
-  // Gráfico de energia
+  // Gráfico de energia — últimos 30 dias
   const chartEl = document.getElementById('energy-chart');
   if (chartEl) {
     const last30 = records.slice(-30);
     if (last30.length === 0) {
-      chartEl.innerHTML = '<div style="color:var(--text-dim);font-family:var(--font-ui);font-size:0.72rem;padding:0.5rem;align-self:center">Registre dias para ver seu gráfico ☽</div>';
+      chartEl.innerHTML = '<div style="color:var(--text-dim);font-family:var(--font-ui);font-size:0.8rem;padding:1rem;align-self:center;text-align:center">Registre dias no Calendário para ver seu gráfico ☽</div>';
     } else {
       chartEl.innerHTML = last30.map(r => {
-        const pct = ((r.energy || 5) / 10 * 100);
-        return '<div class="energy-bar" style="height:' + pct + '%" title="' + r._dateKey + ': ' + (r.energy||5) + '/10"></div>';
+        const e = r.energy || 5;
+        const pct = (e / 10 * 100);
+        const moodMap = {'😢':'#EF4444','😐':'#6B7280','🙂':'#F59E0B','😊':'#10B981','🌟':'#C5A059'};
+        const moodColor = moodMap[r.mood] || 'var(--gold)';
+        return '<div class="energy-bar-wrap" title="' + (r._dateKey||'') + ' — Energia: ' + e + '/10' + (r.mood ? ' — Humor: ' + r.mood : '') + '">' +
+          (r.mood ? '<div class="energy-bar-mood" style="color:' + moodColor + '">' + r.mood + '</div>' : '<div class="energy-bar-mood"></div>') +
+          '<div class="energy-bar" style="height:' + pct + '%;background:' + (e >= 8 ? 'var(--gold)' : e >= 5 ? '#8B5CF6' : '#4F46E5') + '"></div>' +
+          '</div>';
       }).join('');
-      // completar com vazios até 30
       for (let i = last30.length; i < 30; i++) {
-        chartEl.innerHTML += '<div class="energy-bar-empty"></div>';
+        chartEl.innerHTML += '<div class="energy-bar-wrap"><div class="energy-bar-mood"></div><div class="energy-bar-empty"></div></div>';
       }
     }
   }
 
-  // Frase motivacional
-  const phraseEl = document.getElementById('journey-phrase');
-  if (phraseEl) {
-    const phrases = [
-      'Sua jornada está apenas começando. Cada dia registrado é sabedoria que nenhum livro pode ensinar.',
-      'Você já percorreu ' + daysUsingApp + ' dias nessa jornada. Sua consistência é seu maior superpoder. ✦',
-      'Cada registro é uma conversa com sua própria natureza. Continue ouvindo. ☽',
-      totalDays >= 7 ? 'Você tem ' + totalDays + ' registros. Sua sabedoria cíclica está sendo cartografada em tempo real. ◆' : null,
-      daysUsingApp >= 30 ? 'Um mês completo de consciência cíclica. Você fez algo extraordinário. ✦' : null,
-    ].filter(Boolean);
-    phraseEl.textContent = phrases[Math.min(Math.floor(daysUsingApp / 7), phrases.length - 1)];
+  // Gráfico de energia média por mês
+  const monthlyEl = document.getElementById('monthly-energy-chart');
+  if (monthlyEl) {
+    const byMonth = {};
+    records.forEach(r => {
+      if (!r._dateKey) return;
+      const m = r._dateKey.slice(0, 7); // YYYY-MM
+      if (!byMonth[m]) byMonth[m] = [];
+      byMonth[m].push(r.energy || 5);
+    });
+    const months = Object.keys(byMonth).sort();
+    if (months.length === 0) {
+      monthlyEl.innerHTML = '<div style="color:var(--text-dim);font-family:var(--font-ui);font-size:0.8rem;padding:1rem;text-align:center">Registre ao menos 1 mês para ver a evolução ✦</div>';
+    } else {
+      const MONTH_NAMES = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+      monthlyEl.innerHTML = months.map(m => {
+        const vals = byMonth[m];
+        const avg = vals.reduce((a,b) => a+b, 0) / vals.length;
+        const pct = (avg / 10 * 100);
+        const [, mm] = m.split('-');
+        const label = MONTH_NAMES[parseInt(mm,10)-1] || mm;
+        return '<div class="monthly-bar-col">' +
+          '<div class="monthly-bar" style="height:' + pct.toFixed(0) + '%;" title="' + label + ': média ' + avg.toFixed(1) + '/10"></div>' +
+          '<div class="monthly-bar-label">' + label + '</div>' +
+          '<div class="monthly-bar-avg">' + avg.toFixed(1) + '</div>' +
+          '</div>';
+      }).join('');
+    }
   }
 }
 
@@ -3683,6 +3749,107 @@ function exportLibrary() {
   a.click();
 }
 
+function exportLibraryPDF() {
+  const now = new Date();
+  const MONTH_NAMES_PT = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+  const monthYear = MONTH_NAMES_PT[now.getMonth()] + ' ' + now.getFullYear();
+  const userName = localStorage.getItem('4fases-username') || 'Minha Jornada';
+
+  const highlights = JSON.parse(localStorage.getItem('ebook_highlights') || '[]');
+  const notes = [];
+  for (let i = 0; i < localStorage.length; i++) {
+    const k = localStorage.key(i);
+    if (k && k.startsWith('ebook_note-')) {
+      const val = localStorage.getItem(k);
+      const ts  = localStorage.getItem(k + '-ts');
+      if (val && val.trim()) notes.push({ id: k.replace('ebook_note-',''), text: val, ts });
+    }
+  }
+  const insights = [];
+  for (let i = 0; i < localStorage.length; i++) {
+    const k = localStorage.key(i);
+    if (k && k.startsWith('4fases-insight-')) {
+      const val = localStorage.getItem(k);
+      if (val) try { insights.push(JSON.parse(val)); } catch {}
+    }
+  }
+
+  const COLOR_MAP = { gold: '#C5A059', pink: '#EC4899', purple: '#8B5CF6' };
+  const PHASE_COLOR = { maiden: '#10B981', mother: '#F59E0B', witch: '#EF4444', crone: '#6366F1' };
+
+  function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+  const hlHtml = highlights.length === 0
+    ? '<p style="color:#888;font-style:italic">Nenhum grifo registrado ainda.</p>'
+    : highlights.map(h => {
+        const c = COLOR_MAP[h.color] || COLOR_MAP.gold;
+        return '<div style="border-left:4px solid ' + c + ';padding:0.6rem 1rem;margin:0.5rem 0;background:rgba(0,0,0,0.02);border-radius:0 6px 6px 0;font-size:1rem;line-height:1.7">' + esc(h.text) + '</div>';
+      }).join('');
+
+  const notesHtml = notes.length === 0
+    ? '<p style="color:#888;font-style:italic">Nenhuma anotação registrada ainda.</p>'
+    : notes.map(n => {
+        const dateStr = n.ts ? new Date(n.ts).toLocaleDateString('pt-BR') : n.id;
+        return '<div style="margin:0.8rem 0;padding:0.7rem 1rem;border:1px solid #e8dcc8;border-radius:8px;background:#fffdf8">' +
+          '<div style="font-size:0.7rem;color:#a89070;font-family:sans-serif;margin-bottom:0.3rem">📝 ' + esc(dateStr) + '</div>' +
+          '<div style="font-size:1rem;line-height:1.7">' + esc(n.text) + '</div>' +
+          '</div>';
+      }).join('');
+
+  const insightsHtml = insights.length === 0
+    ? '<p style="color:#888;font-style:italic">Nenhum insight salvo ainda.</p>'
+    : insights.map(ins => {
+        return '<div style="margin:0.8rem 0;padding:0.8rem 1.2rem;border:1px solid #d4b070;border-radius:8px;background:linear-gradient(135deg,#fffdf5,#fdf6e3)">' +
+          '<div style="font-size:0.7rem;color:#a89070;font-family:sans-serif;margin-bottom:0.4rem">' + esc(ins.label||'Insight') + (ins.date ? ' · ' + new Date(ins.date).toLocaleDateString('pt-BR') : '') + '</div>' +
+          '<div style="font-size:1rem;line-height:1.7;font-style:italic">' + esc(ins.text||'') + '</div>' +
+          '</div>';
+      }).join('');
+
+  const html = `<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8">
+<title>Meu Diário Lunar — ${esc(userName)} — ${monthYear}</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Cormorant Garamond', Georgia, serif; color: #2c1f0e; background: #fdf8f0; padding: 3rem 4rem; max-width: 780px; margin: 0 auto; }
+  @media print { body { padding: 2rem 2.5rem; } .no-print { display:none; } }
+  .cover-page { text-align: center; padding: 4rem 0 3rem; border-bottom: 2px solid #d4b070; margin-bottom: 3rem; }
+  .cover-moon { font-size: 3rem; display: block; margin-bottom: 1rem; }
+  .cover-title { font-size: 2.2rem; color: #8B6914; font-weight: 600; letter-spacing: 0.04em; margin-bottom: 0.5rem; }
+  .cover-sub   { font-size: 1.1rem; color: #a89070; font-style: italic; margin-bottom: 0.4rem; }
+  .cover-date  { font-size: 0.85rem; color: #c9a84c; font-family: sans-serif; letter-spacing: 0.1em; text-transform: uppercase; margin-top: 1rem; }
+  .divider { text-align: center; color: #c9a84c; font-size: 1.2rem; letter-spacing: 0.3em; margin: 2rem 0; }
+  .section-title { font-size: 1.5rem; color: #8B6914; font-weight: 600; border-bottom: 1px solid #e8dcc8; padding-bottom: 0.5rem; margin: 2.5rem 0 1.2rem; }
+  .print-btn { position:fixed;top:1.5rem;right:1.5rem;background:#C5A059;color:#fff;border:none;padding:0.6rem 1.4rem;border-radius:6px;font-size:0.9rem;cursor:pointer;font-family:sans-serif;box-shadow:0 2px 8px rgba(0,0,0,0.2); }
+  .print-btn:hover { background:#a8874a; }
+  .footer { margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid #e8dcc8; text-align: center; color: #c9a84c; font-style: italic; font-size: 0.9rem; }
+</style></head><body>
+<button class="print-btn no-print" onclick="window.print()">🖨 Salvar como PDF</button>
+<div class="cover-page">
+  <span class="cover-moon">☽</span>
+  <div class="cover-title">Meu Diário Lunar</div>
+  <div class="cover-sub">${esc(userName)}</div>
+  <div class="cover-sub">Mapeamento das 4 Fases Internas</div>
+  <div class="cover-date">✦ ${monthYear} ✦</div>
+</div>
+<div class="divider">✦ ✧ ☽ ✧ ✦</div>
+<div class="section-title">✦ Meus Grifos</div>
+${hlHtml}
+<div class="divider">✦ ✧ ☽ ✧ ✦</div>
+<div class="section-title">📝 Minhas Anotações</div>
+${notesHtml}
+<div class="divider">✦ ✧ ☽ ✧ ✦</div>
+<div class="section-title">☽ Insights Salvos</div>
+${insightsHtml}
+<div class="footer">Código Lunar · Mapeamento das 4 Fases Internas · ${monthYear}</div>
+</body></html>`;
+
+  const win = window.open('', '_blank');
+  if (!win) { alert('Permita pop-ups para gerar o PDF.'); return; }
+  win.document.write(html);
+  win.document.close();
+  win.focus();
+}
+
 // ── SHOW SECTION (novas seções via TOC) ───────────────────────
 function showSection(name) {
   const sections = ['calendar','journey','library','insights'];
@@ -3710,6 +3877,23 @@ function saveNote(id, value) {
   localStorage.setItem('ebook_note-' + id + '-ts', new Date().toISOString());
   showSaveIndicator();
 }
+
+// ── TOOLTIPS MOBILE (toque longo nos botões da barra) ─────────
+(function initMobileTooltips() {
+  document.querySelectorAll('.htip-wrap').forEach(wrap => {
+    let timer;
+    const tip = wrap.querySelector('.htip');
+    if (!tip) return;
+    wrap.addEventListener('touchstart', () => {
+      timer = setTimeout(() => {
+        tip.style.display = 'block';
+        setTimeout(() => { tip.style.display = ''; }, 2500);
+      }, 500);
+    }, { passive: true });
+    wrap.addEventListener('touchend', () => clearTimeout(timer), { passive: true });
+    wrap.addEventListener('touchmove', () => clearTimeout(timer), { passive: true });
+  });
+})();
 
 // ── INICIALIZAÇÃO DE TUDO ─────────────────────────────────────
 (function initNewFeatures() {
