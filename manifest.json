@@ -1,6 +1,7 @@
 {
   "name": "Mapeamento das 4 Fases Internas",
   "short_name": "Código Lunar",
+  "version": "1.1.1",
   "description": "O Primeiro Guia Científico de Reconexão Cíclica Feminina — Código Lunar",
   "start_url": "./index.html",
   "display": "standalone",

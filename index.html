@@ -37,42 +37,46 @@
       overflow-x: hidden; min-height: 100vh;
     }
     #loading-screen {
-      position: fixed; inset: 0;
+      position: fixed;
+      top: 0; right: 0; bottom: 0; left: 0;
       background: linear-gradient(160deg, #0B0F19 0%, #1a1035 45%, #2d1b4e 75%, #0B0F19 100%);
-      z-index: 9999; display: flex; flex-direction: column;
-      align-items: center; justify-content: center; gap: 1.2rem;
-      transition: opacity 0.9s ease;
+      z-index: 9999;
+      display: -webkit-box; display: -ms-flexbox; display: flex;
+      -webkit-box-orient: vertical; -webkit-box-direction: normal;
+      -ms-flex-direction: column; flex-direction: column;
+      -webkit-box-align: center; -ms-flex-align: center; align-items: center;
+      -webkit-box-pack: center; -ms-flex-pack: center; justify-content: center;
+      gap: 1rem;
+      -webkit-transition: opacity 0.7s ease; transition: opacity 0.7s ease;
+      text-align: center;
     }
     #loading-screen.fade-out { opacity: 0; pointer-events: none; }
-    .splash-logo-wrap {
-      position: relative; width: 120px; height: 120px;
-      display: flex; align-items: center; justify-content: center;
-      margin-bottom: 0.5rem;
-    }
-    .splash-mandala {
-      position: absolute; inset: 0;
-      animation: splashSpin 12s linear infinite;
-    }
-    .splash-cl {
-      font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 2.6rem; font-weight: 600; color: var(--gold);
-      letter-spacing: 0.05em; position: relative; z-index: 2;
-      text-shadow: 0 0 30px rgba(197,160,89,0.5);
+    /* Logo SVG — self-contained, sem position absolute */
+    .splash-logo-svg {
+      width: 120px; height: 120px;
+      display: block; margin: 0 auto 0.4rem;
+      -webkit-animation: splashSpin 14s linear infinite;
+              animation: splashSpin 14s linear infinite;
     }
     .splash-title {
       font-family: 'Cormorant Garamond', Georgia, serif;
-      font-size: 1.5rem; font-weight: 500; color: var(--gold);
+      font-size: 1.5rem; font-weight: 500; color: #C5A059;
       letter-spacing: 0.04em; text-align: center;
       text-shadow: 0 0 20px rgba(197,160,89,0.3);
+      margin: 0;
     }
     .splash-subtitle {
-      font-family: var(--font-ui); font-size: 0.62rem; letter-spacing: 0.25em;
-      text-transform: uppercase; color: var(--text-muted); opacity: 0.7;
-      text-align: center; max-width: 220px; line-height: 1.6;
+      font-family: system-ui, -apple-system, sans-serif;
+      font-size: 0.6rem; letter-spacing: 0.22em;
+      text-transform: uppercase; color: #9CA3AF; opacity: 0.75;
+      text-align: center; max-width: 200px; line-height: 1.6;
+      margin: 0;
     }
-    .loading-bar { width: 160px; height: 2px; background: rgba(255,255,255,0.1); border-radius: 1px; overflow: hidden; margin-top: 0.5rem; }
-    .loading-fill { height: 100%; background: linear-gradient(90deg, var(--primary), var(--gold)); animation: loadFill 1.8s ease forwards; }
+    .loading-bar { width: 140px; height: 2px; background: rgba(255,255,255,0.1); border-radius: 1px; overflow: hidden; margin-top: 0.3rem; }
+    .loading-fill { height: 100%; background: -webkit-linear-gradient(left, #4F46E5, #C5A059); background: linear-gradient(90deg, #4F46E5, #C5A059); -webkit-animation: loadFill 1.8s ease forwards; animation: loadFill 1.8s ease forwards; }
+    @-webkit-keyframes loadFill { from { width: 0; } to { width: 100%; } }
     @keyframes loadFill { from { width: 0; } to { width: 100%; } }
+    @-webkit-keyframes splashSpin { from { -webkit-transform: rotate(0deg); transform: rotate(0deg); } to { -webkit-transform: rotate(360deg); transform: rotate(360deg); } }
     @keyframes splashSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
   </style>
 </head>
@@ -145,28 +149,36 @@
 
 <!-- LOADING / SPLASH SCREEN -->
 <div id="loading-screen">
-  <div class="splash-logo-wrap">
-    <svg class="splash-mandala" viewBox="0 0 120 120" width="120" height="120" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <!-- Outer ring -->
-      <circle cx="60" cy="60" r="56" stroke="#C5A059" stroke-width="0.8" stroke-dasharray="4 6" opacity="0.5"/>
-      <!-- Mid ring -->
-      <circle cx="60" cy="60" r="42" stroke="#8B5CF6" stroke-width="0.6" stroke-dasharray="2 8" opacity="0.4"/>
-      <!-- 4 phases — 🌑 🌓 🌕 🌗 -->
-      <!-- Nova (top) -->
-      <circle cx="60" cy="14" r="7" fill="#0B0F19" stroke="#C5A059" stroke-width="1.2" opacity="0.9"/>
-      <!-- Crescente (right) -->
-      <circle cx="106" cy="60" r="7" fill="#0B0F19" stroke="#C5A059" stroke-width="1.2" opacity="0.9"/>
-      <path d="M106 53 a7 7 0 0 1 0 14" fill="#C5A059" opacity="0.8"/>
-      <!-- Cheia (bottom) -->
-      <circle cx="60" cy="106" r="7" fill="#C5A059" opacity="0.9"/>
-      <!-- Minguante (left) -->
-      <circle cx="14" cy="60" r="7" fill="#0B0F19" stroke="#C5A059" stroke-width="1.2" opacity="0.9"/>
-      <path d="M14 53 a7 7 0 0 0 0 14" fill="#C5A059" opacity="0.8"/>
-      <!-- Diagonal ornaments -->
-      <text x="60" y="64" text-anchor="middle" font-size="7" fill="#8B5CF6" opacity="0.6" font-family="Georgia">✦</text>
-    </svg>
-    <span class="splash-cl">CL</span>
-  </div>
+  <!--
+    Logo: círculo dourado com 4 fases lunares nos cardeais + "CL" no centro.
+    Sem position:absolute interno — 100% self-contained para máxima compatibilidade mobile.
+  -->
+  <svg class="splash-logo-svg" viewBox="0 0 120 120" xmlns="http://www.w3.org/2000/svg">
+    <!-- Background circle -->
+    <circle cx="60" cy="60" r="58" fill="#111827" stroke="#C5A059" stroke-width="1.5" opacity="0.9"/>
+    <!-- Dashed outer ring (static — não gira, a animação gira o SVG inteiro) -->
+    <circle cx="60" cy="60" r="50" fill="none" stroke="#C5A059" stroke-width="0.8" stroke-dasharray="5 7" opacity="0.4"/>
+    <!-- Mid ring -->
+    <circle cx="60" cy="60" r="36" fill="none" stroke="#8B5CF6" stroke-width="0.6" stroke-dasharray="3 9" opacity="0.35"/>
+
+    <!-- 4 fases nos pontos cardeais -->
+    <!-- Norte: Lua nova (círculo escuro com borda dourada) -->
+    <circle cx="60" cy="9" r="7.5" fill="#0d1117" stroke="#C5A059" stroke-width="1.5"/>
+    <!-- Leste: Quarto crescente (metade direita dourada) -->
+    <circle cx="111" cy="60" r="7.5" fill="#0d1117" stroke="#C5A059" stroke-width="1.5"/>
+    <path d="M111 52.5 a7.5 7.5 0 0 1 0 15" fill="#C5A059"/>
+    <!-- Sul: Lua cheia (círculo dourado sólido) -->
+    <circle cx="60" cy="111" r="7.5" fill="#C5A059"/>
+    <!-- Oeste: Quarto minguante (metade esquerda dourada) -->
+    <circle cx="9" cy="60" r="7.5" fill="#0d1117" stroke="#C5A059" stroke-width="1.5"/>
+    <path d="M9 52.5 a7.5 7.5 0 0 0 0 15" fill="#C5A059"/>
+
+    <!-- "CL" central em estilo elegante -->
+    <text x="60" y="68" text-anchor="middle" dominant-baseline="middle"
+          font-family="Georgia, 'Times New Roman', serif"
+          font-size="28" font-weight="600" fill="#C5A059" opacity="0.95"
+          letter-spacing="1">CL</text>
+  </svg>
   <div class="splash-title">Código Lunar</div>
   <div class="splash-subtitle">Mapeamento das 4 Fases Internas</div>
   <div class="loading-bar"><div class="loading-fill"></div></div>
@@ -2143,19 +2155,32 @@ const STATE = {
   highlightData: JSON.parse(localStorage.getItem('ebook_highlights') || '[]'),
 };
 
-// ── LOADING ──
+// ── LOADING / SPLASH ──
+// hideSplash é idempotente — pode ser chamada múltiplas vezes sem efeito duplicado
+let _splashHidden = false;
+function hideSplash() {
+  if (_splashHidden) return;
+  _splashHidden = true;
+  const s = document.getElementById('loading-screen');
+  if (!s) return;
+  s.classList.add('fade-out');
+  setTimeout(() => {
+    s.style.display = 'none';
+    checkWelcome();
+    checkBookmark();
+  }, 700);
+}
+
+// TIMEOUT FORÇADO — garante que a splash desaparece em no máximo 2.5s
+// independente de load, fonts, rede ou qualquer outra condição
+setTimeout(hideSplash, 2500);
+
 window.addEventListener('load', () => {
   generateStars();
   restoreAll();
   requestPersistentStorage();
-  setTimeout(() => {
-    document.getElementById('loading-screen').classList.add('fade-out');
-    setTimeout(() => {
-      document.getElementById('loading-screen').style.display = 'none';
-      checkWelcome();
-      checkBookmark();
-    }, 700);
-  }, 2000);
+  // Esconde a splash tão logo o conteúdo carregue (máx 2s, ou 2.5s pelo timeout forçado)
+  setTimeout(hideSplash, 2000);
 });
 
 async function requestPersistentStorage() {
