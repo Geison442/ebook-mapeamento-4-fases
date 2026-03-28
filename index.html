@@ -2753,44 +2753,149 @@ function saveCommitment() {
 
 // ── DOWNLOAD ──
 function downloadRespostas() {
-  let content = 'MAPEAMENTO DAS 4 FASES INTERNAS\nSuas Respostas Pessoais\n' + new Date().toLocaleDateString('pt-BR') + '\n\n';
-  content += '═'.repeat(50) + '\n\n';
+  const userName = localStorage.getItem('4fases-username') || 'Mapeamento Pessoal';
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('pt-BR');
+  const MONTH_NAMES_PT = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+  const monthYear = MONTH_NAMES_PT[now.getMonth()] + ' de ' + now.getFullYear();
+
+  function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+  // Exercícios respondidos
+  const responses = [];
   document.querySelectorAll('[data-save]').forEach(el => {
     if (el.value && el.value.trim()) {
-      const label = el.closest('.input-group')?.querySelector('.label-main')?.textContent
-        || el.dataset.save;
-      content += label + ':\n' + el.value + '\n\n';
+      const group = el.closest('.input-group');
+      const label = group?.querySelector('.label-main')?.textContent?.trim() || el.dataset.save;
+      const hint  = group?.querySelector('.label-hint')?.textContent?.trim() || '';
+      responses.push({ label, hint, value: el.value.trim() });
     }
   });
-  content += '═'.repeat(50) + '\n';
-  content += 'NOTAS MARGINAIS:\n\n';
+
+  // Grifos
+  const highlights = JSON.parse(localStorage.getItem('ebook_highlights') || '[]');
+
+  // Anotações marginais
+  const notes = [];
   for (let i = 0; i < localStorage.length; i++) {
-    const key = localStorage.key(i);
-    if (key && key.startsWith('ebook_note-')) {
-      const val = localStorage.getItem(key);
-      if (val) content += key.replace('ebook_note-','Nota ') + ':\n' + val + '\n\n';
+    const k = localStorage.key(i);
+    if (k && k.startsWith('ebook_note-')) {
+      const val = localStorage.getItem(k);
+      const ts  = localStorage.getItem(k + '-ts');
+      if (val && val.trim()) notes.push({ id: k.replace('ebook_note-',''), text: val.trim(), ts });
     }
   }
-  content += '═'.repeat(50) + '\n';
-  content += 'REGISTROS DO DIÁRIO:\n\n';
+
+  // Insights
+  const insights = [];
   for (let i = 0; i < localStorage.length; i++) {
-    const key = localStorage.key(i);
-    if (key && key.startsWith('4fases-diario-')) {
-      try {
-        const d = JSON.parse(localStorage.getItem(key));
-        const date = key.replace('4fases-diario-','');
-        content += date + ': humor=' + (d.mood||'-') + ' energia=' + (d.energy||'-') + '/10';
-        if (d.practices && d.practices.length) content += ' práticas=[' + d.practices.join(',') + ']';
-        if (d.note) content += '\n  ' + d.note;
-        content += '\n\n';
-      } catch(e) {}
+    const k = localStorage.key(i);
+    if (k && k.startsWith('4fases-insight-')) {
+      try { const v = localStorage.getItem(k); if (v) insights.push(JSON.parse(v)); } catch {}
     }
   }
-  const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+
+  const COLOR_MAP = { gold: '#C5A059', pink: '#EC4899', purple: '#8B5CF6', green: '#10B981' };
+
+  const responsesHtml = responses.length === 0
+    ? '<p style="color:#6B7280;font-style:italic;font-size:1rem">Nenhum exercício respondido ainda.</p>'
+    : responses.map(r =>
+        '<div style="margin:1.6rem 0;padding:1.2rem 1.5rem;border-left:3px solid #C5A059;background:rgba(197,160,89,0.07);border-radius:0 8px 8px 0">' +
+        '<div style="font-family:sans-serif;font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;color:#C5A059;margin-bottom:0.5rem">' + esc(r.label) + '</div>' +
+        (r.hint ? '<div style="font-size:0.85rem;color:#9CA3AF;font-style:italic;margin-bottom:0.6rem;line-height:1.5">' + esc(r.hint) + '</div>' : '') +
+        '<div style="font-size:1.05rem;line-height:1.85;color:#E5E7EB">' + esc(r.value).replace(/\n/g,'<br>') + '</div>' +
+        '</div>'
+      ).join('');
+
+  const highlightsHtml = highlights.length === 0
+    ? '<p style="color:#6B7280;font-style:italic;font-size:1rem">Nenhum grifo registrado ainda.</p>'
+    : highlights.map(h =>
+        '<div style="border-left:4px solid ' + (COLOR_MAP[h.color]||'#C5A059') + ';padding:0.7rem 1rem;margin:0.6rem 0;background:rgba(255,255,255,0.03);border-radius:0 6px 6px 0;font-size:1.02rem;line-height:1.8;color:#D1D5DB;font-style:italic">' +
+        esc(h.text) + '</div>'
+      ).join('');
+
+  const notesHtml = notes.length === 0
+    ? '<p style="color:#6B7280;font-style:italic;font-size:1rem">Nenhuma anotação registrada ainda.</p>'
+    : notes.map(n => {
+        const dateLabel = n.ts ? new Date(n.ts).toLocaleDateString('pt-BR') : n.id;
+        return '<div style="margin:0.8rem 0;padding:0.9rem 1.2rem;border:1px solid rgba(197,160,89,0.2);border-radius:8px;background:rgba(197,160,89,0.04)">' +
+          '<div style="font-family:sans-serif;font-size:0.62rem;color:#C5A059;letter-spacing:0.08em;margin-bottom:0.45rem">📝 ' + esc(dateLabel) + '</div>' +
+          '<div style="font-size:1rem;line-height:1.8;color:#D1D5DB">' + esc(n.text).replace(/\n/g,'<br>') + '</div>' +
+          '</div>';
+      }).join('');
+
+  const insightsHtml = insights.length === 0
+    ? '<p style="color:#6B7280;font-style:italic;font-size:1rem">Nenhum insight salvo ainda.</p>'
+    : insights.map(ins =>
+        '<div style="margin:0.8rem 0;padding:0.9rem 1.2rem;border:1px solid rgba(139,92,246,0.3);border-radius:8px;background:rgba(139,92,246,0.06)">' +
+        '<div style="font-family:sans-serif;font-size:0.62rem;color:#8B5CF6;letter-spacing:0.08em;margin-bottom:0.45rem">' + esc(ins.label||'Insight') + (ins.date ? ' · ' + new Date(ins.date).toLocaleDateString('pt-BR') : '') + '</div>' +
+        '<div style="font-size:1rem;line-height:1.8;font-style:italic;color:#D1D5DB">' + esc(ins.text||'') + '</div>' +
+        '</div>'
+      ).join('');
+
+  const safeName = userName.replace(/[^a-zA-Z0-9\u00C0-\u024F\s]/g,'').trim().replace(/\s+/g,'-');
+  const safeDate = now.toLocaleDateString('pt-BR').replace(/\//g,'-');
+  const fileName  = 'Mapeamento-4-Fases-' + safeName + '-' + safeDate + '.html';
+
+  const html = '<!DOCTYPE html>\n<html lang="pt-BR">\n<head>\n' +
+    '<meta charset="UTF-8">\n' +
+    '<meta name="viewport" content="width=device-width, initial-scale=1.0">\n' +
+    '<title>Mapeamento das 4 Fases — ' + esc(userName) + '</title>\n' +
+    '<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&display=swap" rel="stylesheet">\n' +
+    '<style>\n' +
+    '* { box-sizing: border-box; margin: 0; padding: 0; }\n' +
+    'body { font-family: \'Cormorant Garamond\', Georgia, serif; background: #0B0F19; color: #F3F4F6; min-height: 100vh; }\n' +
+    '.page { max-width: 780px; margin: 0 auto; padding: 3rem 4rem; }\n' +
+    '@media (max-width: 640px) { .page { padding: 2rem 1.5rem; } }\n' +
+    '@media print {\n' +
+    '  body { background: #0B0F19 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; color: #F3F4F6 !important; }\n' +
+    '  .no-print { display: none !important; }\n' +
+    '  .page { padding: 1.5rem 2.5rem; }\n' +
+    '}\n' +
+    '.cover { text-align: center; padding: 4rem 0 3rem; border-bottom: 1px solid rgba(197,160,89,0.3); margin-bottom: 3rem; }\n' +
+    '.cover-moon { font-size: 3.5rem; display: block; margin-bottom: 1.5rem; color: #C5A059; }\n' +
+    '.cover-title { font-size: 2.2rem; font-weight: 600; color: #C5A059; letter-spacing: 0.04em; margin-bottom: 0.6rem; line-height: 1.3; }\n' +
+    '.cover-name { font-size: 1.5rem; color: #F3F4F6; font-style: italic; margin-bottom: 0.3rem; }\n' +
+    '.cover-sub { font-size: 1rem; color: #9CA3AF; font-style: italic; }\n' +
+    '.cover-date { font-family: sans-serif; font-size: 0.7rem; color: #C5A059; letter-spacing: 0.14em; text-transform: uppercase; margin-top: 1.5rem; }\n' +
+    '.ornament { text-align: center; color: #C5A059; font-size: 1.2rem; letter-spacing: 0.3em; margin: 2.5rem 0; }\n' +
+    '.section-title { font-size: 1.5rem; font-weight: 600; color: #C5A059; border-bottom: 1px solid rgba(197,160,89,0.2); padding-bottom: 0.6rem; margin: 2.8rem 0 1.5rem; letter-spacing: 0.02em; }\n' +
+    '.footer { margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid rgba(197,160,89,0.2); text-align: center; color: #9CA3AF; font-style: italic; font-size: 0.9rem; line-height: 1.7; }\n' +
+    '.print-btn { position: fixed; top: 1.5rem; right: 1.5rem; background: #C5A059; color: #0B0F19; border: none; padding: 0.65rem 1.6rem; border-radius: 6px; font-family: sans-serif; font-size: 0.82rem; font-weight: 700; cursor: pointer; box-shadow: 0 4px 20px rgba(197,160,89,0.45); letter-spacing: 0.06em; text-transform: uppercase; transition: background 0.2s; }\n' +
+    '.print-btn:hover { background: #d4b070; }\n' +
+    '</style>\n</head>\n<body>\n' +
+    '<button class="print-btn no-print" onclick="window.print()">🖨 Imprimir / Salvar PDF</button>\n' +
+    '<div class="page">\n' +
+    '  <div class="cover">\n' +
+    '    <span class="cover-moon">☽</span>\n' +
+    '    <div class="cover-title">Mapeamento das 4 Fases Internas</div>\n' +
+    '    <div class="cover-name">' + esc(userName) + '</div>\n' +
+    '    <div class="cover-sub">Registro Pessoal · Código Lunar</div>\n' +
+    '    <div class="cover-date">✦ ' + esc(monthYear) + ' · ' + esc(dateStr) + ' ✦</div>\n' +
+    '  </div>\n' +
+    '  <div class="ornament">✦ ✧ ☽ ✧ ✦</div>\n' +
+    '  <div class="section-title">✦ Exercícios Respondidos</div>\n' +
+    responsesHtml + '\n' +
+    '  <div class="ornament">✦ ✧ ☽ ✧ ✦</div>\n' +
+    '  <div class="section-title">✧ Grifos Marcados</div>\n' +
+    highlightsHtml + '\n' +
+    '  <div class="ornament">✦ ✧ ☽ ✧ ✦</div>\n' +
+    '  <div class="section-title">📝 Anotações Marginais</div>\n' +
+    notesHtml + '\n' +
+    '  <div class="ornament">✦ ✧ ☽ ✧ ✦</div>\n' +
+    '  <div class="section-title">☽ Insights Registrados</div>\n' +
+    insightsHtml + '\n' +
+    '  <div class="ornament">✦ ✧ ◆ ✧ ✦</div>\n' +
+    '  <div class="footer">Código Lunar · Mapeamento das 4 Fases Internas<br>' + esc(monthYear) + '</div>\n' +
+    '</div>\n</body>\n</html>';
+
+  const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
   const a = document.createElement('a');
   a.href = URL.createObjectURL(blob);
-  a.download = 'mapeamento-4-fases-respostas.txt';
+  a.download = fileName;
+  document.body.appendChild(a);
   a.click();
+  document.body.removeChild(a);
 }
 
 // ── RESET ──
@@ -3000,6 +3105,25 @@ document.addEventListener('click', function(e) {
   if (!para) { hideHighlightTooltip(); return; }
   showHighlightTooltip(para);
 });
+
+// Android: touchend garante que o tooltip aparece mesmo quando o click
+// é suprimido pelo browser (seleção de texto nativa, longpress context menu)
+let _grifoTouchMoved = false;
+document.addEventListener('touchstart', function(e) {
+  _grifoTouchMoved = false;
+}, { passive: true });
+document.addEventListener('touchmove', function() {
+  _grifoTouchMoved = true;
+}, { passive: true });
+document.addEventListener('touchend', function(e) {
+  if (_grifoTouchMoved) return;
+  if (!document.body.classList.contains('grifo-mode')) return;
+  if (e.target.closest('#highlight-tooltip') || e.target.closest('#btn-grifo')) return;
+  const para = e.target.closest('.para-wrap p');
+  if (!para) return;
+  e.preventDefault();
+  showHighlightTooltip(para);
+}, { passive: false });
 
 // ── MODOS DE LEITURA ──────────────────────────────────────
 (function() {
