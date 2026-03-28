@@ -215,7 +215,7 @@ body.mode-night #fixed-header { background: rgba(0,0,0,0.97); }
 }
 
 /* ── Book Wrap & Container ── */
-#book-wrap { padding-top: 0; padding-bottom: 5rem; }
+#book-wrap { padding-top: 0; padding-bottom: 5rem; overflow-x: hidden; }
 .book-container {
   max-width: 780px; margin: 0 auto; background: var(--surface);
   box-shadow: 0 0 80px rgba(0,0,0,0.6), inset 0 0 0 1px rgba(197,160,89,0.07);
@@ -2125,8 +2125,66 @@ body.grifo-mode .para-wrap p {
   .journey-stat-grid { grid-template-columns: repeat(2, 1fr); }
   .monthly-quiz-box { padding: 1.8rem 1.4rem; }
   .library-export-row { flex-direction: column; }
+
+  /* Calendário: zera padding lateral do inner div (inline style)
+     para não acumular com o padding já dado ao container externo */
+  #section-calendar > span {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+  #section-calendar > div {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  /* Jornada / Biblioteca: reduz padding lateral do inner div */
+  #section-journey > div,
+  #section-library > div {
+    padding-left: 0.2rem !important;
+    padding-right: 0.2rem !important;
+  }
+
+  /* Calendário: cabeçalho ‹ Mês Ano › numa linha, centralizado */
+  .calendar-header-row {
+    gap: 0.6rem;
+  }
+  .calendar-month-title {
+    flex: 1;
+    text-align: center;
+    font-size: 1.3rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .calendar-nav-btn {
+    flex-shrink: 0;
+    width: 34px;
+    height: 34px;
+  }
+
+  /* Grade do calendário: sem overflow lateral */
+  .calendar-weekdays,
+  .calendar-grid {
+    width: 100%;
+    box-sizing: border-box;
+  }
+  .calendar-day { min-height: 40px; }
 }
+
 @media (max-width: 480px) {
   .cover-time { font-size: 1.8rem; }
   .phase-btn-grid { grid-template-columns: 1fr 1fr; }
+
+  /* Cards da Jornada menores em telas muito pequenas */
+  .journey-stat-grid { gap: 0.5rem; }
+  .journey-stat-card { padding: 0.9rem 0.6rem; }
+  .journey-stat-num { font-size: 2rem; }
+  .journey-stat-label { font-size: 0.58rem; }
+
+  /* Calendário em telas menores que 480px */
+  .calendar-day { min-height: 36px; }
+  .calendar-day-num { font-size: 0.68rem; }
+  .calendar-weekday { font-size: 0.55rem; }
+  .calendar-grid { gap: 3px; }
+  .calendar-weekdays { gap: 3px; }
 }
