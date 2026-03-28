@@ -1,7 +1,7 @@
 {
   "name": "Mapeamento das 4 Fases Internas",
-  "short_name": "4 Fases",
-  "description": "O Primeiro Guia Científico de Reconexão Cíclica Feminina",
+  "short_name": "Código Lunar",
+  "description": "O Primeiro Guia Científico de Reconexão Cíclica Feminina — Código Lunar",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#0B0F19",
@@ -13,19 +13,25 @@
       "src": "icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
     },
     {
       "src": "icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
     },
     {
       "src": "icon-180.png",
       "sizes": "180x180",
       "type": "image/png",
       "purpose": "any"
+    },
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
     }
   ],
   "categories": ["education", "lifestyle", "health"],

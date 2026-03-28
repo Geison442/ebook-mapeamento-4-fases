@@ -2171,6 +2171,33 @@ body.grifo-mode .para-wrap p {
   .calendar-day { min-height: 40px; }
 }
 
+/* ── TOC DOWNLOAD BUTTON ── */
+.toc-download-wrap {
+  padding: 1.2rem 1rem 1.5rem;
+  border-top: 1px solid var(--border-light);
+  margin-top: 0.5rem;
+}
+.toc-download-btn {
+  display: flex; align-items: center; gap: 0.8rem;
+  width: 100%; padding: 0.85rem 1rem;
+  background: linear-gradient(135deg, rgba(79,70,229,0.15), rgba(139,92,246,0.15));
+  border: 1px solid rgba(197,160,89,0.3); border-radius: 10px;
+  color: var(--text); cursor: pointer; text-align: left;
+  transition: all 0.2s ease; font-family: var(--font-ui);
+}
+.toc-download-btn:hover, .toc-download-btn:active {
+  background: linear-gradient(135deg, rgba(79,70,229,0.25), rgba(139,92,246,0.25));
+  border-color: var(--gold);
+}
+.toc-dl-icon { font-size: 1.4rem; flex-shrink: 0; }
+.toc-dl-text { display: flex; flex-direction: column; gap: 0.15rem; }
+.toc-dl-text strong { font-size: 0.85rem; color: var(--gold); font-family: var(--font-ui); }
+.toc-dl-text small { font-size: 0.7rem; color: var(--text-muted); }
+.toc-dl-hint {
+  font-size: 0.68rem; color: var(--text-muted); margin-top: 0.7rem;
+  line-height: 1.5; padding: 0 0.2rem; font-family: var(--font-ui);
+}
+
 @media (max-width: 480px) {
   .cover-time { font-size: 1.8rem; }
   .phase-btn-grid { grid-template-columns: 1fr 1fr; }
