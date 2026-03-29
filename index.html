@@ -1951,19 +1951,36 @@ const STATE = {
   highlightData: JSON.parse(localStorage.getItem('ebook_highlights') || '[]'),
 };
 
+// ── SPLASH HIDE (garantido) ──
+function hideSplash() {
+  const el = document.getElementById('loading-screen');
+  if (!el || el.style.display === 'none') return;
+  el.classList.add('fade-out');
+  setTimeout(() => { el.style.display = 'none'; }, 700);
+}
+
+// Timeout forçado: splash some após 2s independente de qualquer condição
+setTimeout(() => { hideSplash(); }, 2000);
+
+// ── STORAGE PERSISTENTE ──
+function requestPersistentStorage() {
+  try {
+    if (navigator.storage && navigator.storage.persist) {
+      navigator.storage.persist().catch(() => {});
+    }
+  } catch (e) {}
+}
+
 // ── LOADING ──
 window.addEventListener('load', () => {
-  generateStars();
-  restoreAll();
-  requestPersistentStorage();
+  try { generateStars(); } catch (e) {}
+  try { restoreAll(); } catch (e) {}
+  try { requestPersistentStorage(); } catch (e) {}
   setTimeout(() => {
-    document.getElementById('loading-screen').classList.add('fade-out');
-    setTimeout(() => {
-      document.getElementById('loading-screen').style.display = 'none';
-      checkWelcome();
-      checkBookmark();
-    }, 700);
-  }, 2000);
+    hideSplash();
+    try { checkWelcome(); } catch (e) {}
+    try { checkBookmark(); } catch (e) {}
+  }, 800);
 });
 
 function generateStars() {
