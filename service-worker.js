@@ -1,4 +1,4 @@
-const CACHE_NAME = '4-fases-v1.1.1';
+const CACHE_NAME = '4-fases-v1.1.2';
 
 // Assets com estratégia Stale-While-Revalidate (HTML, CSS, JS)
 const SWR_ASSETS = [
@@ -13,7 +13,6 @@ const CACHE_FIRST_ASSETS = [
   './icon-192.png',
   './icon-512.png',
   './icon-180.png',
-  './icon.svg',
 ];
 
 // ── Install: pré-cache todos os assets ──────────────────
