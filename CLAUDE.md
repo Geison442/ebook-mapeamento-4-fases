@@ -141,6 +141,15 @@ base-conhecimento/  — PDFs de referência (não deployados)
 
 ## REGRAS OBRIGATÓRIAS
 
+### ARQUITETURA MULTI-FILE — REGRA ABSOLUTA DO ECOSSISTEMA
+- `index.html` → estrutura HTML + CSS crítico inline
+- `app.js` → todo o JavaScript (sem exceção)
+- `sw.js` → Service Worker Stale-While-Revalidate
+- `manifest.json` → configuração PWA
+- ícones: `icon-180.png`, `icon-192.png`, `icon-512.png`
+
+**NUNCA single-file. NUNCA JavaScript inline no HTML.**
+
 1. **NUNCA** adicionar `Co-Authored-By` nos commits — bloqueia o Netlify
 2. **SEMPRE** incrementar versão do SW ao alterar CSS/JS/HTML
 3. **SEMPRE** usar `./` em todos os paths de recursos
