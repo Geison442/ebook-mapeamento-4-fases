@@ -10,7 +10,8 @@
 
 - **Nome:** Mapeamento das 4 Fases Internas
 - **Produto:** Ebook 1 do ecossistema Código Lunar
-- **Deploy:** Netlify (auto-deploy via GitHub)
+- **Deploy:** Cloudflare Pages (auto-deploy via GitHub)
+- **URL:** https://codigo-lunar-mapeamento.pages.dev
 - **Stack:** HTML puro + CSS + JS vanilla (sem frameworks)
 - **Arquivo principal:** `index.html` (contém HTML + CSS inline crítico + todo o JS)
 - **Estilos:** `styles.css` (CSS completo separado)
@@ -116,8 +117,8 @@ Elementos obrigatórios que já estão implementados:
 | Flip causa jank no mobile | Usar translateX + opacity (2D puro) — NUNCA perspective/rotateY |
 | Safari swipe conflita | Edge guard: ignorar touchstart nos 22px das bordas |
 | iOS auto-zoom em inputs | font-size mínimo 16px em inputs no mobile |
-| Layout quebrado no Netlify | Sem @import duplicado + paths ./ + CSS crítico inline + versão SW incrementada |
-| Netlify bloqueia deploy | NUNCA usar Co-Authored-By nos commits |
+| Layout quebrado após deploy | Sem @import duplicado + paths ./ + CSS crítico inline + versão SW incrementada |
+| Deploy bloqueado | NUNCA usar Co-Authored-By nos commits |
 | Double padding nas seções Jornada/Biblioteca | Removido padding CSS do #section-journey e #section-library (o inner div já provê padding) |
 | White mode — worksheets e inputs escuros | Overrides em body.mode-white para .worksheet, .input-text, .phase-card, etc. |
 
@@ -150,7 +151,7 @@ base-conhecimento/  — PDFs de referência (não deployados)
 
 **NUNCA single-file. NUNCA JavaScript inline no HTML.**
 
-1. **NUNCA** adicionar `Co-Authored-By` nos commits — bloqueia o Netlify
+1. **NUNCA** adicionar `Co-Authored-By` nos commits — bloqueia o deploy automático no Cloudflare Pages
 2. **SEMPRE** incrementar versão do SW ao alterar CSS/JS/HTML
 3. **SEMPRE** usar `./` em todos os paths de recursos
 4. **NUNCA** usar `@import` no CSS quando o HTML já carrega a fonte via `<link>`
