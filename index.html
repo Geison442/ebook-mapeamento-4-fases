@@ -51,6 +51,19 @@
     .loading-bar { width: 200px; height: 2px; background: var(--border); border-radius: 1px; overflow: hidden; }
     .loading-fill { height: 100%; background: linear-gradient(90deg, var(--primary), var(--gold)); animation: loadFill 1.8s ease forwards; }
     @keyframes loadFill { from { width: 0; } to { width: 100%; } }
+  /* PWA Guide Modal */
+  #pwa-guide-modal{display:none;position:fixed;inset:0;z-index:9600;background:rgba(0,0,0,.75);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:20px}
+  #pwa-guide-content{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:28px 24px;width:100%;max-width:440px;position:relative;max-height:88vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.3)}
+  #pwa-guide-close{position:absolute;top:14px;right:14px;background:rgba(128,128,128,.12);border:1px solid var(--border);color:var(--text-muted);border-radius:50%;width:32px;height:32px;font-size:.85rem;cursor:pointer;display:flex;align-items:center;justify-content:center}
+  #pwa-guide-icon{font-size:3rem;text-align:center;margin-bottom:10px}
+  #pwa-guide-title{font-family:var(--font-display);font-size:1.5rem;color:var(--primary);text-align:center;margin:0 0 20px}
+  .pwa-guide-step{display:flex;align-items:flex-start;gap:14px;background:var(--bg,var(--surface));border:1px solid var(--border);border-radius:12px;padding:13px 15px;margin-bottom:10px}
+  .pwa-guide-num{width:28px;height:28px;background:var(--primary);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--font-ui);font-weight:700;font-size:.88rem;flex-shrink:0}
+  .pwa-guide-text{font-family:var(--font-ui);font-size:.88rem;color:var(--text);line-height:1.5}
+  #pwa-guide-install-btn{display:block;width:100%;padding:14px;background:var(--primary);border:none;border-radius:12px;color:#fff;font-family:var(--font-ui);font-size:1rem;font-weight:700;letter-spacing:.05em;cursor:pointer;margin-top:20px;transition:opacity .2s,transform .2s}
+  #pwa-guide-install-btn:active{opacity:.85;transform:scale(.98)}
+  #pwa-guide-cancel{display:block;width:100%;padding:10px;background:transparent;border:none;color:var(--text-muted);font-family:var(--font-ui);font-size:.9rem;cursor:pointer;margin-top:6px}
+  @media print{#pwa-guide-modal{display:none!important}}
   </style>
 </head>
 <body>
@@ -117,6 +130,18 @@
     </div>
 
     <button class="ios-close-btn" onclick="closeIOSModal()">Entendi!</button>
+  </div>
+</div>
+
+<!-- MODAL GUIA DE INSTALAÇÃO — Android / iOS / Desktop -->
+<div id="pwa-guide-modal" role="dialog" aria-modal="true" aria-label="Como instalar o app" style="display:none">
+  <div id="pwa-guide-content">
+    <button id="pwa-guide-close" onclick="closePwaGuide()" aria-label="Fechar">&#10005;</button>
+    <div id="pwa-guide-icon"></div>
+    <h3 id="pwa-guide-title"></h3>
+    <div id="pwa-guide-steps"></div>
+    <button id="pwa-guide-install-btn" onclick="executePwaInstall()">Instalar Agora</button>
+    <button id="pwa-guide-cancel" onclick="closePwaGuide()">Agora não</button>
   </div>
 </div>
 
@@ -3019,20 +3044,7 @@ if ('serviceWorker' in navigator) {
     setTimeout(() => { bar.style.display = 'none'; }, 400);
   }
 
-  window.handleInstallClick = function() {
-    if (isIOS) {
-      openIOSModal();
-    } else if (deferredPrompt) {
-      deferredPrompt.prompt();
-      deferredPrompt.userChoice.then(function(result) {
-        if (result.outcome === 'accepted') {
-          localStorage.setItem(DONE_KEY, '1');
-          hideInstallBar();
-        }
-        deferredPrompt = null;
-      });
-    }
-  };
+  window.handleInstallClick = function() { openPwaGuide(); };
 
   window.dismissInstallBar = function() {
     localStorage.setItem(BAR_KEY, '1');
@@ -3058,6 +3070,47 @@ if ('serviceWorker' in navigator) {
   iosModal.addEventListener('click', function(e) {
     if (e.target === iosModal) closeIOSModal();
   });
+
+  // ── Mini Manual de Instalação ──────────────────────────
+  var guideModal = document.getElementById('pwa-guide-modal');
+  var GUIDE = {
+    android: { icon: '🤖', title: 'Instalar no Android',
+      steps: ['Toque em "Instalar Agora" abaixo', 'Uma janela do Chrome vai aparecer — toque em "Instalar"', 'Aguarde alguns segundos', 'O app aparecerá na sua tela inicial', 'Abra pelo ícone — funciona offline!'] },
+    ios:     { icon: '🍎', title: 'Instalar no iPhone/iPad',
+      steps: ['Toque no ícone de compartilhar ⬆️ na barra do Safari', 'Role para baixo e toque em "Adicionar à Tela de Início"', 'Toque em "Adicionar" no canto superior direito', 'O app aparecerá na sua tela inicial', 'Abra pelo ícone — funciona offline!'] },
+    desktop: { icon: '💻', title: 'Instalar no Computador',
+      steps: ['Clique em "Instalar Agora" abaixo', 'Uma janela do navegador vai aparecer — clique em "Instalar"', 'O app abrirá como janela independente', 'Acesse offline a qualquer momento!'] }
+  };
+
+  function openPwaGuide() {
+    var type = isIOS ? 'ios' : isAndroid ? 'android' : 'desktop';
+    var d = GUIDE[type];
+    document.getElementById('pwa-guide-icon').textContent = d.icon;
+    document.getElementById('pwa-guide-title').textContent = d.title;
+    document.getElementById('pwa-guide-steps').innerHTML = d.steps.map(function(s, i) {
+      return '<div class="pwa-guide-step"><div class="pwa-guide-num">' + (i + 1) + '</div><div class="pwa-guide-text">' + s + '</div></div>';
+    }).join('');
+    document.getElementById('pwa-guide-install-btn').textContent = type === 'ios' ? 'Entendido, vou instalar!' : 'Instalar Agora';
+    guideModal.style.display = 'flex';
+  }
+
+  window.closePwaGuide = function() { guideModal.style.display = 'none'; };
+
+  window.executePwaInstall = function() {
+    var type = isIOS ? 'ios' : isAndroid ? 'android' : 'desktop';
+    if (type === 'ios') {
+      closePwaGuide();
+    } else if (deferredPrompt) {
+      closePwaGuide();
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then(function(r) {
+        if (r.outcome === 'accepted') { localStorage.setItem(DONE_KEY, '1'); hideInstallBar(); }
+        deferredPrompt = null;
+      });
+    }
+  };
+
+  guideModal.addEventListener('click', function(e) { if (e.target === guideModal) closePwaGuide(); });
 })();
 
 // ═══════════════════════════════════════════════════════════
