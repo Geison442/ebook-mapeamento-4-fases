@@ -1961,6 +1961,24 @@
 // EBOOK — JAVASCRIPT COMPLETO
 // ═══════════════════════════════════════════════════════
 
+// ── STORAGE (setItem seguro com try/catch + aviso discreto) ──
+let _lsWarned = false;
+function _lsWarn() {
+  if (_lsWarned) return;
+  _lsWarned = true;
+  try {
+    const n = document.createElement('div');
+    n.textContent = '⚠️ Não foi possível salvar — armazenamento cheio ou navegação privada.';
+    n.style.cssText = 'position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:#111827;color:#fff;padding:10px 16px;border-radius:10px;font-size:13px;z-index:99999;max-width:90%;text-align:center;box-shadow:0 4px 16px rgba(0,0,0,.4)';
+    document.body.appendChild(n);
+    setTimeout(() => { n.remove(); _lsWarned = false; }, 4000);
+  } catch (_) {}
+}
+function safeSetItem(k, v) {
+  try { localStorage.setItem(k, v); return true; }
+  catch (e) { _lsWarn(); return false; }
+}
+
 // ── STATE ──
 const STATE = {
   currentDiaryDay: 1,
@@ -2033,7 +2051,7 @@ function checkWelcome() {
 }
 
 function closeWelcome() {
-  localStorage.setItem('ebook_welcomed', '1');
+  safeSetItem('ebook_welcomed', '1');
   closeModal('welcome-modal');
 }
 
@@ -2116,10 +2134,10 @@ function applyFont() {
 }
 
 document.getElementById('btn-font-dec').addEventListener('click', () => {
-  if (fontIdx > 0) { fontIdx--; applyFont(); localStorage.setItem('ebook_fontIdx', fontIdx); }
+  if (fontIdx > 0) { fontIdx--; applyFont(); safeSetItem('ebook_fontIdx', fontIdx); }
 });
 document.getElementById('btn-font-inc').addEventListener('click', () => {
-  if (fontIdx < fontSizes.length - 1) { fontIdx++; applyFont(); localStorage.setItem('ebook_fontIdx', fontIdx); }
+  if (fontIdx < fontSizes.length - 1) { fontIdx++; applyFont(); safeSetItem('ebook_fontIdx', fontIdx); }
 });
 
 // ── BOOKMARK ──
@@ -2133,7 +2151,7 @@ document.getElementById('btn-bookmark').addEventListener('click', () => {
 
 function doSaveBookmark() {
   const pos = window.scrollY;
-  localStorage.setItem('ebook_bookmark', pos);
+  safeSetItem('ebook_bookmark', pos);
   const btn = document.getElementById('btn-bookmark');
   btn.classList.add('active');
   btn.style.animation = 'ribbonPop 0.4s ease';
@@ -2208,11 +2226,11 @@ function initAutoSave() {
       }
     }
     el.addEventListener('input', () => {
-      localStorage.setItem(key, el.value);
+      safeSetItem(key, el.value);
       showSaveIndicator();
     });
     el.addEventListener('change', () => {
-      localStorage.setItem(key, el.value);
+      safeSetItem(key, el.value);
       showSaveIndicator();
     });
   });
@@ -2230,7 +2248,7 @@ function toggleNote(id, btn) {
 }
 
 function saveNote(id, value) {
-  localStorage.setItem('ebook_note-' + id, value);
+  safeSetItem('ebook_note-' + id, value);
   showSaveIndicator();
 }
 
@@ -2282,7 +2300,7 @@ function scrollToPhase(phase) {
 
 function setCurrentPhase(phase) {
   STATE.currentPhase = phase;
-  localStorage.setItem('ebook_currentPhase', phase);
+  safeSetItem('ebook_currentPhase', phase);
   document.querySelectorAll('.wheel-legend-item').forEach(l => l.classList.remove('current'));
   document.getElementById('wl-' + phase).classList.add('current');
   document.querySelectorAll('.wheel-segment').forEach(s => s.classList.remove('active-phase'));
@@ -2332,7 +2350,7 @@ function applyParaHighlight(color) {
   para.classList.add('highlight', color);
   STATE.highlightData = STATE.highlightData.filter(h => h.paraId !== paraId);
   STATE.highlightData.push({ paraId, color });
-  localStorage.setItem('ebook_highlights', JSON.stringify(STATE.highlightData));
+  safeSetItem('ebook_highlights', JSON.stringify(STATE.highlightData));
   updateGrifoCount();
   hideHighlightTooltip();
   showSaveIndicator('✦ Grifo salvo!');
@@ -2346,7 +2364,7 @@ function removeParaHighlight() {
   para.classList.remove('highlight', 'gold', 'purple', 'pink', 'green');
   if (paraId) {
     STATE.highlightData = STATE.highlightData.filter(h => h.paraId !== paraId);
-    localStorage.setItem('ebook_highlights', JSON.stringify(STATE.highlightData));
+    safeSetItem('ebook_highlights', JSON.stringify(STATE.highlightData));
   }
   updateGrifoCount();
   hideHighlightTooltip();
@@ -2384,7 +2402,7 @@ function initChecklist() {
     const key = 'ebook_check_' + cb.dataset.save;
     if (localStorage.getItem(key) === '1') cb.checked = true;
     cb.addEventListener('change', () => {
-      localStorage.setItem(key, cb.checked ? '1' : '0');
+      safeSetItem(key, cb.checked ? '1' : '0');
       updateChecklistProgress(cb.closest('.checklist-section'));
       showSaveIndicator();
     });
@@ -2487,7 +2505,7 @@ function saveDiaryEntry() {
     energy: STATE.currentDiaryEnergy,
     note: document.getElementById('diary-note-text').value,
   };
-  localStorage.setItem('ebook_diary_' + _diaryDay, JSON.stringify(data));
+  safeSetItem('ebook_diary_' + _diaryDay, JSON.stringify(data));
   const dayEl = document.querySelector('.diary-day[data-day="' + _diaryDay + '"]');
   if (dayEl) {
     dayEl.classList.add('has-entry');
@@ -2522,7 +2540,7 @@ function cycleMood(sq, day, moods, lbl) {
   const cur = localStorage.getItem('ebook_mood_' + day) || '';
   const idx = moods.indexOf(cur);
   const next = moods[(idx + 1) % moods.length];
-  localStorage.setItem('ebook_mood_' + day, next);
+  safeSetItem('ebook_mood_' + day, next);
   sq.textContent = next;
   sq.appendChild(lbl);
   sq.classList.add('filled');
@@ -2628,7 +2646,7 @@ function selectQuizOption(btn) {
   btn.closest('.quiz-options').querySelectorAll('.quiz-option').forEach(b => b.classList.remove('selected'));
   btn.classList.add('selected');
   STATE.quizAnswers[step] = btn.dataset.type;
-  localStorage.setItem('ebook_quiz_answers', JSON.stringify(STATE.quizAnswers));
+  safeSetItem('ebook_quiz_answers', JSON.stringify(STATE.quizAnswers));
   const nextBtn = document.getElementById('quiz-next-' + step);
   if (nextBtn) nextBtn.classList.add('enabled');
 }
@@ -2655,7 +2673,7 @@ function showQuizResult() {
   document.getElementById('qr-affirmation').textContent = '"' + r.affirmation + '"';
   const result = document.getElementById('quiz-result');
   result.classList.add('show');
-  localStorage.setItem('ebook_quiz_result', winner);
+  safeSetItem('ebook_quiz_result', winner);
   showSaveIndicator('✦ Resultado salvo!');
 }
 
@@ -2796,7 +2814,7 @@ function saveCommitment() {
     alert('Escreva seu compromisso antes de salvar!');
     return;
   }
-  localStorage.setItem('ebook_compromisso-pessoal', ta.value);
+  safeSetItem('ebook_compromisso-pessoal', ta.value);
   showSaveIndicator('✦ Compromisso registrado!');
   ta.style.borderColor = 'var(--maiden)';
   ta.style.boxShadow = '0 0 0 3px rgba(16,185,129,0.15)';
@@ -3027,7 +3045,7 @@ if ('serviceWorker' in navigator) {
 
   // Android: detectar instalação concluída
   window.addEventListener('appinstalled', function() {
-    localStorage.setItem(DONE_KEY, '1');
+    safeSetItem(DONE_KEY, '1');
     hideInstallBar();
     showToast('App instalado! Acesse pela tela inicial.');
   });
@@ -3056,7 +3074,7 @@ if ('serviceWorker' in navigator) {
   window.handleInstallClick = function() { openPwaGuide(); };
 
   window.dismissInstallBar = function() {
-    localStorage.setItem(BAR_KEY, '1');
+    safeSetItem(BAR_KEY, '1');
     hideInstallBar();
   };
 
@@ -3113,7 +3131,7 @@ if ('serviceWorker' in navigator) {
       closePwaGuide();
       deferredPrompt.prompt();
       deferredPrompt.userChoice.then(function(r) {
-        if (r.outcome === 'accepted') { localStorage.setItem(DONE_KEY, '1'); hideInstallBar(); }
+        if (r.outcome === 'accepted') { safeSetItem(DONE_KEY, '1'); hideInstallBar(); }
         deferredPrompt = null;
       });
     }
@@ -3128,14 +3146,14 @@ if ('serviceWorker' in navigator) {
 
 // ── FOCUS TIP ─────────────────────────────────────────────
 window.closeFocusTip = function() {
-  localStorage.setItem('ebook_focus-tip-seen', '1');
+  safeSetItem('ebook_focus-tip-seen', '1');
   document.getElementById('focus-tip-modal').style.display = 'none';
   enableFocusMode();
 };
 
 // ── BOOKMARK TIP ──────────────────────────────────────────
 window.closeBookmarkTip = function() {
-  localStorage.setItem('ebook_bm-tip-seen', '1');
+  safeSetItem('ebook_bm-tip-seen', '1');
   document.getElementById('bookmark-tip-modal').style.display = 'none';
   doSaveBookmark();
 };
@@ -3213,7 +3231,7 @@ document.addEventListener('touchend', function(e) {
   function applyMode(mode) {
     document.body.classList.remove('mode-white','mode-sepia','mode-night');
     if (mode !== 'dark') document.body.classList.add('mode-' + mode);
-    localStorage.setItem('ebook_reading-mode', mode);
+    safeSetItem('ebook_reading-mode', mode);
     _mode = mode;
     const btn = document.getElementById('btn-theme');
     if (btn) btn.textContent = ICONS[mode] || '🌙';
@@ -3516,7 +3534,7 @@ function saveCalDayEntry() {
     practices: practices,
     savedAt: new Date().toISOString()
   };
-  localStorage.setItem('4fases-diario-' + _calSelDate, JSON.stringify(data));
+  safeSetItem('4fases-diario-' + _calSelDate, JSON.stringify(data));
   closeModal('cal-day-modal');
   renderCalendar();
   updateJourney();
@@ -3550,7 +3568,7 @@ function checkMonthlyQuiz() {
       document.getElementById('monthly-quiz-modal').classList.add('open');
     }
   }
-  localStorage.setItem('4fases-last-access-month', nowKey);
+  safeSetItem('4fases-last-access-month', nowKey);
 }
 
 function saveMonthlyQuiz() {
@@ -3563,7 +3581,7 @@ function saveMonthlyQuiz() {
     savedAt: new Date().toISOString()
   };
   const key = fmtMonthKey(new Date(new Date().getFullYear(), new Date().getMonth() - 1, 1));
-  localStorage.setItem('4fases-mensal-' + key, JSON.stringify(data));
+  safeSetItem('4fases-mensal-' + key, JSON.stringify(data));
   // Gerar insight mensal
   const insightText = 'Sua energia em ' + PT_MONTHS[new Date(new Date().getFullYear(), new Date().getMonth()-1,1).getMonth()] +
     ' foi ' + data.energia + '/10. Sua fase mais poderosa: ' + (PHASE_NAMES[data.poder] || '—') +
@@ -3577,7 +3595,7 @@ function saveMonthlyQuiz() {
 // ── D. INSIGHTS ───────────────────────────────────────────────
 function saveInsight(type, text) {
   const key = '4fases-insight-' + type + '-' + fmtDate(new Date());
-  localStorage.setItem(key, JSON.stringify({ type, text, date: new Date().toISOString() }));
+  safeSetItem(key, JSON.stringify({ type, text, date: new Date().toISOString() }));
   showInsightBanner(type === 'mensal' ? '✦ Insight do Mês' : '☽ Insight da Semana', text);
 }
 
@@ -3774,7 +3792,7 @@ function updateJourney() {
     milestonesEl.innerHTML = MILESTONES.map(m => {
       const achieved = m.threshold();
       const savedDate = localStorage.getItem('4fases-milestone-' + m.id);
-      if (achieved && !savedDate) localStorage.setItem('4fases-milestone-' + m.id, fmtDate(new Date()));
+      if (achieved && !savedDate) safeSetItem('4fases-milestone-' + m.id, fmtDate(new Date()));
       const dateStr = savedDate || (achieved ? fmtDate(new Date()) : '');
       return '<div class="journey-milestone' + (achieved ? ' achieved' : '') + '">' +
         '<div class="journey-milestone-icon' + (achieved ? '' : ' locked') + '">' + m.icon + '</div>' +
@@ -4064,8 +4082,8 @@ function showSection(name) {
 // Sobrescreve saveNote para incluir timestamp
 const _origSaveNote = typeof saveNote === 'function' ? saveNote : null;
 function saveNote(id, value) {
-  localStorage.setItem('ebook_note-' + id, value);
-  localStorage.setItem('ebook_note-' + id + '-ts', new Date().toISOString());
+  safeSetItem('ebook_note-' + id, value);
+  safeSetItem('ebook_note-' + id + '-ts', new Date().toISOString());
   showSaveIndicator();
 }
 
@@ -4090,7 +4108,7 @@ function saveNote(id, value) {
 (function initNewFeatures() {
   // Registrar primeiro uso
   if (!localStorage.getItem('4fases-first-use')) {
-    localStorage.setItem('4fases-first-use', new Date().toISOString());
+    safeSetItem('4fases-first-use', new Date().toISOString());
   }
 
   // Verificar questionário mensal (aguardar loading)
