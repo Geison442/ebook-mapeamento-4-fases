@@ -3667,7 +3667,7 @@ function updateInsightsHistory() {
     const d = new Date(item.date);
     const dateStr = d.toLocaleDateString('pt-BR');
     const label = item.type === 'mensal' ? '✦ Insight Mensal' : '☽ Insight Semanal';
-    return '<div class="insight-history-item"><div class="insight-history-date">' + label + ' · ' + dateStr + '</div><div class="insight-history-text">' + item.text + '</div></div>';
+    return '<div class="insight-history-item"><div class="insight-history-date">' + label + ' · ' + dateStr + '</div><div class="insight-history-text">' + escapeHtml(item.text || '') + '</div></div>';
   }).join('');
 }
 
