@@ -19,9 +19,10 @@ const CACHE_FIRST_ASSETS = [
 // ── Install: pré-cache todos os assets ──────────────────
 self.addEventListener('install', (event) => {
   event.waitUntil(
+    // PT-6: não chamar skipWaiting() aqui — o novo SW aguarda ativação explícita ("Atualizar agora")
     caches.open(CACHE_NAME).then((cache) => {
       return cache.addAll([...SWR_ASSETS, ...CACHE_FIRST_ASSETS]);
-    }).then(() => self.skipWaiting())
+    })
   );
 });
 

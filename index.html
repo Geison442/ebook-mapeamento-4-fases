@@ -3002,21 +3002,36 @@ function restoreAll() {
   if (bookmark) document.getElementById('btn-bookmark').classList.add('active');
 }
 
-// ── SERVICE WORKER ──
+// ── SERVICE WORKER + atualização sob demanda (PT-6: não auto-ativar) ──
 if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./service-worker.js').catch(() => {});
+  let _swRefreshing = false;
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    if (_swRefreshing) return;
+    _swRefreshing = true;
+    window.location.reload();
   });
-  // Notificação discreta de nova versão
-  navigator.serviceWorker.addEventListener('message', (event) => {
-    if (event.data && event.data.type === 'NEW_VERSION') {
-      const el = document.getElementById('save-indicator');
-      if (el) {
-        el.textContent = '✨ Nova versão disponível — feche e reabra para atualizar';
-        el.classList.add('show');
-        setTimeout(() => el.classList.remove('show'), 8000);
-      }
-    }
+  const _activateUpdate = (worker) => {
+    if (worker) { try { worker.postMessage({ type: 'SKIP_WAITING' }); } catch (e) {} }
+  };
+  const _showUpdateToast = (worker) => {
+    const el = document.getElementById('save-indicator');
+    if (!el || document.getElementById('sw-update-btn')) return;
+    el.innerHTML = '✨ Nova versão disponível — <button id="sw-update-btn" style="margin-left:8px;cursor:pointer;border:none;border-radius:9999px;padding:4px 12px;font-weight:700;color:#fff;background:#7C3AED">Atualizar agora</button>';
+    el.classList.add('show');
+    const btn = document.getElementById('sw-update-btn');
+    if (btn) btn.addEventListener('click', () => _activateUpdate(worker));
+  };
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./service-worker.js').then((reg) => {
+      if (reg.waiting && navigator.serviceWorker.controller) _showUpdateToast(reg.waiting);
+      reg.addEventListener('updatefound', () => {
+        const nw = reg.installing;
+        if (!nw) return;
+        nw.addEventListener('statechange', () => {
+          if (nw.state === 'installed' && navigator.serviceWorker.controller) _showUpdateToast(nw);
+        });
+      });
+    }).catch(() => {});
   });
 }
 
