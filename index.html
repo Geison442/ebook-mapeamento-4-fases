@@ -2389,6 +2389,11 @@ function restoreHighlights() {
   } catch(e) {}
 }
 
+// PT-5: re-hidrata grifos quando outra aba grava (evita last-write-wins do blob de highlights)
+window.addEventListener('storage', e => {
+  if (e.key === 'ebook_highlights' && typeof restoreHighlights === 'function') restoreHighlights();
+});
+
 document.addEventListener('mousedown', e => {
   if (!e.target.closest('#highlight-tooltip')) hideHighlightTooltip();
 });
