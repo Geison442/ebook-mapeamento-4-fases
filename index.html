@@ -2727,24 +2727,33 @@ function startTimer() {
   if (STATE.timerRemaining <= 0) STATE.timerRemaining = timerDuration;
   STATE.timerRunning = true;
   STATE.timerTotal = STATE.timerRemaining;
+  STATE.timerEnd = Date.now() + STATE.timerRemaining * 1000;
   const btn = document.getElementById('timer-start-btn');
   if (btn) btn.textContent = '⏸ Pausar';
   const phaseMsg = { maiden: '☽ Ideal para journaling de intenções', mother: '○ Ideal para visualização criativa', witch: '◑ Ideal para meditação analítica profunda', crone: '● Ideal para gratidão e integração' };
   const msg = document.getElementById('timer-message');
   if (msg) msg.textContent = phaseMsg[STATE.currentPhase] || '✦ Respire. Você está presente.';
-  STATE.timerInterval = setInterval(() => {
-    STATE.timerRemaining--;
-    updateTimerDisplay(STATE.timerRemaining);
-    updateTimerCircle(STATE.timerRemaining / STATE.timerTotal);
-    if (STATE.timerRemaining <= 0) {
-      clearInterval(STATE.timerInterval);
-      STATE.timerRunning = false;
-      if (btn) btn.textContent = '▶ Iniciar';
-      if (msg) msg.textContent = '✦ Meditação completa. Bela presença.';
-      playBell();
-    }
-  }, 1000);
+  STATE.timerInterval = setInterval(tickMeditationTimer, 1000);
 }
+
+function tickMeditationTimer() {
+  STATE.timerRemaining = Math.round((STATE.timerEnd - Date.now()) / 1000);
+  if (STATE.timerRemaining < 0) STATE.timerRemaining = 0;
+  updateTimerDisplay(STATE.timerRemaining);
+  updateTimerCircle(STATE.timerRemaining / STATE.timerTotal);
+  if (STATE.timerRemaining <= 0) {
+    clearInterval(STATE.timerInterval);
+    STATE.timerRunning = false;
+    const btn = document.getElementById('timer-start-btn');
+    if (btn) btn.textContent = '▶ Iniciar';
+    const msg = document.getElementById('timer-message');
+    if (msg) msg.textContent = '✦ Meditação completa. Bela presença.';
+    playBell();
+  }
+}
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible' && STATE.timerRunning) tickMeditationTimer();
+});
 
 function pauseTimer() {
   clearInterval(STATE.timerInterval);
