@@ -3398,6 +3398,11 @@ function getDayPhase(day) {
   if (day <= 21) return 'witch';
   return 'crone';
 }
+// PT-7: sem data da última menstruação, usa o dia do mês como aproximação,
+// mas recicla modularmente em 28 dias (evita dias 29-31 caírem todos em 'crone').
+function getCycleDay() {
+  return ((new Date().getDate() - 1) % 28) + 1;
+}
 const PHASE_COLORS = { maiden: '#10B981', mother: '#F59E0B', witch: '#EF4444', crone: '#6366F1' };
 const PHASE_NAMES  = { maiden: '☽ Folicular', mother: '○ Ovulatória', witch: '◑ Lútea', crone: '● Menstrual' };
 const PT_MONTHS    = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
@@ -3418,7 +3423,7 @@ const PT_MONTHS    = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Jul
       greetEl.textContent = g;
     }
     if (phaseEl) {
-      const day = now.getDate();
+      const day = getCycleDay();
       const phase = getDayPhase(day);
       phaseEl.textContent = PHASE_NAMES[phase] + ' · Dia ' + day + ' do ciclo';
       phaseEl.style.color = PHASE_COLORS[phase];
@@ -3718,7 +3723,7 @@ function checkAndShowStoredInsight() {
 // ── E. RECOMENDAÇÕES PERSONALIZADAS ──────────────────────────
 function showRecommendation() {
   const now = new Date();
-  const day = now.getDate();
+  const day = getCycleDay();
   const h   = now.getHours();
   const phase = getDayPhase(day);
   const isNight   = (h >= 18 || h < 5);
