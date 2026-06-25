@@ -2847,6 +2847,14 @@ function downloadRespostas() {
   // Exercícios respondidos
   const responses = [];
   document.querySelectorAll('[data-save]').forEach(el => {
+    if (el.type === 'range') {
+      // Slider só conta como respondido se a usuária interagiu (valor persistido pelo auto-save)
+      if (localStorage.getItem('ebook_' + el.dataset.save) === null) return;
+      const sgroup = el.closest('.slider-group');
+      const slabel = sgroup?.querySelector('.slider-label')?.textContent?.trim() || el.dataset.save;
+      responses.push({ label: slabel, hint: '', value: el.value.trim() });
+      return;
+    }
     if (el.value && el.value.trim()) {
       const group = el.closest('.input-group');
       const label = group?.querySelector('.label-main')?.textContent?.trim() || el.dataset.save;
