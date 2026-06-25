@@ -1881,6 +1881,7 @@
       <textarea class="input-text" id="mq-intencao" rows="2" placeholder="No próximo ciclo, quero honrar... Vou me permitir... Minha intenção é..."></textarea>
     </div>
     <button class="monthly-save-btn" onclick="saveMonthlyQuiz()">Guardar minha jornada ☽</button>
+    <button class="monthly-skip-btn" onclick="closeMonthlyQuiz()" style="display:block;width:100%;padding:10px;background:transparent;border:none;color:var(--text-muted);font-family:var(--font-ui);font-size:.9rem;cursor:pointer;margin-top:6px">Agora não</button>
   </div>
 </div>
 
@@ -2067,6 +2068,7 @@ document.addEventListener('keydown', e => {
     document.querySelectorAll('.modal-overlay.open').forEach(m => {
       if (m.id !== 'welcome-modal') m.classList.remove('open');
     });
+    closeMonthlyQuiz();
     if (STATE.focusMode) disableFocusMode();
     closeTOC();
   }
@@ -3596,6 +3598,15 @@ function checkMonthlyQuiz() {
   }
   safeSetItem('4fases-last-access-month', nowKey);
 }
+
+function closeMonthlyQuiz() {
+  const m = document.getElementById('monthly-quiz-modal');
+  if (m) m.classList.remove('open');
+}
+(function(){
+  const m = document.getElementById('monthly-quiz-modal');
+  if (m) m.addEventListener('click', e => { if (e.target === m) closeMonthlyQuiz(); });
+})();
 
 function saveMonthlyQuiz() {
   const data = {
