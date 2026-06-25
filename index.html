@@ -2831,7 +2831,12 @@ function saveCommitment() {
 
 // ── DOWNLOAD ──
 function downloadRespostas() {
-  const userName = localStorage.getItem('4fases-username') || 'Mapeamento Pessoal';
+  let userName = localStorage.getItem('4fases-username');
+  if (!userName) {
+    const entered = (prompt('Seu nome para a capa? (opcional)') || '').trim();
+    if (entered) { safeSetItem('4fases-username', entered); userName = entered; }
+  }
+  userName = userName || 'Mapeamento Pessoal';
   const now = new Date();
   const dateStr = now.toLocaleDateString('pt-BR');
   const MONTH_NAMES_PT = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
@@ -3999,7 +4004,12 @@ function exportLibraryPDF() {
   const now = new Date();
   const MONTH_NAMES_PT = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
   const monthYear = MONTH_NAMES_PT[now.getMonth()] + ' ' + now.getFullYear();
-  const userName = localStorage.getItem('4fases-username') || 'Minha Jornada';
+  let userName = localStorage.getItem('4fases-username');
+  if (!userName) {
+    const entered = (prompt('Seu nome para a capa? (opcional)') || '').trim();
+    if (entered) { safeSetItem('4fases-username', entered); userName = entered; }
+  }
+  userName = userName || 'Minha Jornada';
 
   const highlights = JSON.parse(localStorage.getItem('ebook_highlights') || '[]');
   const notes = [];
